@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtos Charles — Artist Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --accent:     #A6DDFF;
+      --accent-deep:#5FB3E8;
+      --ink:        #16191D;
+      --muted:      #6B7280;
+      --bg:         #FFFFFF;
+      --panel:      #FFFFFF;
+      --line:       #ECECEC;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      font-size: 16px;
+    }
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    a { color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.6rem 5rem;
+      background: rgba(255,255,255,0);
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom-color: var(--line);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem; font-weight: 600;
+      letter-spacing: -0.01em;
+      text-decoration: none; color: var(--ink);
+    }
+    .nav-links { display: flex; gap: 2.6rem; list-style: none; align-items: center; }
+    .nav-links a {
+      text-decoration: none; font-size: 0.85rem;
+      color: var(--muted); transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      padding: 0.55rem 1.3rem;
+      background: var(--ink) !important;
+      color: var(--bg) !important;
+      border-radius: 4px;
+      font-size: 0.82rem !important;
+      transition: background 0.25s !important;
+    }
+    .nav-cta:hover { background: var(--accent-deep) !important; color: var(--ink) !important; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span { width: 22px; height: 1.5px; background: var(--ink); display: block; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: fixed; inset: 0;
+      background: var(--bg); z-index: 400;
+      flex-direction: column; justify-content: center; align-items: center; gap: 2.2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem; font-weight: 500;
+      color: var(--ink); text-decoration: none;
+    }
+    .mobile-menu a:hover { color: var(--accent-deep); }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 90vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 9rem 5rem 5rem;
+      position: relative;
+      background: linear-gradient(180deg, #F3FAFF 0%, #FFFFFF 75%);
+    }
+    .hero-tag {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.8rem; letter-spacing: 0.04em;
+      color: var(--accent-deep); font-weight: 500;
+      margin-bottom: 1.8rem;
+    }
+    .hero-tag .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent-deep);
+    }
+    .hero-title {
+      font-size: clamp(2.8rem, 6.5vw, 5.6rem);
+      font-weight: 500; line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.8rem;
+      max-width: 17ch;
+      color: var(--ink);
+    }
+    .hero-title .line { display: block; }
+    .hero-title .accent-word {
+      color: var(--accent-deep);
+      font-style: italic; font-weight: 500;
+    }
+
+    .hero-row {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      gap: 3rem; flex-wrap: wrap; margin-top: 1rem;
+    }
+    .hero-sub {
+      max-width: 40ch; color: var(--muted); font-size: 1.05rem;
+      font-weight: 300;
+    }
+    .hero-actions { display: flex; gap: 0.9rem; flex-shrink: 0; }
+
+    .btn-primary {
+      display: inline-block; padding: 0.9rem 2rem;
+      background: var(--accent); color: var(--ink);
+      text-decoration: none; font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.01em; border-radius: 50px;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .btn-primary:hover { background: var(--accent-deep); transform: translateY(-1px); }
+    .btn-outline {
+      display: inline-block; padding: 0.9rem 2rem;
+      background: transparent; color: var(--ink);
+      text-decoration: none; font-size: 0.85rem;
+      border-radius: 50px; border: 1px solid var(--line);
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .btn-outline:hover { border-color: var(--accent-deep); color: var(--accent-deep); }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; right: 5rem;
+      font-size: 0.72rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .hero-scroll::after { content: '↓'; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 5rem; }
+    .eyebrow {
+      display: block; font-size: 0.75rem;
+      color: var(--accent-deep); font-weight: 500;
+      margin-bottom: 0.9rem; letter-spacing: 0.02em;
+    }
+    .section-title {
+      font-size: clamp(1.9rem, 3vw, 2.7rem);
+      font-weight: 600; line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--panel);
+      display: grid; grid-template-columns: 0.9fr 1.1fr;
+      gap: 5rem; align-items: start;
+      border-bottom: 1px solid var(--line);
+    }
+    .about-photo {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--line);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      color: #A9A9A9; font-size: 0.78rem; letter-spacing: 0.04em;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, transparent 60%, rgba(166,221,255,0.35) 100%);
+    }
+    .about-text p { color: var(--muted); margin-bottom: 1.4rem; font-size: 0.98rem; }
+
+    .about-meta {
+      display: flex; gap: 2.5rem; margin-top: 2.5rem;
+      padding-top: 1.8rem; border-top: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+    .about-meta-item { min-width: 8rem; }
+    .about-meta-label { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.3rem; }
+    .about-meta-value { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 500; }
+
+    /* ── WORKS ── */
+    #works { background: var(--bg); border-bottom: 1px solid var(--line); }
+    .works-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;
+    }
+    .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .filter-btn {
+      font-size: 0.78rem; padding: 0.4rem 1rem;
+      border-radius: 4px; border: 1px solid var(--line);
+      background: transparent; cursor: pointer; color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.25s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--ink); color: var(--bg); border-color: var(--ink);
+    }
+
+    .gallery {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--line); border: 1px solid var(--line);
+    }
+    .g-item {
+      position: relative; overflow: hidden;
+      cursor: pointer; background: var(--bg);
+    }
+    .g-thumb {
+      width: 100%; aspect-ratio: 4/5;
+      background: var(--panel);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; color: #B0B0B0;
+      transition: opacity 0.3s;
+    }
+    .g-info {
+      padding: 1.1rem 1.2rem 1.3rem;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .g-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.98rem; font-weight: 500; }
+    .g-meta { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; }
+    .g-price { font-size: 0.85rem; color: var(--accent-deep); font-weight: 500; white-space: nowrap; }
+    .g-item:hover .g-thumb { opacity: 0.85; }
+
+    /* series card */
+    .g-series { text-decoration: none; display: block; }
+    .g-series .g-thumb {
+      background: linear-gradient(150deg, #FFE0FC 0%, #FFCCFD 100%);
+      position: relative; display: flex; align-items: flex-end; justify-content: flex-start; padding: 1.2rem;
+    }
+    .g-series-tag {
+      font-size: 0.68rem; letter-spacing: 0.04em;
+      color: var(--ink);
+      background: rgba(255,255,255,0.75);
+      padding: 0.35rem 0.8rem; border-radius: 4px;
+    }
+    .g-series .g-title { color: var(--ink); }
+    .g-series .g-arrow { font-size: 0.85rem; color: var(--ink); }
+
+    /* coming soon card */
+    .g-soon { cursor: default; opacity: 0.7; }
+    .g-soon .g-thumb {
+      background: var(--panel);
+      border: 1px dashed #D5D5D5;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .g-soon-tag {
+      font-size: 0.72rem; letter-spacing: 0.04em;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      padding: 0.4rem 0.9rem; border-radius: 4px;
+    }
+
+    /* ── APPROACH ── */
+    #approach {
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+    .approach-grid {
+      display: grid; grid-template-columns: 1fr 1.3fr; gap: 5rem;
+      align-items: start;
+    }
+    #approach p { color: var(--muted); font-size: 0.98rem; margin-bottom: 1.4rem; }
+    .approach-quote {
+      border-left: 2px solid var(--accent-deep);
+      padding-left: 1.6rem; margin-top: 2rem;
+    }
+    blockquote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem; font-weight: 500;
+      line-height: 1.4; color: var(--ink);
+    }
+    .quote-by { font-size: 0.78rem; color: var(--muted); margin-top: 0.9rem; }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--bg);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: start;
+    }
+    .contact-info p { color: var(--muted); margin-bottom: 1.4rem; font-size: 0.98rem; }
+    .contact-list { margin-top: 2rem; }
+    .contact-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.9rem 0; border-bottom: 1px solid var(--line);
+      text-decoration: none; color: var(--ink); font-size: 0.92rem;
+      transition: color 0.25s;
+    }
+    .contact-row:hover { color: var(--accent-deep); }
+    .contact-icon {
+      width: 1.9rem; height: 1.9rem; border-radius: 4px;
+      background: var(--panel); display: flex; align-items: center;
+      justify-content: center; font-size: 0.85rem; flex-shrink: 0;
+    }
+
+    .form { display: flex; flex-direction: column; gap: 1.1rem; }
+    .fg { display: flex; flex-direction: column; gap: 0.35rem; }
+    .fg label { font-size: 0.72rem; color: var(--muted); }
+    .fg input, .fg textarea, .fg select {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: 4px; padding: 0.8rem 1rem;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      color: var(--ink); outline: none; width: 100%;
+      transition: border-color 0.25s;
+    }
+    .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--accent-deep); }
+    .fg textarea { resize: vertical; min-height: 110px; }
+    .btn-send {
+      align-self: flex-start; padding: 0.85rem 2rem;
+      background: var(--ink); color: var(--bg);
+      border: none; border-radius: 4px;
+      font-family: 'Inter', sans-serif; font-size: 0.82rem;
+      cursor: pointer; transition: background 0.25s;
+    }
+    .btn-send:hover { background: var(--accent-deep); color: var(--ink); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg); color: var(--muted);
+      padding: 2.2rem 5rem;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem;
+    }
+    .footer-brand { font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--ink); }
+    footer a { color: var(--muted); text-decoration: none; transition: color 0.25s; }
+    footer a:hover { color: var(--accent-deep); }
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    /* ── MODAL ── */
+    .modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(22,25,29,0.6);
+      z-index: 800; align-items: center; justify-content: center; padding: 2rem;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: var(--bg); max-width: 640px; width: 100%;
+      border-radius: 6px; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .modal-img { background: var(--panel); min-height: 300px; }
+    .modal-body { padding: 2.4rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .modal-close {
+      align-self: flex-end; background: var(--panel);
+      border: none; width: 1.9rem; height: 1.9rem; border-radius: 4px;
+      cursor: pointer; font-size: 0.85rem; color: var(--muted);
+      margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: center;
+      transition: background 0.25s;
+    }
+    .modal-close:hover { background: var(--line); }
+    .modal-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .modal-meta { font-size: 0.75rem; color: var(--muted); }
+    .modal-desc { color: var(--muted); font-size: 0.9rem; margin: 1.4rem 0; line-height: 1.75; }
+    .modal-price { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 600; color: var(--accent-deep); margin-bottom: 0.8rem; }
+    .modal-buy {
+      display: inline-block; padding: 0.7rem 1.4rem;
+      background: var(--ink); color: var(--bg); text-decoration: none;
+      font-size: 0.8rem; border-radius: 4px; transition: background 0.25s;
+      text-align: center;
+    }
+    .modal-buy:hover { background: var(--accent-deep); color: var(--ink); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) { .fade-up { transition: none; } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 4.5rem 2rem; }
+      #home { padding: 7rem 2rem 3rem; }
+      .hero-row { flex-direction: column; align-items: flex-start; }
+      .hero-scroll { display: none; }
+      #about { grid-template-columns: 1fr; gap: 2.5rem; }
+      .gallery { grid-template-columns: 1fr 1fr; }
+      .works-header { flex-direction: column; align-items: flex-start; }
+      .approach-grid { grid-template-columns: 1fr; gap: 2rem; }
+      #contact { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: 1rem; padding: 2rem; text-align: center; }
+      .modal { grid-template-columns: 1fr; }
+      .modal-img { min-height: 180px; }
+    }
+    @media (max-width: 520px) {
+      .gallery { grid-template-columns: 1fr; }
+      .about-meta { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#home" class="nav-logo">Virtos Charles</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+    </ul>
+    <button class="hamburger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mob">
+    <a href="#about"    onclick="closeMob()">About</a>
+    <a href="#works"    onclick="closeMob()">Works</a>
+    <a href="#shop"     onclick="closeMob()">Shop</a>
+    <a href="#approach" onclick="closeMob()">Approach</a>
+    <a href="#contact"  onclick="closeMob()">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="home">
+    <p class="hero-tag"><span class="dot"></span>Artist</p>
+    <h1 class="hero-title">
+      <span class="line">Art as a</span>
+      <span class="line accent-word">living language</span>
+    </h1>
+    <div class="hero-row">
+      <p class="hero-sub">
+        I create works that speak where words fall silent — painting, drawing,
+        and experimenting with form, colour, and feeling.
+      </p>
+      <div class="hero-actions">
+        <a href="#works"  class="btn-primary">View my works</a>
+        <a href="#about"  class="btn-outline">About me</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-photo fade-up">Your photo here</div>
+    <div class="about-text fade-up">
+      <span class="eyebrow">About me</span>
+      <h2 class="section-title">Who am I?</h2>
+      <p>
+        I am Virtos Charles, a French artist. Since childhood, I have drawn and painted
+        the world as I feel it — not as it simply appears.
+      </p>
+      <p>
+        My work explores [your themes: memory, identity, matter, light…].
+        I draw from [your influences] to build a visual language that is entirely my own.
+      </p>
+      <p>
+        Self-taught / trained at [school or course], I work primarily with
+        [your mediums: oil, acrylic, ink, mixed media…].
+      </p>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works">
+    <div class="works-header">
+      <div>
+        <span class="eyebrow">Series</span>
+        <h2 class="section-title">My works</h2>
+      </div>
+    </div>
+    <div class="gallery" id="gallery">
+
+      <a href="love-story.html" class="g-item g-series fade-up">
+        <div class="g-thumb"><span class="g-series-tag">First series</span></div>
+        <div class="g-info">
+          <div>
+            <div class="g-title">A Love Story</div>
+            <div class="g-meta">Explore the full series</div>
+          </div>
+          <span class="g-arrow">→</span>
+        </div>
+      </a>
+
+      <div class="g-item g-soon fade-up">
+        <div class="g-thumb"><span class="g-soon-tag">Coming soon</span></div>
+        <div class="g-info">
+          <div>
+            <div class="g-title">New series</div>
+            <div class="g-meta">In progress</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SHOP / AVAILABLE NOW -->
+  <section id="shop">
+    <div class="works-header">
+      <div>
+        <span class="eyebrow">Shop</span>
+        <h2 class="section-title">Available now</h2>
+      </div>
+    </div>
+    <div class="gallery" id="shop-gallery">
+
+      <div class="g-item fade-up" onclick="openModal('NightRider#1','Ink on paper · Illustration series','A set of 15 expressive ink portraits — bold linework, sharp characters, drawn in one uninterrupted burst of energy.','£50','images/nightrider-1.jpeg')">
+        <div class="g-thumb" style="background-image:url(&quot;images/nightrider-1.jpeg&quot;); background-size:cover; background-position:center;"></div>
+        <div class="g-info">
+          <div>
+            <div class="g-title">NightRider#1</div>
+            <div class="g-meta">Ink · Illustration</div>
+          </div>
+          <div class="g-price">£50</div>
+        </div>
+      </div>
+
+      <div class="g-item fade-up" onclick="openModal('Inner Light','Painting · Acrylic · 2025 · 60×80 cm','Light as a metaphor for what we conceal. Vertical format, warm hues and luminous glazes layered with care.','€520')">
+        <div class="g-thumb">Artwork</div>
+        <div class="g-info">
+          <div>
+            <div class="g-title">Inner Light</div>
+            <div class="g-meta">Acrylic · 2025</div>
+          </div>
+          <div class="g-price">€520</div>
+        </div>
+      </div>
+
+      <div class="g-item fade-up" onclick="openModal('Mapping #3','Drawing · Ink and pencil · 2024 · A2','Lines that map an inner geography. Black ink, fine marks, and a confident, restless hand.','€150')">
+        <div class="g-thumb">Artwork</div>
+        <div class="g-info">
+          <div>
+            <div class="g-title">Mapping #3</div>
+            <div class="g-meta">Ink · 2024</div>
+          </div>
+          <div class="g-price">€150</div>
+        </div>
+      </div>
+
+      <div class="g-item fade-up" onclick="openModal('Fragment','Mixed media · 2025 · 50×50 cm','Collage, paint, found materials. A piece about assembly and the fragmentation of memory.','€290')">
+        <div class="g-thumb">Artwork</div>
+        <div class="g-info">
+          <div>
+            <div class="g-title">Fragment</div>
+            <div class="g-meta">Mixed media · 2025</div>
+          </div>
+          <div class="g-price">€290</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section id="approach">
+    <div class="approach-grid">
+      <div>
+        <span class="eyebrow">Artistic approach</span>
+        <h2 class="section-title">What I am searching for</h2>
+      </div>
+      <div>
+        <p>
+          My work is born from a tension between the visible and the intimate.
+          I do not try to represent the world — I try to feel it on the canvas.
+        </p>
+        <p>
+          Each series begins with a different question. I work in cycles, through
+          temporary obsessions — and every canvas is an attempt at a provisional answer.
+        </p>
+        <div class="approach-quote fade-up">
+          <blockquote>
+            "Painting is the way I found to say what I would not know how to put into words."
+          </blockquote>
+          <div class="quote-by">— Virtos Charles</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-info fade-up">
+      <span class="eyebrow">Contact & Sales</span>
+      <h2 class="section-title">Let's talk</h2>
+      <p>
+        Looking to acquire a work, propose a collaboration, or simply talk about art?
+        I am always open to a good conversation.
+      </p>
+      <p>
+        All works are available for sale. Careful shipping within France and internationally.
+        Custom commissions are welcome.
+      </p>
+      <div class="contact-list">
+        <a href="mailto:VirtosCharle@outlook.com" class="contact-row">
+          <div class="contact-icon">✉</div> VirtosCharle@outlook.com
+        </a>
+        <a href="https://instagram.com" target="_blank" class="contact-row">
+          <div class="contact-icon">◈</div> @your_instagram
+        </a>
+        <a href="#" class="contact-row">
+          <div class="contact-icon">↓</div> Download my portfolio (PDF)
+        </a>
+      </div>
+    </div>
+    <div class="form fade-up">
+      <div class="fg">
+        <label>Full name</label>
+        <input type="text" placeholder="Jane Smith" />
+      </div>
+      <div class="fg">
+        <label>Email</label>
+        <input type="email" placeholder="jane@email.com" />
+      </div>
+      <div class="fg">
+        <label>Subject</label>
+        <select>
+          <option>Purchase a work</option>
+          <option>Custom commission</option>
+          <option>Collaboration / Exhibition</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Message</label>
+        <textarea placeholder="Tell me what you have in mind…"></textarea>
+      </div>
+      <button class="btn-send" type="button">Send message →</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">Virtos Charles</span>
+    <span>© 2025 — All rights reserved</span>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Behance</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-bg" id="modalBg" onclick="outsideClose(event)">
+    <div class="modal">
+      <div class="modal-img" id="mImg"></div>
+      <div class="modal-body">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div>
+          <h3 class="modal-title" id="mTitle"></h3>
+          <p class="modal-meta"  id="mMeta"></p>
+          <p class="modal-desc"  id="mDesc"></p>
+        </div>
+        <div>
+          <div class="modal-price" id="mPrice"></div>
+          <a href="#contact" class="modal-buy" onclick="closeModal()">Contact to purchase</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+    const burger = document.getElementById('burger');
+    const mob    = document.getElementById('mob');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('active');
+      mob.classList.toggle('open');
+    });
+    function closeMob() { burger.classList.remove('active'); mob.classList.remove('open'); }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 70);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+    function filter(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.g-item').forEach(el => {
+        el.style.display = (cat === 'all' || el.dataset.cat === cat) ? '' : 'none';
+      });
+    }
+
+    function openModal(title, meta, desc, price, img) {
+      document.getElementById('mTitle').textContent = title;
+      document.getElementById('mMeta').textContent  = meta;
+      document.getElementById('mDesc').textContent  = desc;
+      document.getElementById('mPrice').textContent = price;
+      const imgEl = document.getElementById('mImg');
+      imgEl.style.backgroundImage = img ? `url("${img}")` : 'none';
+      imgEl.style.backgroundSize = 'cover';
+      imgEl.style.backgroundPosition = 'center';
+      document.getElementById('modalBg').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modalBg').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function outsideClose(e) { if (e.target.id === 'modalBg') closeModal(); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>
