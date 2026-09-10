@@ -20,7 +20,11 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y proximity;
+      scroll-padding-top: 88px;
+    }
     body {
       background: var(--bg);
       color: var(--ink);
@@ -32,6 +36,8 @@
     }
     h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
     a { color: inherit; }
+
+    section, footer { scroll-snap-align: start; }
 
     /* ── NAV ── */
     nav {
