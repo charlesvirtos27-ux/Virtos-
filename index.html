@@ -18,9 +18,7 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body {
-      height: 100%;
-    }
+    html, body { height: 100%; }
 
     body {
       background: linear-gradient(180deg, #F3FAFF 0%, #FFFFFF 75%);
@@ -28,13 +26,14 @@
       font-family: 'Inter', sans-serif;
       font-weight: 300;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 2rem;
       text-align: center;
     }
 
-    .splash {
+    .home {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -43,61 +42,60 @@
       animation: fade-in 0.9s ease forwards 0.15s;
     }
 
-    .splash-tag {
+    .home-tag {
       display: flex; align-items: center; gap: 0.6rem;
       font-size: 0.8rem; letter-spacing: 0.04em;
       color: var(--accent-deep); font-weight: 500;
       margin-bottom: 1.6rem;
     }
-    .splash-tag .dot {
+    .home-tag .dot {
       width: 7px; height: 7px; border-radius: 50%;
       background: var(--accent-deep);
     }
 
-    .splash-name {
+    .home-logo {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.4rem, 8vw, 4.2rem);
+      font-size: clamp(3.2rem, 11vw, 6rem);
       font-weight: 600;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 3.2rem;
     }
 
-    .splash-tagline {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 32ch;
-      margin-bottom: 2.6rem;
-    }
-    .splash-tagline em {
-      color: var(--accent-deep);
-      font-style: italic;
+    .home-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
     }
 
-    .enter-btn {
+    .home-menu a {
       display: inline-flex;
-      align-items: center;
+      align-items: baseline;
       gap: 0.6rem;
-      padding: 0.95rem 2.4rem;
-      background: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-weight: 500;
       color: var(--ink);
       text-decoration: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      border-radius: 50px;
-      transition: background 0.25s, transform 0.25s;
+      padding: 0.5rem 0;
+      transition: color 0.25s;
     }
-    .enter-btn:hover {
-      background: var(--accent-deep);
-      transform: translateY(-1px);
+    .home-menu a .arrow {
+      font-size: 0.9em;
+      color: var(--accent-deep);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.25s, transform 0.25s;
     }
-    .enter-btn .arrow {
-      transition: transform 0.25s;
+    .home-menu a:hover,
+    .home-menu a:focus-visible {
+      color: var(--accent-deep);
     }
-    .enter-btn:hover .arrow {
-      transform: translateX(3px);
+    .home-menu a:hover .arrow,
+    .home-menu a:focus-visible .arrow {
+      opacity: 1;
+      transform: none;
     }
 
     @keyframes fade-in {
@@ -105,17 +103,20 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .splash { animation: none; opacity: 1; transform: none; }
+      .home { animation: none; opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="splash">
-    <p class="splash-tag"><span class="dot"></span>Artist</p>
-    <h1 class="splash-name">Virtos Charles</h1>
-    <p class="splash-tagline">Art as a <em>living language</em>.</p>
-    <a href="main.html" class="enter-btn">Enter <span class="arrow">→</span></a>
+  <div class="home">
+    <p class="home-tag"><span class="dot"></span>Artist</p>
+    <h1 class="home-logo">Virtos</h1>
+    <ul class="home-menu">
+      <li><a href="main.html#shop">Store <span class="arrow">→</span></a></li>
+      <li><a href="main.html#works">Artwork <span class="arrow">→</span></a></li>
+      <li><a href="main.html#about">Me <span class="arrow">→</span></a></li>
+    </ul>
   </div>
 
 </body>
