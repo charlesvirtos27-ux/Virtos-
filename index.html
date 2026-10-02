@@ -21,7 +21,7 @@
     html, body { height: 100%; }
 
     body {
-      background: linear-gradient(180deg, #F3FAFF 0%, #FFFFFF 75%);
+      background: #FFFFFF;
       color: var(--ink);
       font-family: 'Inter', sans-serif;
       font-weight: 300;
@@ -33,7 +33,16 @@
       text-align: center;
     }
 
+    #dove {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .home {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -98,6 +107,8 @@
 </head>
 <body>
 
+  <canvas id="dove" aria-hidden="true"></canvas>
+
   <div class="home">
     <h1 class="home-logo">Virtos</h1>
     <ul class="home-menu">
@@ -106,6 +117,89 @@
       <li><a href="main.html#about">Me <span class="arrow">→</span></a></li>
     </ul>
   </div>
+
+  <script>
+    const canvas = document.getElementById('dove');
+    const ctx = canvas.getContext('2d');
+    const INK = '#16191D';
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, H = 0;
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function wing(flap, alpha) {
+      ctx.save();
+      ctx.translate(6, -6);
+      ctx.rotate(-0.55 + 0.95 * flap);
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-10, -30, -42, -58, -82, -62);
+      ctx.bezierCurveTo(-66, -42, -54, -22, -42, -4);
+      ctx.closePath();
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawDove(x, y, scale, angle, flap) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.scale(scale, scale);
+      ctx.lineWidth = 1.6 / scale;
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = INK;
+      wing(flap * 0.85, 0.55);
+      ctx.beginPath();
+      ctx.moveTo(62, -4);
+      ctx.lineTo(48, -8);
+      ctx.bezierCurveTo(44, -17, 34, -17, 30, -9);
+      ctx.bezierCurveTo(15, -8, -10, -6, -58, -2);
+      ctx.bezierCurveTo(-40, 7, -30, 9, -24, 11);
+      ctx.bezierCurveTo(-5, 17, 20, 13, 34, 10);
+      ctx.bezierCurveTo(44, 7, 48, 3, 48, -1);
+      ctx.closePath();
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(38, -9, 1.4, 0, Math.PI * 2);
+      ctx.fillStyle = INK;
+      ctx.fill();
+      wing(flap, 1);
+      ctx.restore();
+    }
+
+    const CYCLE = 16000;
+    function frame(now) {
+      ctx.clearRect(0, 0, W, H);
+      const scale = Math.max(0.55, Math.min(W / 1400, 1)) * 1.1;
+      const span = W + 300 * scale;
+      const p = (now % CYCLE) / CYCLE;
+      const x = -150 * scale + span * p;
+      const baseY = H * 0.2;
+      const y = baseY + Math.sin(p * Math.PI * 2 * 1.5) * 26 * scale;
+      const slope = Math.cos(p * Math.PI * 2 * 1.5) * 26 * scale * (Math.PI * 3) / span;
+      const flap = Math.sin(now / 150);
+      drawDove(x, y + flap * 2.5 * scale, scale, Math.atan(slope), flap);
+      requestAnimationFrame(frame);
+    }
+
+    if (reduced) {
+      drawDove(W / 2, H * 0.2, Math.max(0.7, Math.min(W / 1400, 1)), 0, 0.9);
+    } else {
+      requestAnimationFrame(frame);
+    }
+  </script>
 
 </body>
 </html>
