@@ -113,7 +113,7 @@
       font-family: 'Caveat', cursive;
       font-size: clamp(1.7rem, 5.5vw, 2.2rem);
       font-weight: 600;
-      color: var(--pencil);
+      color: var(--ink);
       transform: rotate(-3deg);
       opacity: 0;
       transition: opacity 0.6s ease;
@@ -332,7 +332,7 @@
         [[1.1, 1, 0, 0]].forEach(function(o){
           var p = document.createElementNS(NS, 'path');
           p.setAttribute('d', d);
-          p.setAttribute('stroke-width', o[0]);
+          p.setAttribute('stroke-width', '2.2');
           p.setAttribute('opacity', o[1]);
           p.setAttribute('transform', 'translate(' + o[2] + ' ' + o[3] + ') rotate(' + tilt.toFixed(1) + ' ' + w/2 + ' ' + h/2 + ')');
           svg.appendChild(p);
