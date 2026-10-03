@@ -83,34 +83,24 @@
     }
 
     .home-menu a {
-      position: relative;
       display: inline-block;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-size: clamp(1.75rem, 4.6vw, 2.4rem);
       font-weight: 500;
       color: var(--ink);
       text-decoration: none;
       padding: 0.5rem 0;
-      transition: color 0.25s;
+      cursor: default;
     }
-    .home-menu a .arrow {
-      position: absolute;
-      left: 100%;
-      margin-left: 0.5rem;
-      font-size: 0.9em;
+
+    .upcoming {
+      margin-top: 2rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.8rem, 2.4vw, 0.95rem);
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
       color: var(--accent-deep);
-      opacity: 0;
-      transform: translateX(-4px);
-      transition: opacity 0.25s, transform 0.25s;
-    }
-    .home-menu a:hover,
-    .home-menu a:focus-visible {
-      color: var(--accent-deep);
-    }
-    .home-menu a:hover .arrow,
-    .home-menu a:focus-visible .arrow {
-      opacity: 1;
-      transform: none;
     }
 
     @keyframes fade-in {
@@ -130,10 +120,11 @@
       <canvas id="signature" tabindex="0" role="img" aria-label="Virtos Charles"></canvas>
     </h1>
     <ul class="home-menu">
-      <li><a href="main.html#shop">Store <span class="arrow">→</span></a></li>
-      <li><a href="main.html#works">Artwork <span class="arrow">→</span></a></li>
-      <li><a href="main.html#about">About <span class="arrow">→</span></a></li>
+      <li><a aria-disabled="true">Store</a></li>
+      <li><a aria-disabled="true">Artwork</a></li>
+      <li><a aria-disabled="true">About</a></li>
     </ul>
+    <p class="upcoming">Upcoming soon</p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
