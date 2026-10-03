@@ -103,7 +103,7 @@
     }
     .scribble path {
       fill: none;
-      stroke: var(--pencil);
+      stroke: var(--ink);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
@@ -119,6 +119,7 @@
       transition: opacity 0.6s ease;
     }
     .upcoming.show { opacity: 1; }
+    .upcoming .dots { color: var(--ink); }
 
     @keyframes fade-in {
       to { opacity: 1; transform: none; }
@@ -141,7 +142,7 @@
       <li><a class="strike" aria-disabled="true">Artwork</a></li>
       <li><a class="strike" aria-disabled="true">About</a></li>
     </ul>
-    <p class="upcoming">Upcoming soon</p>
+    <p class="upcoming">Upcoming soon<span class="dots">..</span></p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -328,7 +329,7 @@
         svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
         var tilt = (r() - 0.5) * 6;
         var d = scribblePath(w, h, r);
-        [[1.9, 0.9, 0, 0], [1, 0.45, 0.7, 0.5]].forEach(function(o){
+        [[1.1, 1, 0, 0]].forEach(function(o){
           var p = document.createElementNS(NS, 'path');
           p.setAttribute('d', d);
           p.setAttribute('stroke-width', o[0]);
