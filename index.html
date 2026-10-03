@@ -228,7 +228,7 @@
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       var tan = Math.tan(camera.fov * Math.PI / 360);
-      camera.position.set(0, 0, Math.max((WIDTH * 0.56) / (tan * camera.aspect), (halfH * 1.35) / tan));
+      camera.position.set(-0.25, 0, Math.max((WIDTH * 0.56) / (tan * camera.aspect), (halfH * 1.35) / tan));
       camera.updateProjectionMatrix();
     }
     window.addEventListener('resize', resize);
