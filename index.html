@@ -6,7 +6,7 @@
   <title>Virtos Charles — Artist</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --accent:      #A6DDFF;
@@ -73,15 +73,28 @@
     .home-logo.no-3d #signature { display: none; }
     #signature:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 4px; border-radius: 4px; }
 
-    .upcoming, .dots {
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      font-size: clamp(1.1rem, 3.2vw, 1.4rem);
-      font-weight: 400;
-      letter-spacing: 0.04em;
+    .upcoming {
+      margin-top: 0.5rem;
+      font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      font-size: clamp(1.25rem, 3.6vw, 1.6rem);
+      font-weight: 700;
+      letter-spacing: 0.05em;
       color: #000;
     }
-    .upcoming { margin-top: 0.5rem; }
-    .dots { margin-top: 1.4rem; }
+    .dots {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 0.18rem;
+      margin-top: 1.4rem;
+    }
+    .dots i {
+      display: block;
+      border-radius: 50%;
+      background: #000;
+      width: 0.34rem; height: 0.34rem;
+    }
+    .dots i + i { width: 0.24rem; height: 0.24rem; }
 
     @keyframes fade-in {
       to { opacity: 1; transform: none; }
@@ -100,7 +113,7 @@
       <canvas id="signature" tabindex="0" role="img" aria-label="Virtos Charles"></canvas>
     </h1>
     <p class="upcoming">Upcoming soon</p>
-    <p class="dots">..</p>
+    <p class="dots" aria-label=".."><i></i><i></i></p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
