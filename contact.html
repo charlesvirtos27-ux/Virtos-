@@ -51,31 +51,15 @@
       letter-spacing: 0.01em;
     }
 
-    .mail { margin-top: 1.4rem; }
-    .mail a {
-      position: relative;
-      display: inline-block;
-      padding: 0.3rem 0;
-      font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-      font-size: clamp(1.1rem, 3.6vw, 1.6rem);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: #000;
-      text-decoration: none;
-      overflow-wrap: anywhere;
+    .intro {
+      max-width: 32rem;
+      margin: 1.8rem auto 0;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #374151;
     }
-    .mail a::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0; bottom: 0.1rem;
-      height: 2px;
-      background: currentColor;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.35s ease;
-    }
-    .mail a:hover::after, .mail a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
-    .mail a:focus-visible { outline: none; }
+    .intro + .intro { margin-top: 1rem; }
+    .intro a { color: #000; text-underline-offset: 4px; }
 
     @keyframes fade-in {
       to { opacity: 1; transform: none; }
@@ -92,7 +76,8 @@
 
   <main class="page">
     <h1>Contact</h1>
-    <p class="mail"><a href="mailto:VirtosCharles@outlook.com">VirtosCharles@outlook.com</a></p>
+    <p class="intro">Painter and visual artist working with bold colour, hand-drawn outlines and raw texture. Each piece is built to hold attention a little longer than expected.</p>
+    <p class="intro">For orders, collaborations or any request for more information, please get in touch at <a href="mailto:VirtosCharles@outlook.com">VirtosCharles@outlook.com</a>.</p>
   </main>
 
 </body>
