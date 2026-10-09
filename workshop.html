@@ -10,9 +10,10 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body { height: 100%; }
+    html { height: 100%; }
 
     body {
+      min-height: 100%;
       background: #FFFFFF;
       color: #000;
       font-family: 'Inter', sans-serif;
@@ -21,7 +22,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem 1rem;
+      padding: 5rem 1rem 3rem;
       text-align: center;
     }
 
@@ -50,6 +51,15 @@
       letter-spacing: 0.03em;
     }
 
+    .work {
+      display: block;
+      width: min(900px, 100%);
+      height: auto;
+      max-height: 70vh;
+      object-fit: contain;
+      margin: 2rem auto 0;
+    }
+
     @keyframes fade-in {
       to { opacity: 1; transform: none; }
     }
@@ -65,6 +75,7 @@
 
   <main class="page">
     <h1>Workshop</h1>
+    <img class="work" src="assets/img/workshop-1.jpg" alt="Painting by Virtos Charles: a bald cartoon figure in a blue jacket holding a pistol, on a pink background" width="1590" height="1166" />
   </main>
 
 </body>
