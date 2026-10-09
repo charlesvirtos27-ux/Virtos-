@@ -51,6 +51,7 @@
       letter-spacing: 0.03em;
     }
 
+    picture { display: block; }
     .work {
       display: block;
       width: calc(var(--s, 1) * min(820px, 100%));
@@ -73,8 +74,14 @@
 
   <main class="page">
     <h1>Workshop</h1>
-    <img class="work" style="--s:1.0" src="assets/img/workshop-1.jpg" alt="Painting by Virtos Charles: a bald cartoon figure in a blue jacket holding a pistol, on a pink background" width="1590" height="1166" />
-    <img class="work" style="--s:0.724" src="assets/img/workshop-2.jpg" alt="Painting by Virtos Charles: a cartoon figure in a grey top hat and red sweater holding a yellow knife, on a blue background" width="1400" height="1960" loading="lazy" />
+    <picture>
+      <source srcset="assets/img/workshop-1.webp" type="image/webp" />
+      <img class="work" style="--s:1.0" src="assets/img/workshop-1.jpg" alt="Painting by Virtos Charles: a bald cartoon figure in a blue jacket holding a pistol, on a pink background" width="1590" height="1166" decoding="async" />
+    </picture>
+    <picture>
+      <source srcset="assets/img/workshop-2.webp" type="image/webp" />
+      <img class="work" style="--s:0.724" src="assets/img/workshop-2.jpg" alt="Painting by Virtos Charles: a cartoon figure in a grey top hat and red sweater holding a yellow knife, on a blue background" width="1400" height="1960" loading="lazy" decoding="async" />
+    </picture>
   </main>
 
 </body>
