@@ -220,7 +220,7 @@
     function resize(){
       var w = canvas.clientWidth, h = canvas.clientHeight;
       if (!w || !h) return;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       var tan = Math.tan(camera.fov * Math.PI / 360);
@@ -256,8 +256,10 @@
     });
 
     var TWO_PI = Math.PI * 2;
+    var running = false, inView = true, rafId = 0;
     function frame(now){
-      requestAnimationFrame(frame);
+      if (!running) return;
+      rafId = requestAnimationFrame(frame);
       var sec = now / 1000, idle = (now - lastTouch) > 2500;
       if (!down && !idle) {
         ry += vy; rx = Math.max(-0.7, Math.min(0.7, rx + vx)); vy *= 0.94; vx *= 0.94;
@@ -272,7 +274,18 @@
       group.rotation.set(rx, ry, 0);
       renderer.render(scene, camera);
     }
-    requestAnimationFrame(frame);
+    function sync(){
+      var want = inView && document.visibilityState === 'visible';
+      if (want && !running) { running = true; rafId = requestAnimationFrame(frame); }
+      else if (!want && running) { running = false; cancelAnimationFrame(rafId); }
+    }
+    document.addEventListener('visibilitychange', sync);
+    window.addEventListener('pagehide', function(){ inView = false; sync(); });
+    window.addEventListener('pageshow', function(){ inView = true; sync(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(e){ inView = e[0].isIntersecting; sync(); }).observe(canvas);
+    }
+    sync();
   })();
   </script>
 
