@@ -73,28 +73,38 @@
     .home-logo.no-3d #signature { display: none; }
     #signature:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 4px; border-radius: 4px; }
 
-    .upcoming {
+    .home-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
       margin-top: 0.5rem;
+    }
+    .home-menu a {
+      position: relative;
+      display: inline-block;
+      padding: 0.3rem 0;
       font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
       font-size: clamp(1.25rem, 3.6vw, 1.6rem);
       font-weight: 700;
       letter-spacing: 0.05em;
       color: #000;
+      text-decoration: none;
     }
-    .dots {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 0.3rem;
-      margin-top: 1.4rem;
+    .home-menu a::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0.1rem;
+      height: 2px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.35s ease;
     }
-    .dots i {
-      display: block;
-      border-radius: 50%;
-      background: #000;
-      width: 0.7rem; height: 0.7rem;
-    }
-    .dots i + i { width: 0.5rem; height: 0.5rem; }
+    .home-menu a:hover::after,
+    .home-menu a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+    .home-menu a:focus-visible { outline: none; }
 
     @keyframes fade-in {
       to { opacity: 1; transform: none; }
@@ -112,7 +122,11 @@
       <span class="logo-fallback">Virtos</span>
       <canvas id="signature" tabindex="0" role="img" aria-label="Virtos Charles"></canvas>
     </h1>
-    <p class="upcoming">Upcoming soon..</p>
+    <nav class="home-menu" aria-label="Main">
+      <ul>
+        <li><a href="workshop.html">Workshop</a></li>
+      </ul>
+    </nav>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
