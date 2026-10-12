@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Virtos Charles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; }
+
+    body {
+      background: #FFFFFF;
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+
+    .back {
+      position: fixed;
+      top: 1.5rem; left: 1.5rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      color: #000;
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.25s ease;
+    }
+    .back:hover, .back:focus-visible { opacity: 1; }
+
+    .page {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fade-in 0.9s ease forwards 0.15s;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-size: clamp(2.6rem, 8vw, 4rem);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .intro {
+      max-width: 32rem;
+      margin: 1.8rem auto 0;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #374151;
+    }
+    .intro + .intro { margin-top: 1rem; }
+    .intro a { color: #000; text-underline-offset: 4px; }
+
+    @keyframes fade-in {
+      to { opacity: 1; transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .page { animation: none; opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back" href="index.html">← Virtos</a>
+
+  <main class="page">
+    <h1>Contact</h1>
+    <p class="intro">Painter and visual artist working with bold colour, hand-drawn outlines and raw texture. Each piece is built to hold attention a little longer than expected.</p>
+    <p class="intro">For orders, collaborations or any request for more information, please get in touch at <a href="mailto:VirtosCharles@outlook.com">VirtosCharles@outlook.com</a>.</p>
+  </main>
+
+</body>
+</html>

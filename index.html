@@ -6,7 +6,7 @@
   <title>Virtos Charles — Artist</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=Unbounded:wght@500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --accent:      #A6DDFF;
@@ -73,28 +73,38 @@
     .home-logo.no-3d #signature { display: none; }
     #signature:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 4px; border-radius: 4px; }
 
-    .upcoming {
-      margin-top: 0.5rem;
-      font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-      font-size: clamp(1.25rem, 3.6vw, 1.6rem);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: #000;
-    }
-    .dots {
+    .home-menu ul {
+      list-style: none;
       display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 0.3rem;
-      margin-top: 1.4rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
     }
-    .dots i {
-      display: block;
-      border-radius: 50%;
-      background: #000;
-      width: 0.7rem; height: 0.7rem;
+    .home-menu a {
+      position: relative;
+      display: inline-block;
+      padding: 0.3rem 0;
+      font-family: 'Unbounded', 'Helvetica Neue', Arial, sans-serif;
+      font-size: clamp(1.05rem, 3vw, 1.3rem);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: #000;
+      text-decoration: none;
     }
-    .dots i + i { width: 0.5rem; height: 0.5rem; }
+    .home-menu a::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0.1rem;
+      height: 2px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.35s ease;
+    }
+    .home-menu a:hover::after,
+    .home-menu a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+    .home-menu a:focus-visible { outline: none; }
 
     @keyframes fade-in {
       to { opacity: 1; transform: none; }
@@ -112,7 +122,13 @@
       <span class="logo-fallback">Virtos</span>
       <canvas id="signature" tabindex="0" role="img" aria-label="Virtos Charles"></canvas>
     </h1>
-    <p class="upcoming">Upcoming soon..</p>
+    <nav class="home-menu" aria-label="Main">
+      <ul>
+        <li><a href="workshop.html">Workshop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -204,7 +220,7 @@
     function resize(){
       var w = canvas.clientWidth, h = canvas.clientHeight;
       if (!w || !h) return;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       var tan = Math.tan(camera.fov * Math.PI / 360);
@@ -240,8 +256,10 @@
     });
 
     var TWO_PI = Math.PI * 2;
+    var running = false, inView = true, rafId = 0;
     function frame(now){
-      requestAnimationFrame(frame);
+      if (!running) return;
+      rafId = requestAnimationFrame(frame);
       var sec = now / 1000, idle = (now - lastTouch) > 2500;
       if (!down && !idle) {
         ry += vy; rx = Math.max(-0.7, Math.min(0.7, rx + vx)); vy *= 0.94; vx *= 0.94;
@@ -256,7 +274,18 @@
       group.rotation.set(rx, ry, 0);
       renderer.render(scene, camera);
     }
-    requestAnimationFrame(frame);
+    function sync(){
+      var want = inView && document.visibilityState === 'visible';
+      if (want && !running) { running = true; rafId = requestAnimationFrame(frame); }
+      else if (!want && running) { running = false; cancelAnimationFrame(rafId); }
+    }
+    document.addEventListener('visibilitychange', sync);
+    window.addEventListener('pagehide', function(){ inView = false; sync(); });
+    window.addEventListener('pageshow', function(){ inView = true; sync(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(e){ inView = e[0].isIntersecting; sync(); }).observe(canvas);
+    }
+    sync();
   })();
   </script>
 
