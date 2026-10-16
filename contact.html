@@ -6,8 +6,10 @@
   <title>Contact — Virtos Charles</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,700&display=swap" rel="stylesheet" />
   <style>
+    :root { --sig: #4a78b5; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html { height: 100%; }
@@ -55,6 +57,7 @@
       font-size: clamp(2.6rem, 8vw, 4rem);
       font-weight: 500;
       letter-spacing: 0.01em;
+      color: var(--sig);
     }
 
     .texts {
@@ -68,20 +71,20 @@
       font-weight: 500;
       font-size: clamp(1.2rem, 3.4vw, 1.4rem);
       line-height: 1.6;
-      color: #1f2328;
+      color: var(--sig);
       text-wrap: pretty;
     }
     .intro + .intro { margin-top: 1.2rem; }
-    .intro a { color: #000; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+    .intro a { color: var(--sig); text-underline-offset: 4px; text-decoration-thickness: 1px; }
 
     .thanks {
       padding: 0 0 1rem;
       font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
       font-style: italic;
-      font-weight: 500;
-      font-size: 1.15rem;
+      font-weight: 700;
+      font-size: 1.3rem;
       letter-spacing: 0.02em;
-      color: #374151;
+      color: var(--sig);
       text-align: center;
     }
 
