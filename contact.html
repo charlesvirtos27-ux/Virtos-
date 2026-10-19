@@ -6,11 +6,13 @@
   <title>Contact — Virtos Charles</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Jost:wght@300;400;500;700&family=Unbounded:wght@500&display=swap" rel="stylesheet" />
   <style>
+    :root { --sig: #4a78b5; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body { height: 100%; }
+    html { height: 100%; }
 
     body {
       background: #FFFFFF;
@@ -21,6 +23,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      min-height: 100%;
       padding: 1.5rem 1rem;
       text-align: center;
     }
@@ -38,28 +41,50 @@
     .back:hover, .back:focus-visible { opacity: 1; }
 
     .page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
       opacity: 0;
       transform: translateY(14px);
       animation: fade-in 0.9s ease forwards 0.15s;
     }
 
     h1 {
-      font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-      font-style: italic;
-      font-size: clamp(2.6rem, 8vw, 4rem);
+      font-family: 'Unbounded', 'Helvetica Neue', Arial, sans-serif;
+      font-size: clamp(2.2rem, 7vw, 3.4rem);
       font-weight: 500;
       letter-spacing: 0.01em;
+      color: var(--sig);
     }
 
-    .intro {
-      max-width: 32rem;
-      margin: 1.8rem auto 0;
-      font-size: 1rem;
-      line-height: 1.75;
-      color: #374151;
+    .texts {
+      width: 100%;
+      max-width: 30rem;
+      margin: 2rem auto 0;
+      text-align: left;
     }
-    .intro + .intro { margin-top: 1rem; }
-    .intro a { color: #000; text-underline-offset: 4px; }
+    .intro {
+      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 400;
+      font-size: clamp(1rem, 3vw, 1.12rem);
+      line-height: 1.75;
+      color: #1f2328;
+      text-wrap: pretty;
+    }
+    .intro + .intro { margin-top: 1.2rem; }
+    .intro a { color: #000; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+
+    .thanks {
+      padding: 0 0 1rem;
+      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      color: #1f2328;
+      text-align: center;
+    }
 
     @keyframes fade-in {
       to { opacity: 1; transform: none; }
@@ -76,9 +101,13 @@
 
   <main class="page">
     <h1>Contact</h1>
-    <p class="intro">Painter and visual artist working with bold colour, hand-drawn outlines and raw texture. Each piece is built to hold attention a little longer than expected.</p>
-    <p class="intro">For orders, collaborations or any request for more information, please get in touch at <a href="mailto:VirtosCharles@outlook.com">VirtosCharles@outlook.com</a>.</p>
+    <div class="texts">
+      <p class="intro">If you are interested by a piece and would like more information about sizing, pricing, anything else, or if you simply want to place a personal order, hit me at: <a href="mailto:Virtos.Charles@outlook.com">Virtos.Charles@outlook.com</a>.</p>
+      <p class="intro">For do special collaborations, let's pull up in my MP</p>
+    </div>
   </main>
+
+  <p class="thanks">Thx 2 U</p>
 
 </body>
 </html>

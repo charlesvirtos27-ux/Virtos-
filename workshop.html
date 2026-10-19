@@ -6,23 +6,22 @@
   <title>Workshop — Virtos Charles</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Unbounded:wght@500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html { height: 100%; }
 
     body {
-      min-height: 100%;
       background: #FFFFFF;
       color: #000;
       font-family: 'Inter', sans-serif;
       font-weight: 300;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding: 4rem 1rem 3rem;
+      justify-content: center;
+      min-height: 100%;
+      padding: 1.5rem 1rem;
       text-align: center;
     }
 
@@ -38,34 +37,22 @@
     }
     .back:hover, .back:focus-visible { opacity: 1; }
 
-    .page {
+    .soon-block { display: flex; flex-direction: column; align-items: center; }
+
+    .soon {
+      font-family: 'Unbounded', 'Helvetica Neue', Arial, sans-serif;
+      font-size: clamp(1.1rem, 3.6vw, 1.6rem);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.5;
       opacity: 0;
       transform: translateY(14px);
       animation: fade-in 0.9s ease forwards 0.15s;
     }
 
-    h1 {
-      font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-      font-style: italic;
-      font-size: clamp(2.6rem, 8vw, 4rem);
-      font-weight: 500;
-      letter-spacing: 0.01em;
-    }
-
-    picture { display: block; }
-    .work-link {
-      display: block;
-      width: calc(var(--s, 1) * min(560px, 84%));
-      margin: clamp(2.5rem, 7vw, 4.5rem) auto 0;
-      line-height: 0;
-      transition: opacity 0.3s ease;
-    }
-    .work-link:hover, .work-link:focus-visible { opacity: 0.82; }
-    .work-link:focus-visible { outline: 2px solid #000; outline-offset: 6px; }
-    .work {
-      display: block;
-      width: 100%;
-      height: auto;
+    .soon-line {
+      margin-top: 0.25rem;
+      animation-delay: 0.35s;
     }
 
     @keyframes fade-in {
@@ -73,7 +60,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .page { animation: none; opacity: 1; transform: none; }
+      .soon { animation: none; opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -81,86 +68,11 @@
 
   <a class="back" href="index.html">← Virtos</a>
 
-  <main class="page">
-    <h1>Workshop</h1>
-    <a class="work-link" style="--s:1.0" href="work-1.html">
-      <picture>
-        <source srcset="assets/img/workshop-1.webp" type="image/webp" />
-        <img class="work" src="assets/img/workshop-1.jpg" alt="Painting by Virtos Charles: a bald cartoon figure in a blue jacket holding a pistol, on a pink background" width="1590" height="1166" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.724" href="work-2.html">
-      <picture>
-        <source srcset="assets/img/workshop-2.webp" type="image/webp" />
-        <img class="work" src="assets/img/workshop-2.jpg" alt="Painting by Virtos Charles: a cartoon figure in a grey top hat and red sweater holding a yellow knife, on a blue background" width="1400" height="1960" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.734" href="work-batman.html">
-      <picture>
-        <source srcset="assets/img/batman.webp" type="image/webp" />
-        <img class="work" src="assets/img/batman.jpg" alt="Painting by Virtos Charles: Batman" width="1469" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.724" href="work-be-free.html">
-      <picture>
-        <source srcset="assets/img/be-free.webp" type="image/webp" />
-        <img class="work" src="assets/img/be-free.jpg" alt="Painting by Virtos Charles: Be Free" width="1429" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.722" href="work-clown-couteau.html">
-      <picture>
-        <source srcset="assets/img/clown-couteau.webp" type="image/webp" />
-        <img class="work" src="assets/img/clown-couteau.jpg" alt="Painting by Virtos Charles: Clown au couteau" width="1422" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.741" href="work-clown-diable.html">
-      <picture>
-        <source srcset="assets/img/clown-diable.webp" type="image/webp" />
-        <img class="work" src="assets/img/clown-diable.jpg" alt="Painting by Virtos Charles: Clown diable" width="1497" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.729" href="work-clown-triste.html">
-      <picture>
-        <source srcset="assets/img/clown-triste.webp" type="image/webp" />
-        <img class="work" src="assets/img/clown-triste.jpg" alt="Painting by Virtos Charles: Clown triste" width="1449" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.742" href="work-femme-chapeau.html">
-      <picture>
-        <source srcset="assets/img/femme-chapeau.webp" type="image/webp" />
-        <img class="work" src="assets/img/femme-chapeau.jpg" alt="Painting by Virtos Charles: Femme au chapeau" width="1503" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.749" href="work-homme-yeux-rouges.html">
-      <picture>
-        <source srcset="assets/img/homme-yeux-rouges.webp" type="image/webp" />
-        <img class="work" src="assets/img/homme-yeux-rouges.jpg" alt="Painting by Virtos Charles: Homme aux yeux rouges" width="1531" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.741" href="work-joueur-angleterre-10.html">
-      <picture>
-        <source srcset="assets/img/joueur-angleterre-10.webp" type="image/webp" />
-        <img class="work" src="assets/img/joueur-angleterre-10.jpg" alt="Painting by Virtos Charles: Joueur Angleterre 10" width="1497" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.727" href="work-joueur-france-10.html">
-      <picture>
-        <source srcset="assets/img/joueur-france-10.webp" type="image/webp" />
-        <img class="work" src="assets/img/joueur-france-10.jpg" alt="Painting by Virtos Charles: Joueur France 10" width="1440" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.746" href="work-madone-bleue.html">
-      <picture>
-        <source srcset="assets/img/madone-bleue.webp" type="image/webp" />
-        <img class="work" src="assets/img/madone-bleue.jpg" alt="Painting by Virtos Charles: Madone bleue" width="1516" height="2000" loading="lazy" decoding="async" />
-      </picture>
-    </a>
-    <a class="work-link" style="--s:0.995" href="work-trois-visages.html">
-      <picture>
-        <source srcset="assets/img/trois-visages.webp" type="image/webp" />
-        <img class="work" src="assets/img/trois-visages.jpg" alt="Painting by Virtos Charles: Trois visages" width="2000" height="1482" loading="lazy" decoding="async" />
-      </picture>
-    </a>
+  <main>
+    <div class="soon-block">
+      <p class="soon">First Sale Upcoming Soon</p>
+      <p class="soon soon-line">Gb…</p>
+    </div>
   </main>
 
 </body>
