@@ -68,6 +68,16 @@
       height: auto;
     }
 
+    .caption {
+      width: calc(var(--s, 1) * min(560px, 84%));
+      margin: 0.6rem auto 0;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+    }
+
     @keyframes fade-in {
       to { opacity: 1; transform: none; }
     }
@@ -113,6 +123,7 @@
         <img class="work" src="assets/img/batman-2.jpg" alt="Painting by Virtos Charles: Batman in a blue cowl with red lips and a bat emblem, on a green background" width="1627" height="2174" loading="lazy" decoding="async" />
       </picture>
     </a>
+    <p class="caption" style="--s:0.9">Naija batbat</p>
     <a class="work-link" style="--s:0.9" href="contact.html">
       <picture>
         <source srcset="assets/img/deux-hommes.webp" type="image/webp" />
