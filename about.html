@@ -71,6 +71,8 @@
     .work-link:focus-visible { outline: 2px solid #000; outline-offset: 6px; }
     .work { display: block; width: 100%; height: auto; }
 
+    .about-title + .work-link { margin-top: clamp(1.5rem, 4vw, 2.2rem); }
+
     .about-year {
       width: min(420px, 84%);
       margin: clamp(0.8rem, 2.5vw, 1.2rem) auto 0;
@@ -91,7 +93,7 @@
       color: #E8A0B4;
     }
     .about-line {
-      margin: 0.6rem auto 0;
+      margin: 0.4rem auto 0;
       max-width: 40ch;
       text-align: center;
       font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
@@ -115,13 +117,13 @@
 
   <main class="page">
     <h1>About</h1>
+    <p class="about-line">“die trying to express something to someone”</p>
     <picture>
       <source srcset="assets/img/workshop-3.webp" type="image/webp" />
       <img class="about-art" src="assets/img/workshop-3.jpg" alt="Painting by Virtos Charles: black spray-painted lettering reading NEED MONEY FOR PORSCHE, crossed out, and YOU. on a red background" width="1500" height="2000" decoding="async" />
     </picture>
     <p class="about-year">2022</p>
     <h2 class="about-title">A love story</h2>
-    <p class="about-line">“die trying to express something to someone”</p>
     <a class="work-link" style="--s:0.9" href="contact.html">
       <picture>
         <source srcset="assets/img/madone-bleue-2.webp" type="image/webp" />
