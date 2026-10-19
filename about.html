@@ -28,7 +28,11 @@
 
     .back {
       position: fixed;
-      top: 1.5rem; left: 1.5rem;
+      z-index: 10;
+      top: 1rem; left: 1rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
       font-size: 0.95rem;
       letter-spacing: 0.05em;
       color: #000;
@@ -159,6 +163,21 @@
       </picture>
     </a>
   </main>
+
+  <script>
+    (function () {
+      var back = document.querySelector('.back');
+      if (!back) return;
+      back.addEventListener('click', function (e) {
+        try {
+          if (document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1) {
+            e.preventDefault();
+            history.back();
+          }
+        } catch (err) {}
+      });
+    })();
+  </script>
 
 </body>
 </html>
