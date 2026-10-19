@@ -37,6 +37,8 @@
     }
     .back:hover, .back:focus-visible { opacity: 1; }
 
+    .soon-block { display: flex; flex-direction: column; align-items: center; }
+
     .soon {
       font-family: 'Unbounded', 'Helvetica Neue', Arial, sans-serif;
       font-size: clamp(1.1rem, 3.6vw, 1.6rem);
@@ -46,6 +48,11 @@
       opacity: 0;
       transform: translateY(14px);
       animation: fade-in 0.9s ease forwards 0.15s;
+    }
+
+    .soon-line {
+      margin-top: 0.25rem;
+      animation-delay: 0.35s;
     }
 
     @keyframes fade-in {
@@ -62,7 +69,10 @@
   <a class="back" href="index.html">← Virtos</a>
 
   <main>
-    <p class="soon">First Sale Upcoming Soon</p>
+    <div class="soon-block">
+      <p class="soon">First Sale Upcoming Soon</p>
+      <p class="soon soon-line">Gb…</p>
+    </div>
   </main>
 
 </body>
