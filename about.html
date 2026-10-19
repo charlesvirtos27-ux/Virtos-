@@ -57,8 +57,19 @@
       display: block;
       width: min(420px, 84%);
       height: auto;
-      margin: clamp(4rem, 11vw, 6.5rem) auto 0;
+      margin: clamp(2.5rem, 7vw, 4.5rem) auto 0;
     }
+
+    .work-link {
+      display: block;
+      width: calc(var(--s, 1) * min(560px, 84%));
+      margin: clamp(2.5rem, 7vw, 4.5rem) auto 0;
+      line-height: 0;
+      transition: opacity 0.3s ease;
+    }
+    .work-link:hover, .work-link:focus-visible { opacity: 0.82; }
+    .work-link:focus-visible { outline: 2px solid #000; outline-offset: 6px; }
+    .work { display: block; width: 100%; height: auto; }
 
     .about-year {
       width: min(420px, 84%);
@@ -70,8 +81,16 @@
       letter-spacing: 0.08em;
     }
 
+    .about-title {
+      margin: clamp(3.5rem, 10vw, 5.5rem) auto 0;
+      font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-size: clamp(1.9rem, 5.5vw, 2.6rem);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
     .about-line {
-      margin: clamp(1.4rem, 4vw, 2rem) auto 0;
+      margin: 0.6rem auto 0;
       max-width: 40ch;
       text-align: center;
       font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
@@ -95,12 +114,49 @@
 
   <main class="page">
     <h1>About</h1>
-    <p class="about-line">“die trying to express something to someone”</p>
     <picture>
       <source srcset="assets/img/workshop-3.webp" type="image/webp" />
       <img class="about-art" src="assets/img/workshop-3.jpg" alt="Painting by Virtos Charles: black spray-painted lettering reading NEED MONEY FOR PORSCHE, crossed out, and YOU. on a red background" width="1500" height="2000" decoding="async" />
     </picture>
     <p class="about-year">2022</p>
+    <h2 class="about-title">A love story</h2>
+    <p class="about-line">“die trying to express something to someone”</p>
+    <a class="work-link" style="--s:0.9" href="contact.html">
+      <picture>
+        <source srcset="assets/img/madone-bleue-2.webp" type="image/webp" />
+        <img class="work" src="assets/img/madone-bleue-2.jpg" alt="Painting by Virtos Charles: a woman in a blue hooded veil with rosary beads and red lips, on a pink background" width="1498" height="1996" decoding="async" />
+      </picture>
+    </a>
+    <a class="work-link" style="--s:0.9" href="contact.html">
+      <picture>
+        <source srcset="assets/img/joueur-angleterre-2.webp" type="image/webp" />
+        <img class="work" src="assets/img/joueur-angleterre-2.jpg" alt="Painting by Virtos Charles: a figure in a white England football shirt with the number 10 and blue shorts, on a pink background" width="1502" height="2000" loading="lazy" decoding="async" />
+      </picture>
+    </a>
+    <a class="work-link" style="--s:0.9" href="contact.html">
+      <picture>
+        <source srcset="assets/img/homme-yeux-rouges-2.webp" type="image/webp" />
+        <img class="work" src="assets/img/homme-yeux-rouges-2.jpg" alt="Painting by Virtos Charles: a bald cartoon figure with large red eyes, a cross earring and a white zip-neck top, on a pink background" width="1498" height="2000" loading="lazy" decoding="async" />
+      </picture>
+    </a>
+    <a class="work-link" style="--s:0.9" href="contact.html">
+      <picture>
+        <source srcset="assets/img/femme-chapeau-2.webp" type="image/webp" />
+        <img class="work" src="assets/img/femme-chapeau-2.jpg" alt="Painting by Virtos Charles: a woman with curly brown hair in a cream hat and a fur stole, with red lips, on a pink background" width="1481" height="2000" loading="lazy" decoding="async" />
+      </picture>
+    </a>
+    <a class="work-link" style="--s:0.9" href="contact.html">
+      <picture>
+        <source srcset="assets/img/clown-triste-2.webp" type="image/webp" />
+        <img class="work" src="assets/img/clown-triste-2.jpg" alt="Painting by Virtos Charles: a sad clown with purple hair, a grey top hat, blue tears and a large bow tie, on a pink background" width="1557" height="2186" loading="lazy" decoding="async" />
+      </picture>
+    </a>
+    <a class="work-link" style="--s:0.9" href="contact.html">
+      <picture>
+        <source srcset="assets/img/joueur-france-2.webp" type="image/webp" />
+        <img class="work" src="assets/img/joueur-france-2.jpg" alt="Painting by Virtos Charles: a figure in a blue France football shirt with the number 10 and two stars, on a pink background" width="1440" height="2000" loading="lazy" decoding="async" />
+      </picture>
+    </a>
   </main>
 
 </body>
