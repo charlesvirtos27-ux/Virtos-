@@ -90,10 +90,6 @@
     .lede { margin-top: 0.4rem; font-size: 1rem; line-height: 1.5; }
 
     /* ---- « Toutes vendues » : l'annonce, quinze points pleins, une pastille sur chaque vignette ---- */
-    .head .stitle { font-size: clamp(1.5rem, 6vw, 2rem); letter-spacing: 0.02em; }
-    .soldout { margin: 1.1rem auto 0; text-align: center; }
-    .soldout[hidden] { display: none; }
-    .so-title { font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 500; font-size: clamp(3rem, 13vw, 4.6rem); line-height: 1; letter-spacing: 0.01em; color: #000; }
     .tsold { position: absolute; z-index: 1; left: 0.55rem; bottom: 0.55rem; padding: 0.34rem 0.6rem; border-radius: 999px; background: #000; color: #fff; font: 500 0.62rem/1 'Inter', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; }
     .sf-tag { margin: -0.45rem 0 0.9rem; font: 500 0.72rem/1 'Inter', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
 
@@ -277,9 +273,6 @@
       <nav class="tabs" id="tabs" aria-label="Collections" data-i18n-attr="aria-label:collections"></nav>
       <p class="lede" id="lede"></p>
       <h2 class="stitle" id="stitle" hidden></h2>
-      <div class="soldout" id="soldout" hidden>
-        <p class="so-title" id="sotitle"></p>
-      </div>
       <p class="stext" id="stext" hidden></p>
     </header>
 
@@ -438,7 +431,6 @@
         "closed": "Closed",
         "one.original": "{series} · Original, 1 of 1",
         "note.sold": "This sketch has found its home.",
-        "so.title": "All sold.",
         "stext.nightrider-1": "Fifteen original sketches, each one with a new home. To look at, not to buy.",
         "note.soldfirst": "This sketch has found its home, but be the first to know about the next drop.",
         "note.soldfor": "Sold for {p}. This sketch has found its home.",
@@ -561,7 +553,6 @@
         "closed": "Terminée",
         "one.original": "{series} · Original, pièce unique",
         "note.sold": "Cette esquisse a trouvé preneur.",
-        "so.title": "Toutes vendues.",
         "stext.nightrider-1": "Quinze esquisses originales, chacune a trouvé son foyer. À regarder, pas à acheter.",
         "note.soldfirst": "Cette esquisse a trouvé preneur, mais recevez en avant-première l’annonce de la prochaine série.",
         "note.soldfor": "Vendue pour {p}. Cette esquisse a trouvé preneur.",
@@ -859,11 +850,6 @@
           $('#stitle').textContent = S.title || ''; $('#stitle').hidden = !S.title;
           var stext = T('stext.' + S.id); $('#stext').textContent = stext === 'stext.' + S.id ? '' : stext; $('#stext').hidden = !$('#stext').textContent;
           $('#cross').hidden = true;   // plus de phrase « ces esquisses sont vendues »
-          var tot = ITEMS.length, nsold = ITEMS.filter(function (i) { return i.status === 'sold'; }).length, all = tot > 0 && nsold === tot;
-          $('#soldout').hidden = !all;
-          if (all) {
-            $('#sotitle').textContent = T('so.title');
-          }
           $('#skpick').innerHTML = '<option value="">' + T('sk.choose') + '</option>' + ITEMS.map(function (it, i) {
             return '<option value="' + i + '">' + q(ttl(it)) + '</option>'; }).join('');
           $('#sfiche').innerHTML = sketchSheet(null);
