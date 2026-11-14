@@ -89,6 +89,18 @@
     .stext { margin-top: 0.6rem; font-size: 0.95rem; line-height: 1.5; color: var(--muted); }
     .lede { margin-top: 0.4rem; font-size: 1rem; line-height: 1.5; }
 
+    /* ---- « Toutes vendues » : l'annonce, quinze points pleins, une pastille sur chaque vignette ---- */
+    .head .stitle { font-size: clamp(1.5rem, 6vw, 2rem); letter-spacing: 0.02em; }
+    .soldout { margin: 1.1rem auto 0; text-align: center; }
+    .soldout[hidden] { display: none; }
+    .so-title { font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 500; font-size: clamp(3rem, 13vw, 4.6rem); line-height: 1; letter-spacing: 0.01em; color: #000; }
+    .so-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; max-width: 19rem; margin: 1.1rem auto 0; }
+    .so-dots i { width: 0.66rem; height: 0.66rem; border-radius: 50%; background: #000; opacity: 0; transform: scale(0.3); animation: sodot 0.45s cubic-bezier(.2,.8,.3,1.2) forwards; }
+    @keyframes sodot { to { opacity: 1; transform: none; } }
+    .tsold { position: absolute; z-index: 1; left: 0.55rem; bottom: 0.55rem; padding: 0.34rem 0.6rem; border-radius: 999px; background: #000; color: #fff; font: 500 0.62rem/1 'Inter', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; }
+    .sf-tag { margin: -0.45rem 0 0.9rem; font: 500 0.72rem/1 'Inter', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    @media (prefers-reduced-motion: reduce) { .so-dots i { animation: none; opacity: 1; transform: none; } }
+
     /* Vitrine : un ruban continu qui défile doucement, bords estompés */
     .stage { margin: 1.6rem -1rem 0; }
     .band {
@@ -269,6 +281,10 @@
       <nav class="tabs" id="tabs" aria-label="Collections" data-i18n-attr="aria-label:collections"></nav>
       <p class="lede" id="lede"></p>
       <h2 class="stitle" id="stitle" hidden></h2>
+      <div class="soldout" id="soldout" hidden>
+        <p class="so-title" id="sotitle"></p>
+        <div class="so-dots" id="sodots" role="img"></div>
+      </div>
       <p class="stext" id="stext" hidden></p>
     </header>
 
@@ -427,6 +443,9 @@
         "closed": "Closed",
         "one.original": "{series} · Original, 1 of 1",
         "note.sold": "This sketch has found its home.",
+        "so.title": "All sold.",
+        "so.aria": "{s} of {n} sketches sold",
+        "stext.nightrider-1": "Fifteen original sketches, each one with a new home. To look at, not to buy.",
         "note.soldfirst": "This sketch has found its home, but be the first to know about the next drop.",
         "note.soldfor": "Sold for {p}. This sketch has found its home.",
         "note.ship": "Shipping and insurance included",
@@ -548,6 +567,9 @@
         "closed": "Terminée",
         "one.original": "{series} · Original, pièce unique",
         "note.sold": "Cette esquisse a trouvé preneur.",
+        "so.title": "Toutes vendues.",
+        "so.aria": "{s} esquisses vendues sur {n}",
+        "stext.nightrider-1": "Quinze esquisses originales, chacune a trouvé son foyer. À regarder, pas à acheter.",
         "note.soldfirst": "Cette esquisse a trouvé preneur, mais recevez en avant-première l’annonce de la prochaine série.",
         "note.soldfor": "Vendue pour {p}. Cette esquisse a trouvé preneur.",
         "note.ship": "Livraison et assurance incluses",
@@ -629,8 +651,8 @@
             { img: 'nightrider-12', price: 120, status: 'sold' },
             { img: 'nightrider-03', price: 120, status: 'sold' },
             { img: 'nightrider-08', price: 150, status: 'sold' },
-            { img: 'nightrider-07', price: 120, status: 'available' },
-            { img: 'nightrider-14', price: 150, status: 'available' },
+            { img: 'nightrider-07', price: 120, status: 'sold' },
+            { img: 'nightrider-14', price: 150, status: 'sold' },
             { img: 'nightrider-05', price: 120, status: 'sold' },
             { img: 'nightrider-11', price: 180, status: 'sold' },
             { img: 'nightrider-02', price: 120, status: 'sold' },
@@ -638,10 +660,9 @@
             { img: 'nightrider-10', price: 200, status: 'sold' },
             { img: 'nightrider-09', price: 120, status: 'sold' },
             { img: 'nightrider-15', price: 150, status: 'sold' },
-            { img: 'nightrider-13', price: 150, status: 'available' },
+            { img: 'nightrider-13', price: 150, status: 'sold' },
             { img: 'nightrider-01', price: 220, status: 'sold' },
-            // Esquisse photographiée qui n'était pas encore dans le fichier : ajoutée à la suite.
-            { img: 'nightrider-16', status: 'available' }
+            { img: 'nightrider-16', status: 'sold' }
           ]
         }
       ];
@@ -688,7 +709,7 @@
         return ITEMS.map(function (it, i) {
           var side = copy === 1 ? '' : ' tabindex="-1" aria-hidden="true"';
           return '<button class="tile" type="button" data-i="' + i + '"' + side + ' aria-label="' + T('open.details', { title: q(ttl(it)) }) + '">' +
-            '<div class="frame"><img src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" /></div>' +
+            '<div class="frame"><img src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" />' + (it.status === 'sold' ? '<span class="tsold">' + T('sold') + '</span>' : '') + '</div>' +
             '</button>';
         }).join('');
       }
@@ -715,13 +736,13 @@
       // Fiche d'une esquisse, affichée sur la page elle-même (pas de changement de page).
       function sketchSheet(it) {
         var sold = !!it && it.status === 'sold';
-        var head = it ? '<p class="sf-title">' + q(ttl(it)) + '</p><img class="sf-img" src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" />' : '';
+        var head = it ? '<p class="sf-title">' + q(ttl(it)) + '</p><img class="sf-img" src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" />' + (sold ? '<p class="sf-tag">' + T('sold') + '</p>' : '') : '';
         var state = it && !sold ? '<p class="sf-state">' + T('note.ship') + '</p>' : '';
         var buy = it && !sold ? '<a class="btn primary sf-buy" href="contact.html">' + T('buy.sketch') + '</a>' : '';
         return head +
           '<p class="sf-lines">' + T('sf.year') + '<br>' + T('val.size') + '<br>' + T('sf.technique') + '<br>' + T('sf.unique') + '</p>' +
           state +
-          (sold ? '' : '<p class="sf-price">' + fmt(SKETCH_PRICE) + ' <span>' + T('sk.each') + '</span></p>') +   // une pièce vendue n'affiche plus de prix
+          (it && !sold ? '<p class="sf-price">' + fmt(SKETCH_PRICE) + ' <span>' + T('sk.each') + '</span></p>' : '') +   // une pièce vendue n'affiche plus de prix
           buy;
       }
       // Esquisse vendue : la phrase s'affiche sous le menu et prolonge l'invitation (« …, but be the first… »), qui la remplace.
@@ -845,6 +866,13 @@
           $('#stitle').textContent = S.title || ''; $('#stitle').hidden = !S.title;
           var stext = T('stext.' + S.id); $('#stext').textContent = stext === 'stext.' + S.id ? '' : stext; $('#stext').hidden = !$('#stext').textContent;
           $('#cross').hidden = true;   // plus de phrase « ces esquisses sont vendues »
+          var tot = ITEMS.length, nsold = ITEMS.filter(function (i) { return i.status === 'sold'; }).length, all = tot > 0 && nsold === tot;
+          $('#soldout').hidden = !all;
+          if (all) {
+            $('#sotitle').textContent = T('so.title');
+            $('#sodots').setAttribute('aria-label', T('so.aria', { s: nsold, n: tot }));
+            $('#sodots').innerHTML = ITEMS.map(function (x, k) { return '<i style="animation-delay:' + (0.25 + k * 0.07).toFixed(2) + 's"></i>'; }).join('');
+          }
           $('#skpick').innerHTML = '<option value="">' + T('sk.choose') + '</option>' + ITEMS.map(function (it, i) {
             return '<option value="' + i + '">' + q(ttl(it)) + '</option>'; }).join('');
           $('#sfiche').innerHTML = sketchSheet(null);
