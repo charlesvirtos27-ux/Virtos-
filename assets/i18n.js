@@ -30,7 +30,8 @@
   // et entre un nombre et son unité (14 jours, 80 €) : ces signes ne passent jamais seuls à la ligne.
   function typo(s) {
     return s.replace(/ ([:])/g, ' $1').replace(/ ([?!;])/g, ' $1')
-            .replace(/(\d) (g\/m²|g|cm|m|€|%|jours?|heures?)(?![\wé])/g, '$1 $2');
+            .replace(/(\d) (g\/m²|g|cm|m|€|%|jours?|heures?)(?![\wé])/g, '$1 $2')
+            .replace(/([A-Za-zÀ-ÿ])-(moi|toi|vous|nous|je|tu|il|elle|on|ils|elles|y|en|le|la|les|lui|leur|ce|t-il|t-elle|t-on)(?![\wÀ-ÿ])/g, '$1\u2011$2');   // « Écrivez‑moi » ne se coupe jamais au trait d'union
   }
   // Traduction d'une clé ; {nom} dans le texte est remplacé par vars.nom ; à défaut, l'anglais, puis la clé elle-même.
   function t(key, vars) {
