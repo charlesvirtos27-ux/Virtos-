@@ -128,6 +128,16 @@
     .row i { font-style: normal; font-size: 1.2rem; color: var(--sig); transition: transform 0.25s ease; flex: none; }
     .row:hover i, .row:focus-visible i { transform: translateX(4px); }
 
+    /* ---- Ligne pliable : « Ask about an artwork » ---- */
+    button.row.toggle { width: 100%; background: none; border: 0; font: inherit; color: inherit; cursor: pointer; }
+    .row.toggle i { font-size: 1.5rem; line-height: 1; font-weight: 300; }
+    .row.toggle[aria-expanded="true"] i { transform: rotate(45deg); }
+    .panel { padding: 0.4rem 0 1.4rem; animation: unfold 0.35s ease; }
+    .panel[hidden] { display: none; }
+    .panel .label { margin: 0.6rem 0 0.2rem; }
+    .panel-cta { margin-top: 1.4rem; width: 100%; }
+    @keyframes unfold { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
     /* ---- Modalités ---- */
     .steps { list-style: none; counter-reset: s; }
     .steps li {
@@ -201,9 +211,21 @@
       <h2 class="label" id="ways-t" data-i18n="c.ways">How can I help?</h2>
       <ul class="rows">
         <li>
-          <a class="row" data-mail="ask" href="mailto:virtos.charles-pro@outlook.com">
-            <div><b data-i18n="c.r1">Ask about an artwork</b><span data-i18n="c.r1s">Size, price and availability</span></div><i aria-hidden="true">→</i>
-          </a>
+          <button class="row toggle" type="button" id="ask-toggle" aria-expanded="false" aria-controls="steps-panel">
+            <div><b data-i18n="c.r1">Ask about an artwork</b><span data-i18n="c.r1s">Size, price and availability</span></div><i aria-hidden="true">+</i>
+          </button>
+          <div class="panel" id="steps-panel" hidden>
+            <h2 class="label" data-i18n="c.how">How it works</h2>
+            <ol class="steps">
+              <li><b data-i18n="c.s1">Enquiry</b><span data-i18n="c.s1d">Tell me which artwork interests you. I reply within 48 hours with its availability, dimensions and price.</span></li>
+              <li><b data-i18n="c.s2">Reservation</b><span data-i18n="c.s2d">Once we agree, the artwork is reserved in your name for 7 days.</span></li>
+              <li><b data-i18n="c.s3">Payment</b><span data-i18n="c.s3d">By secure payment link or bank transfer. Personal orders: a 50% deposit when the order is confirmed, the balance before shipping.</span></li>
+              <li><b data-i18n="c.s4">Shipping</b><span data-i18n="c.s4d">Carefully packed and sent tracked and insured. The shipping cost is confirmed in your quote.</span></li>
+            </ol>
+            <a class="cta panel-cta" data-mail="ask" href="mailto:virtos.charles-pro@outlook.com">
+              <span data-i18n="c.send">Send me an email</span><span class="go" aria-hidden="true">→</span>
+            </a>
+          </div>
         </li>
         <li>
           <a class="row" data-mail="order" href="mailto:virtos.charles-pro@outlook.com">
@@ -218,15 +240,6 @@
       </ul>
     </section>
 
-    <section class="section" aria-labelledby="how-t">
-      <h2 class="label" id="how-t" data-i18n="c.how">How it works</h2>
-      <ol class="steps">
-        <li><b data-i18n="c.s1">Enquiry</b><span data-i18n="c.s1d">Tell me which artwork interests you. I reply within 48 hours with its availability, dimensions and price.</span></li>
-        <li><b data-i18n="c.s2">Reservation</b><span data-i18n="c.s2d">Once we agree, the artwork is reserved in your name for 7 days.</span></li>
-        <li><b data-i18n="c.s3">Payment</b><span data-i18n="c.s3d">By secure payment link or bank transfer. Personal orders: a 50% deposit when the order is confirmed, the balance before shipping.</span></li>
-        <li><b data-i18n="c.s4">Shipping</b><span data-i18n="c.s4d">Carefully packed and sent tracked and insured. The shipping cost is confirmed in your quote.</span></li>
-      </ol>
-    </section>
 
     <div class="social">
       <p data-i18n="c.follow">Follow the latest work</p>
@@ -301,6 +314,14 @@
       }
       I18N.onChange(mails);
       I18N.init();
+
+      // « Ask about an artwork » déplie les modalités ; un second clic les referme.
+      var tg = document.getElementById('ask-toggle'), pn = document.getElementById('steps-panel');
+      if (tg && pn) tg.addEventListener('click', function () {
+        var open = tg.getAttribute('aria-expanded') !== 'true';
+        tg.setAttribute('aria-expanded', String(open));
+        pn.hidden = !open;
+      });
 
       // Copier l'adresse : utile à ceux qui n'ont pas d'application e-mail sur l'appareil.
       var btn = document.getElementById('copy'), say = document.getElementById('copied'), timer;
