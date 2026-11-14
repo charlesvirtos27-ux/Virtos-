@@ -94,7 +94,7 @@ input[type=email]:focus,input[type=text]:focus,input[type=password]:focus{border
     <form class="panel" id="f1" action="https://869b345c.sibforms.com/serve/MUIFABD1lvf0w90t6-GYtl2IrRarjxDuPBQNqskBmN6iNxnihhECAvpUlAxLDXaowvT9JMMmasws0Zu6h-xzp1Z6-nzS6BIvRgm5lowLCI_lFTnBYouz_n3xdw3jJymZBTdGEAmbY7UPTd563AtmI0oMNCSIl7NZG4g_J1pttLm5PMcV0VHADPY4VCb4qJSRue7fcsu3FRTHE8HuYw==" method="post" novalidate>
       <div class="row"><label class="l" for="g-name" data-t="ln">Name</label><input id="g-name" name="FIRSTNAME" type="text" autocomplete="name" placeholder="Name"></div>
       <div class="row"><label class="l" for="g-email" data-t="le">Email address</label><input id="g-email" name="EMAIL" type="email" autocomplete="email" required placeholder="Your email"></div>
-      <button class="btn" type="submit"><span data-t="b1">Send me the code</span><i aria-hidden="true">→</i></button>
+      <button class="btn" type="submit"><span data-t="b1">Get my code</span><i aria-hidden="true">→</i></button>
       <p class="err" id="g-err" role="alert" data-t="ge">Please check your email address to continue.</p>
       <input class="hp" type="text" name="email_address_check" tabindex="-1" autocomplete="off" aria-hidden="true">
       <input type="hidden" name="locale" value="en">
@@ -106,7 +106,7 @@ input[type=email]:focus,input[type=text]:focus,input[type=password]:focus{border
   <div id="step2" hidden>
     <form class="panel" id="f2" novalidate>
       <div class="row"><label class="l" for="h-code" data-t="hl">Access code</label><input id="h-code" class="code" type="password" autocomplete="one-time-code" placeholder="••••••" required></div>
-      <p class="spam" id="spam"><b data-t="sp1">Check your spam folder.</b><span data-t="sp2">The email can take a minute, and may land in spam or junk.</span></p>
+      <p class="spam" id="spam"><b data-t="sp1">Check your spam folder.</b><span data-t="sp2">The email can take a minute to arrive, and may land in your spam or junk folder.</span></p>
       <p class="err" id="h-err" role="alert" data-t="he">This code is not valid. Check your email and try again.</p>
     </form>
     <div class="s2foot"><p class="hint" data-t="l2">Check your inbox and enter the code we just sent you.</p>
@@ -278,7 +278,7 @@ input[type=email]:focus,input[type=text]:focus,input[type=password]:focus{border
   })();
   </script>
 <script>
-  var DICT = {en: {"le": "Email address", "ep": "Your email", "ln": "Name", "b1": "Get my code", "f1": "Your address is only used to send your access code. You can unsubscribe at any time.", "have": "I already have a code", "ge": "Please check your email address to continue.", "l2": "Check your inbox and enter the code we just sent you.", "hl": "Access code", "b2": "Enter the site", "f2": "Wrong address? You can","sp1": "Check your spam folder.","sp2": "The email can take a minute, and may land in spam or junk.", "other": "use another address", "he": "This code is not valid. Check your email and try again.", "ok1": "Access granted", "ok2": "Welcome.", "ok3": "Opening the site…"}, fr: {"le": "Adresse e-mail", "ep": "Votre e-mail", "ln": "Nom", "b1": "Recevoir le code", "f1": "Votre adresse sert uniquement à vous envoyer le code d’accès. Vous pouvez vous désinscrire à tout moment.", "have": "J’ai déjà un code", "ge": "Vérifiez votre adresse e-mail pour continuer.", "l2": "Consultez votre boîte e-mail et saisissez le code que nous venons de vous envoyer.", "hl": "Code d’accès", "b2": "Entrer sur le site", "f2": "Mauvaise adresse ? Vous pouvez","sp1": "Pensez à regarder dans vos spams.","sp2": "L’e-mail peut mettre une minute, et arriver dans les courriers indésirables.", "other": "utilisez une autre adresse", "he": "Ce code n’est pas valide. Vérifiez votre e-mail et réessayez.", "ok1": "Accès accordé", "ok2": "Bienvenue.", "ok3": "Ouverture du site…"}};
+  var DICT = {en: {"le": "Email address", "ep": "Your email", "ln": "Name", "b1": "Get my code", "f1": "Your address is only used to send your access code. You can unsubscribe at any time.", "have": "I already have a code", "ge": "Please check your email address to continue.", "l2": "Check your inbox and enter the code we just sent you.", "hl": "Access code", "b2": "Enter the site", "f2": "Wrong address? You can","sp1": "Check your spam folder.","sp2": "The email can take a minute to arrive, and may land in your spam or junk folder.", "other": "use another address", "he": "This code is not valid. Check your email and try again.", "ok1": "Access granted", "ok2": "Welcome.", "ok3": "Opening the site…"}, fr: {"le": "Adresse e-mail", "ep": "Votre e-mail", "ln": "Nom", "b1": "Recevoir mon code", "f1": "Votre adresse sert uniquement à vous envoyer le code d’accès. Vous pouvez vous désinscrire à tout moment.", "have": "J’ai déjà un code", "ge": "Vérifiez votre adresse e-mail pour continuer.", "l2": "Consultez votre boîte de réception et saisissez le code que nous venons de vous envoyer.", "hl": "Code d’accès", "b2": "Entrer sur le site", "f2": "Mauvaise adresse ? Vous pouvez","sp1": "Pensez à regarder dans vos spams.","sp2": "L’e-mail peut mettre une minute à arriver, et se retrouver dans vos courriers indésirables.", "other": "utiliser une autre adresse", "he": "Ce code n’est pas valide. Vérifiez votre e-mail et réessayez.", "ok1": "Accès accordé", "ok2": "Bienvenue.", "ok3": "Ouverture du site…"}};
   var lang = (function(){
     var q = new URLSearchParams(location.search).get('lang');
     var l = (q === 'fr' || q === 'en') ? q : ((navigator.language || '').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en');
@@ -308,7 +308,7 @@ input[type=email]:focus,input[type=text]:focus,input[type=password]:focus{border
       var btn = f.querySelector('.btn'); btn.disabled = true;
       fetch(f.action, { method: 'POST', mode: 'no-cors', body: new FormData(f) })
         .then(function(){ btn.disabled = false; show('step2'); })
-        .catch(function(){ btn.disabled = false; $('#g-err').textContent = (lang === 'fr') ? 'Votre inscription n’a pas pu être enregistrée. Réessayez.' : 'Your subscription could not be saved. Please try again.'; $('#g-err').classList.add('on'); });
+        .catch(function(){ btn.disabled = false; $('#g-err').textContent = (lang === 'fr') ? 'Votre inscription n’a pas pu être enregistrée. Veuillez réessayer.' : 'Your subscription could not be saved. Please try again.'; $('#g-err').classList.add('on'); });
     });
     $('#have').addEventListener('click', function(){ show('step2'); });
     $('#other').addEventListener('click', function(){ show('step1'); });
