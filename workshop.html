@@ -90,7 +90,6 @@
     .lede { margin-top: 0.4rem; font-size: 1rem; line-height: 1.5; }
 
     /* ---- « Toutes vendues » : l'annonce, quinze points pleins, une pastille sur chaque vignette ---- */
-    .tsold { position: absolute; z-index: 1; left: 0.55rem; bottom: 0.55rem; padding: 0.34rem 0.6rem; border-radius: 999px; background: #000; color: #fff; font: 500 0.62rem/1 'Inter', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; }
     .sf-tag { margin: -0.45rem 0 0.9rem; font: 500 0.72rem/1 'Inter', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
 
     /* Vitrine : un ruban continu qui défile doucement, bords estompés */
@@ -693,7 +692,7 @@
         return ITEMS.map(function (it, i) {
           var side = copy === 1 ? '' : ' tabindex="-1" aria-hidden="true"';
           return '<button class="tile" type="button" data-i="' + i + '"' + side + ' aria-label="' + T('open.details', { title: q(ttl(it)) }) + '">' +
-            '<div class="frame"><img src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" />' + (it.status === 'sold' ? '<span class="tsold">' + T('sold') + '</span>' : '') + '</div>' +
+            '<div class="frame"><img src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" /></div>' +
             '</button>';
         }).join('');
       }
