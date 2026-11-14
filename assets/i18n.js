@@ -45,6 +45,9 @@
   // Nombre décimal : 2.4 en anglais, 2,4 en français.
   function num(n) { return lang === 'fr' ? String(n).replace(/(\d)\.(\d)/g, '$1,$2') : String(n); }
 
+  // Prix : « €80 » en anglais, « 80 € » en français.
+  function price(n) { return lang === 'fr' ? num(n) + '\u00a0€' : '€' + num(n); }
+
   function apply(root) {
     root = root || document;
     root.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
@@ -120,7 +123,7 @@
   }
 
   window.I18N = {
-    add: add, t: t, num: num, set: set, init: init, apply: apply,
+    add: add, t: t, num: num, price: price, set: set, init: init, apply: apply,
     get: function () { return lang; },
     addRoot: function (r) { roots.push(r); apply(r); },        // un shadow DOM, par exemple
     onChange: function (fn) { listeners.push(fn); }             // pour les textes construits par le script de la page

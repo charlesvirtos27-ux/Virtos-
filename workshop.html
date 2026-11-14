@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-  <script>(function(){var ok=false;try{ok=!!localStorage.getItem('access');}catch(e){}if(!ok&&/(^|; )virtos_access=1/.test(document.cookie))ok=true;if(!ok){var p=location.pathname.split('/').pop()||'index.html';location.replace('acces.html?next='+encodeURIComponent(p+location.search+location.hash));}})();</script>
+<script>(function(){var ok=false;try{ok=!!localStorage.getItem('access');}catch(e){}if(!ok&&/(^|; )virtos_access=1/.test(document.cookie))ok=true;if(!ok){var p=location.pathname.split('/').pop()||'index.html';location.replace('acces.html?next='+encodeURIComponent(p+location.search+location.hash));}})();</script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Workshop — Virtos Charles</title>
+  <meta name="description" content="Nightrider #1: fifteen original sketches by Virtos Charles. Each piece exists once." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Unbounded:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,500&family=Unbounded:wght@500&family=Alegreya:ital,wght@1,700&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --ink: #111;
+      --muted: #6b6b6b;
+      --line: #e8e6e1;
+      --tile: #f5f4f1;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { height: 100%; }
-
     body {
+      min-height: 100%;
       background: #FFFFFF;
-      color: #000;
+      color: var(--ink);
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100%;
-      padding: 1.5rem 1rem;
-      text-align: center;
+      padding: 4rem 1rem 3rem;
     }
+    body.lock { overflow: hidden; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    button:focus-visible, a:focus-visible, select:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
     .back {
       position: fixed;
@@ -42,31 +49,214 @@
     }
     .back:hover, .back:focus-visible { opacity: 1; }
 
-    .soon-block { display: flex; flex-direction: column; align-items: center; }
-
-    .soon {
-      font-family: 'Unbounded', 'Helvetica Neue', Arial, sans-serif;
-      font-size: clamp(1.1rem, 3.6vw, 1.6rem);
+    /* En-tête : titre, choix de la série, une ligne */
+    .head { text-align: center; max-width: 36rem; margin: 0 auto; }
+    h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
       font-weight: 500;
+      font-size: clamp(2.6rem, 8vw, 4rem);
       letter-spacing: 0.01em;
-      line-height: 1.5;
-      opacity: 0;
-      transform: translateY(14px);
-      animation: fade-in 0.9s ease forwards 0.15s;
     }
+    /* Onglets : chaque collection est un mot, l'actif en noir ; les tirages ont leur onglet à eux */
+    .tabs { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0.4rem 1.8rem; margin-top: 0.9rem; }
+    .ctab, .pick select {
+      border: 0; background: transparent; border-radius: 6px; padding: 0.2rem 0.1rem;
+      font-family: 'Unbounded', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; font-size: clamp(1rem, 3.2vw, 1.3rem); letter-spacing: 0.01em;
+      color: var(--muted); border-bottom: 2px solid transparent; border-radius: 0;
+    }
+    .ctab:hover { color: var(--ink); }
+    .ttag { display: inline-block; margin-left: 0.5rem; padding: 0.15rem 0.5rem; border-radius: 999px; font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; vertical-align: middle; font-family: 'Inter', sans-serif; font-weight: 500; }
+    .ctab:not([data-id="prints"]) .ttag { background: var(--line); color: var(--muted); }
+    .ctab[data-id="prints"] .ttag { background: var(--ink); color: #fff; }
+    .ctab[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+    .pick { position: relative; display: inline-block; }
+    .pick select { appearance: none; -webkit-appearance: none; color: var(--ink); padding-right: 1.5rem; cursor: pointer; }
+    .pick::after { content: ''; position: absolute; right: 0.3rem; top: 50%; width: 0.45rem; height: 0.45rem; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: translateY(-80%) rotate(45deg); pointer-events: none; }
+    .stitle { margin-top: 1rem; font-family: 'Alegreya', 'Cormorant Garamond', serif; font-style: italic; font-weight: 700; font-size: clamp(2.6rem, 10vw, 4rem); line-height: 1; color: #000; }
+    .stitle[hidden], .stext[hidden] { display: none; }
+    .sfiche { margin: 1.8rem auto 0; max-width: 22rem; text-align: center; }
+    .sfiche[hidden] { display: none; }
+    .sf-price { margin-top: 1.1rem; font-size: 1.7rem; font-weight: 500; line-height: 1.1; }
+    .sf-price span { font-size: 0.95rem; font-weight: 400; color: var(--muted); }
+    .sf-lines { font-size: 0.95rem; line-height: 1.75; color: #34342f; }
+    .sf-title { font-family: 'Alegreya', 'Cormorant Garamond', serif; font-style: italic; font-weight: 700; font-size: 1.8rem; line-height: 1.15; margin: 0 0 0.9rem; }
+    .sf-img { display: block; width: min(200px, 56vw); height: auto; margin: 0 auto 1.1rem; box-shadow: 0 0 0 1px var(--line); }
+    .sf-state { margin-top: 0.9rem; font-style: italic; font-size: 0.95rem; color: var(--muted); }
+    .sf-state.sold { color: #34342f; }
+    .sf-buy { margin-top: 1.2rem; display: block; }
+    .sf-sold { margin: 1.3rem auto 0; max-width: 28rem; padding: 0 1rem; text-align: center; font-style: italic; font-size: 1.12rem; line-height: 1.5; color: var(--ink); }
+    .stext { margin-top: 0.6rem; font-size: 0.95rem; line-height: 1.5; color: var(--muted); }
+    .lede { margin-top: 0.4rem; font-size: 1rem; line-height: 1.5; }
 
-    .soon-line {
-      margin-top: 0.25rem;
-      animation-delay: 0.35s;
+    /* Vitrine : un ruban continu qui défile doucement, bords estompés */
+    .stage { margin: 1.6rem -1rem 0; }
+    .band {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 24%, #000 76%, transparent);
+              mask-image: linear-gradient(to right, transparent, #000 24%, #000 76%, transparent);
     }
+    .track {
+      --w: clamp(190px, 20vw, 280px); --gap: 1.5rem;
+      display: flex; width: max-content; will-change: transform;
+      transform: translateX(calc(var(--off, 0px) - var(--copy, 0px)));
+      animation: drift var(--dur, 60s) linear infinite;
+    }
+    @keyframes drift {
+      from { transform: translateX(calc(var(--off, 0px) - var(--copy, 0px))); }
+      to   { transform: translateX(calc(var(--off, 0px) - 2 * var(--copy, 0px))); }
+    }
+    /* Téléphone : une grande esquisse bien centrée, les voisines qui dépassent de chaque côté, comme un carrousel */
+    @media (max-width: 600px) {
+      .track { --w: min(66vw, 270px); --gap: 1rem; }
+      .band { -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent); }
+    }
+    .track { animation: none; }   /* le mouvement est piloté par le script (voir « Ruban »), pas par une animation CSS */
+    .band { touch-action: pan-y; cursor: grab; -webkit-user-select: none; user-select: none; }
+    .band.dragging, .band.dragging .tile { cursor: grabbing; }
+    .tile img { -webkit-user-drag: none; user-drag: none; pointer-events: none; }
+    .track.stopped, .track.held, .lock .track { animation-play-state: paused; }
+    .tile { all: unset; display: block; flex: 0 0 var(--w); margin-right: var(--gap); cursor: pointer; transition: opacity 0.3s ease; }
+    .tile:hover { opacity: 0.86; }
+    .tile:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+    /* Prints : le cadre épouse l'image, pas de bande blanche ni de liseré autour */
+    .frame.natural { aspect-ratio: auto; box-shadow: none; background: transparent; }
+    .frame.natural img { position: static; display: block; width: 100%; height: auto; }
+    .thumbs.cover .frame img { object-fit: cover; }
+    .tile .tcap { display: none; }   /* pas de légende sous les photos du ruban qui défile */
+    .tcap { display: block; margin-top: 0.8rem; text-align: center; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.2rem; }
+    .frame { position: relative; aspect-ratio: 21 / 29.7; background: #fff; box-shadow: 0 0 0 1px var(--line); overflow: hidden; }
+    .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+    .tools { margin-top: 1rem; display: flex; justify-content: center; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--muted); }
+    .skpick { position: relative; width: fit-content; margin: 1.8rem auto 0; }
+    .skpick select {
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+      border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink);
+      font: inherit; font-size: 0.95rem; padding: 0.7rem 2.6rem 0.7rem 1.2rem; min-width: 14rem;
+    }
+    .skpick select:hover { border-color: var(--ink); }
+    .skpick::after { content: ''; position: absolute; right: 1.1rem; top: 50%; width: 0.45rem; height: 0.45rem; border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); transform: translateY(-75%) rotate(45deg); pointer-events: none; }
+    .tabs[hidden] { display: none; }
+    .cross { margin-top: 1.2rem; text-align: center; font-size: 0.95rem; }
+    .cross .link { font-weight: 400; color: var(--ink); }
+    .link { border: 0; background: none; padding: 0.3rem 0.2rem; text-decoration: underline; text-underline-offset: 3px; color: inherit; }
 
-    @keyframes fade-in {
-      to { opacity: 1; transform: none; }
+    /* Prochaine série */
+    .notify { max-width: 32rem; margin: 3rem auto 0; text-align: center; scroll-margin-top: 4rem; }
+    .notify .ask { font-size: 1rem; line-height: 1.5; }
+    .notify form { margin-top: 1.1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    .notify form[hidden] { display: none; }
+    .notify input[type="email"] {
+      flex: 1 1 14rem; min-width: 0; padding: 0.9rem 1.1rem; border: 1px solid var(--line); border-radius: 999px;
+      font: inherit; font-size: 1rem; color: var(--ink); background: #fff;
     }
+    .notify input[type="email"]:focus { outline: 2px solid var(--ink); outline-offset: 2px; border-color: var(--ink); }
+    .notify .btn { flex: 0 0 auto; width: auto; padding: 0.9rem 1.6rem; }
+    .notify .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+    .notify .consent { flex: 1 1 100%; display: flex; gap: 0.55rem; align-items: flex-start; text-align: left; font-size: 0.8rem; line-height: 1.45; color: var(--muted); cursor: pointer; }
+    .notify .consent input { flex: 0 0 auto; width: 1.05rem; height: 1.05rem; margin-top: 0.12rem; accent-color: var(--ink); }
+    .notify .fine { margin-top: 0.6rem; font-size: 0.85rem; color: var(--muted); }
+    .notify .fine:empty { display: none; }
+    .foot { margin: 3.5rem auto 0; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+    .foot-q { display: inline-block; padding: 0.8rem 1.6rem; border-radius: 999px; border: 1px solid var(--line); font-size: 0.95rem; color: var(--ink); text-decoration: none; text-align: center; text-wrap: balance; }
+    .foot-q:hover { border-color: var(--ink); }
+    .foot-ig { display: inline-flex; color: var(--ink); }
+    .foot-ig svg { width: 26px; height: 26px; }
+    .foot-ig:hover { opacity: 0.7; }
 
-    @media (prefers-reduced-motion: reduce) {
-      .soon { animation: none; opacity: 1; transform: none; }
+    /* Boutons */
+    .btn {
+      display: block; width: 100%; text-align: center; padding: 1rem 1.2rem; border-radius: 999px; border: 1px solid var(--ink);
+      font-size: 1rem; font-weight: 500; letter-spacing: 0.03em; text-decoration: none; transition: background 0.2s ease, color 0.2s ease;
     }
+    .btn.primary { background: var(--ink); color: #fff; }
+    .btn.primary:hover { background: #333; }
+    .btn.ghost { background: #fff; color: var(--ink); margin-top: 0.6rem; font-weight: 400; }
+    .btn.ghost:hover { background: var(--tile); }
+    .btn[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
+
+    /* Fiche œuvre */
+    .view[hidden] { display: none; }
+    .view { position: fixed; inset: 0; z-index: 30; background: #fff; overflow-y: auto; overscroll-behavior: contain; }
+    .bar {
+      position: sticky; top: 0; z-index: 2; background: rgba(255,255,255,0.94); backdrop-filter: blur(6px);
+      display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; border-bottom: 1px solid var(--line);
+    }
+    .bar .nav { display: flex; gap: 0.3rem; align-items: center; font-size: 0.85rem; color: var(--muted); }
+    .ico { border: 1px solid var(--line); background: transparent; border-radius: 999px; width: 2.2rem; height: 2.2rem; line-height: 1; }
+    .ico:hover { border-color: var(--ink); }
+    .x { border: 0; background: transparent; text-decoration: underline; text-underline-offset: 3px; padding: 0.4rem 0.6rem; }
+
+    .piece { max-width: 1000px; margin: 0 auto; padding: 1.2rem 1rem 9rem; display: grid; gap: 1.4rem; }
+    @media (min-width: 820px) { .piece { grid-template-columns: 1.1fr 1fr; gap: 3rem; padding-top: 2rem; align-items: start; } .pic { position: sticky; top: 5rem; } }
+    .pic { touch-action: pan-y; min-width: 0; max-width: min(270px, 62vw); width: 100%; margin: 0 auto; }   /* image de la fiche : taille modérée, pas plein écran */
+    .thumbs { margin-top: 0.8rem; display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.2rem 0.1rem 0.5rem; scrollbar-width: thin; }
+    .thumb { all: unset; flex: 0 0 auto; width: 3.1rem; cursor: pointer; opacity: 0.5; transition: opacity 0.2s ease; }
+    .thumb:hover, .thumb[aria-current="true"] { opacity: 1; }
+    .thumb:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    .thumb[aria-current="true"] .frame { box-shadow: 0 0 0 1.5px var(--ink); }
+
+    .info h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(2rem, 6vw, 2.8rem); }
+    .info .one { margin-top: 0.3rem; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .price { margin-top: 1rem; font-size: 1.7rem; font-weight: 400; }
+    .price small { display: block; margin-top: 0.15rem; font-size: 0.8rem; color: var(--muted); }
+    .specs { margin-top: 1.2rem; border-top: 1px solid var(--line); }
+    .specs div { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+    .specs dt { color: var(--muted); }
+    .assure { margin-top: 1.2rem; list-style: none; display: grid; gap: 0.5rem; font-size: 0.86rem; color: var(--muted); }
+    .assure li::before { content: '✓'; color: var(--ink); margin-right: 0.55rem; }
+    .assure:empty { display: none; }
+    .buy-desktop { margin-top: 1.4rem; }
+    .buy-mobile {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 3; background: rgba(255,255,255,0.97); border-top: 1px solid var(--line);
+      padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .mrow { display: flex; gap: 0.9rem; align-items: center; }
+    .mfmt { display: flex; gap: 0.4rem; }
+    .mfmt:empty { display: none; }
+    .mfmt .fmt { padding: 0.4rem 0.9rem; font-size: 0.85rem; }
+    .buy-mobile .pp { font-size: 1.15rem; font-weight: 500; white-space: nowrap; }
+    .buy-mobile .btn { padding: 0.85rem 1rem; }
+    @media (min-width: 820px) { .buy-mobile { display: none; } }
+    @media (max-width: 819px) { .buy-desktop { display: none; } }
+
+    .trust { margin: 1.1rem auto 0; max-width: 34rem; text-align: center; font-size: 0.8rem; letter-spacing: 0.04em; line-height: 1.7; color: var(--muted); }
+    .trust[hidden] { display: none; }
+    /* Tirages : des cases à part entière */
+    .pgrid { max-width: 980px; margin: 2.4rem auto 0; display: grid; grid-template-columns: minmax(0, 230px); justify-content: center; gap: 2.6rem 1rem; }   /* téléphone : une pièce par ligne */
+    .pgrid[hidden] { display: none; }
+    @media (min-width: 720px) { .pgrid { grid-template-columns: repeat(3, minmax(0, 250px)); gap: 3rem 2.4rem; } }   /* ordinateur : trois colonnes plus larges */
+    .pcard { display: block; min-width: 0; text-align: center; color: inherit; text-decoration: none; transition: opacity 0.3s ease; }
+    .pcard:hover { opacity: 0.86; }
+    .pcard:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; }
+    .pcard .btn { margin-top: 0.7rem; padding: 0.8rem 1rem; font-size: 0.95rem; }
+    /* Page produit : une image, un prix, un bouton */
+    .product { max-width: 880px; margin: 2.4rem auto 0; display: grid; gap: 1.8rem; align-items: center; }
+    .product[hidden] { display: none; }
+    @media (min-width: 760px) { .product { grid-template-columns: 1fr 1fr; gap: 3.4rem; } }
+    .pfig { width: min(400px, 100%); margin: 0 auto; }
+    .pinfo h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(2.1rem, 6vw, 2.8rem); }
+    .pinfo .one { margin-top: 0.3rem; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .ptext { margin-top: 1.1rem; list-style: none; display: grid; gap: 0.45rem; font-size: 0.95rem; }
+    .ptext li::before { content: '✓'; margin-right: 0.55rem; }
+    .pmini { margin-top: 0.9rem; font-size: 0.8rem; color: var(--muted); }
+    @media (max-width: 759px) { .pinfo { text-align: center; } .ptext { justify-items: center; } .pinfo .edition { max-width: 18rem; margin-left: auto; margin-right: auto; } }
+    body.has-pbar { padding-bottom: 8rem; }
+    .pbar[hidden] { display: none; }
+    .tmeta { display: block; margin-top: 0.15rem; text-align: center; font-size: 0.8rem; color: var(--muted); }
+    .formats { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .formats:empty { display: none; }
+    .fmt { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 0.55rem 1.1rem; font-size: 0.95rem; display: flex; gap: 0.6rem; align-items: baseline; }
+    .fmt small { color: var(--muted); font-size: 0.78rem; }
+    .fmt[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+    .edition { margin-top: 1rem; }
+    .edition:empty { display: none; }
+    .meter { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+    .meter span { display: block; height: 100%; background: var(--ink); }
+    .edition p { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+    .edition p b { color: var(--ink); font-weight: 500; }
+
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   </style>
 </head>
 <body>
@@ -74,20 +264,807 @@
   <a class="back" href="index.html" data-i18n="nav.back">← Back</a>
 
   <main>
-    <div class="soon-block">
-      <p class="soon" data-i18n="ws.soon">First Sale Upcoming Soon</p>
+    <header class="head">
+      <h1 data-i18n="nav.workshop">Workshop</h1>
+      <nav class="tabs" id="tabs" aria-label="Collections" data-i18n-attr="aria-label:collections"></nav>
+      <p class="lede" id="lede"></p>
+      <h2 class="stitle" id="stitle" hidden></h2>
+      <p class="stext" id="stext" hidden></p>
+    </header>
+
+    <section class="stage" aria-label="Sketches" data-i18n-attr="aria-label:sk.aria">
+      <div class="band" id="band"><div class="track" id="track"></div></div>
+      <div class="tools"><button class="link" id="play" type="button" aria-pressed="false">Pause</button></div>
+      <div class="sfiche" id="sfiche" hidden></div>
+      <div class="skpick">
+        <label class="sr" for="skpick" data-i18n="sk.choose">Choose a sketch</label>
+        <select id="skpick"></select>
+      </div>
+      <p class="sf-sold" id="sfsold" hidden></p>
+      <p class="cross" id="cross" hidden><span data-i18n="cross.text">These sketches are sold.</span> <button class="link" id="goprints" type="button" data-i18n="cross.go">See what is on sale →</button></p>
+    </section>
+
+    <section class="pgrid" id="pgrid" aria-label="Prints" data-i18n-attr="aria-label:prints.aria" hidden></section>
+    <article class="product" id="product" aria-label="Print" data-i18n-attr="aria-label:product.aria" hidden></article>
+    <p class="trust" id="trust" hidden></p>
+
+    <section class="notify" id="notify" aria-label="Next drop" data-i18n-attr="aria-label:notify.aria">
+      <p class="ask" id="nask" data-i18n="notify.ask">Be the first to know about the next drop.</p>
+      <form id="nform" method="post" target="nframe" action="about:blank">
+        <input type="email" id="nemail" name="EMAIL" required autocomplete="email" placeholder="Your email" aria-label="Your email" data-i18n-attr="placeholder:notify.email;aria-label:notify.email" />
+        <input type="text" name="email_address_check" value="" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="locale" value="en" />
+        <input type="hidden" name="html_type" value="simple" />
+        <button class="btn primary" type="submit" data-i18n="notify.btn">Notify me</button>
+        <label class="consent"><input type="checkbox" id="nconsent" required /> <span data-i18n="notify.consent">I agree to receive an email from Virtos Charles when the next drop opens. I can unsubscribe at any time.</span></label>
+      </form>
+      <iframe name="nframe" id="nframe" title="Sign-up" data-i18n-attr="title:notify.frame" hidden></iframe>
+      <p class="fine" id="nmsg"></p>
+    </section>
+
+    <div class="foot">
+      <a class="btn ghost foot-q" href="contact.html" data-i18n="foot.ask">Any question or information? Write to me</a>
+      <a class="foot-ig" href="https://www.instagram.com/thxwereallymadeit/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+          <circle cx="12" cy="12" r="4"></circle>
+          <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"></circle>
+        </svg>
+      </a>
     </div>
   </main>
 
+  <div class="buy-mobile pbar" id="pbar" hidden></div>
+
+  <div class="view" id="view" hidden role="dialog" aria-modal="true" aria-label="Sketch details" data-i18n-attr="aria-label:view.aria">
+    <div class="bar">
+      <div class="nav">
+        <button class="ico" id="prev" aria-label="Previous sketch" data-i18n-attr="aria-label:view.prev">←</button>
+        <span id="pos"></span>
+        <button class="ico" id="next" aria-label="Next sketch" data-i18n-attr="aria-label:view.next">→</button>
+      </div>
+      <button class="x" id="close" data-i18n="view.close">Close</button>
+    </div>
+    <div class="piece">
+      <div class="pic">
+        <div class="frame" id="pic"></div>
+        <div class="thumbs" id="thumbs" role="group" aria-label="All sketches" data-i18n-attr="aria-label:view.all"></div>
+      </div>
+      <div class="info">
+        <h2 id="d-title"></h2>
+        <p class="one" id="d-one"></p>
+        <div class="formats" id="d-formats" role="group" aria-label="Format"></div>
+        <p class="price"><span id="d-price"></span><small id="d-note"></small></p>
+        <div class="edition" id="d-edition"></div>
+        <dl class="specs" id="d-specs"></dl>
+        <div class="buy-desktop" id="buy-d"></div>
+        <ul class="assure" id="d-assure"></ul>
+      </div>
+    </div>
+    <div class="buy-mobile" id="buy-m"></div>
+  </div>
+
   <script src="assets/i18n.js"></script>
   <script>
-    I18N.add({ en: {"doc.title": "Workshop — Virtos Charles", "ws.soon": "First Sale Upcoming Soon"}, fr: {"doc.title": "Boutique — Virtos Charles", "ws.soon": "Première vente prochainement"} });
-    I18N.init();
+    I18N.add({
+      en: {
+        "doc.title": "Workshop — Virtos Charles",
+        "doc.title.piece": "{title} — Workshop — Virtos Charles",
+        "collections": "Collections",
+        "series.label": "Series",
+        "sk.aria": "Sketches",
+        "sk.choose": "Choose a sketch",
+        "prints.aria": "Prints",
+        "product.aria": "Print",
+        "play.pause": "Pause",
+        "play.play": "Play",
+        "cross.text": "These sketches have all been sold.",
+        "cross.go": "See what is on sale →",
+        "notify.aria": "Next drop",
+        "notify.ask": "Be the first to know about the next drop.",
+        "notify.email": "Your email",
+        "notify.btn": "Notify me",
+        "notify.consent": "I agree to receive an email from Virtos Charles when the next drop opens. I can unsubscribe at any time.",
+        "notify.frame": "Sign-up",
+        "notify.thanks": "Thank you. Check your inbox to confirm your email.",
+        "notify.mailto": "Your email app should open. Send the message to join the list.",
+        "foot.text": "Questions or commissions:",
+        "foot.ask": "Any questions? Write to me",
+        "view.aria": "Sketch details",
+        "view.prev": "Previous sketch",
+        "view.next": "Next sketch",
+        "view.close": "Close",
+        "view.all": "All sketches",
+        "tab.nightrider-1.name": "Sketches",
+        "tab.nightrider-1.tag": "Sold out",
+        "tab.prints.name": "Prints",
+        "tab.prints.tag": "On sale",
+        "prefix.sketch": "Sketch",
+        "prefix.print": "Print",
+        "lede.nightrider-1.sold": "Nightrider #1 · fifteen original sketches, all sold. To look at, not to buy.",
+        "lede.nightrider-1.left": "Nightrider #1 · fifteen original sketches. {n} still available.",
+        "lede.prints.one": "Limited edition print, numbered and signed. {n} copies.",
+        "lede.prints": "Limited edition prints.",
+        "lede.prints.closed": " All editions are closed.",
+        "trust": "Numbered and signed · Limited editions · {pp}",
+        "pp.one": "One per person",
+        "pp.many": "Up to {n} per person",
+        "pp.one.lc": "one per person",
+        "pp.many.lc": "up to {n} per person",
+        "meta.closed": "Edition closed",
+        "meta.from": "From {p}",
+        "meta.left": "Only {n} left",
+        "buy.print": "Buy print · {f}",
+        "buy.wait": "Join the waiting list",
+        "open.details": "Open details for {title}",
+        "prod.one": "Limited edition print · {f} · {size}",
+        "prod.ship": "Shipping included",
+        "prod.allgone": "All {n} copies have found a home.",
+        "prod.left": "<b>{left} of {n} left</b> · then the edition closes for good",
+        "prod.mini": "14-day returns · One per person",
+        "ptext.signed": "Numbered and signed by hand",
+        "ptext.paper": "Printed on {paper}",
+        "ship.sleeve": "Ships flat in a rigid sleeve, with tracking",
+        "mail.buy.subj": "Order — {title} ({series})",
+        "mail.buy.body": "Hello Virtos,\n\nI would like to buy {title} ({series}, {price}).\n\nName:\nShipping address:\n",
+        "mail.alert.subj": "Next sketches",
+        "mail.alert.body": "Hello Virtos,\n\nPlease let me know when the next sketches are available.\n",
+        "mail.print.subj": "Print order — {title} — {f} ({series})",
+        "mail.print.body": "Hello Virtos,\n\nI would like to buy one print of {title} ({series}).\nFormat: {f} ({size})\nPrice: {price}\nEdition number: next available ({k} / {n})\n\nName:\nShipping address:\n",
+        "mail.nl.subj": "Next drop: notify me",
+        "mail.nl.body": "Hello Virtos,\n\nPlease let me know when the next drop opens.\n\nMy email: {email}\n",
+        "buy.sketch": "Buy this sketch",
+        "ask": "Ask a question",
+        "reserved": "Reserved",
+        "alert.btn": "Tell me if it is released",
+        "notify.drop": "Notify me about the next drop",
+        "ask.similar": "Ask for a similar piece",
+        "sold": "Sold",
+        "sk.each": "each",
+        "sf.unique": "One of a kind, signed and dated",
+        "sf.year": "January 2026",
+        "sf.technique": "Alcohol ink on 300 gsm grained paper",
+        "closed": "Closed",
+        "one.original": "{series} · Original, 1 of 1",
+        "note.sold": "This sketch has found its home.",
+        "note.soldfirst": "This sketch has found its home, but be the first to know about the next drop.",
+        "note.soldfor": "Sold for {p}. This sketch has found its home.",
+        "note.ship": "Shipping and insurance included",
+        "as.orig": "Original on 300 gsm paper, hand-signed, with a certificate",
+        "as.ship": "Ships in 3 working days, tracked and insured",
+        "as.returns": "14-day returns",
+        "spec.medium": "Medium",
+        "spec.paper": "Paper",
+        "spec.size": "Size",
+        "spec.print": "Print",
+        "val.medium": "Alcohol ink",
+        "val.paper": "300 gsm, grained",
+        "val.size": "A4 · 21 × 29.7 cm",
+        "val.print.medium": "Giclée print",
+        "val.print.paper": "320 gsm textured fine-art paper",
+        "val.print.glossy": "300 gsm glossy coated paper",
+        "rp.one": "Prints · Limited edition of {n}",
+        "rp.note": "Shipping included · {pp}",
+        "rp.allgone": "All {n} prints have found a home.",
+        "meter.aria": "{s} of {n} sold",
+        "ed.left": "<b>{left} of {n} left</b> · next number {k} / {n}",
+        "ed.closed": "<b>Edition closed.</b> {n} of {n} sold.",
+        "as.print.signed": "Numbered and signed by hand, with a certificate",
+        "alt.nightrider-12": "Figure in a cap with raised brows and motion marks around the head",
+        "alt.nightrider-03": "Figure in a top hat with a wide toothy grin and a striped shirt",
+        "alt.nightrider-08": "Small horned devil figure with wide teeth and a cross necklace",
+        "alt.nightrider-07": "Man in a spotted cap and sunglasses with a toothy moustache, in a collared shirt",
+        "alt.nightrider-14": "Man with curly hair in a shirt and tie, holding a pistol",
+        "alt.nightrider-05": "Man with curly hair in a suit and tie, with a cross earring",
+        "alt.nightrider-11": "Man in a beanie with a cigarette and a cross earring",
+        "alt.nightrider-02": "Man with curly hair, open mouth and a cross earring",
+        "alt.nightrider-06": "Bald grinning figure with a cross pendant and a tie, next to dark triangles",
+        "alt.nightrider-10": "Curly-haired figure in a striped shirt holding a rifle, with a small face at the lower left",
+        "alt.nightrider-09": "Man in a cap with closed eyes, a cross earring and a striped top",
+        "alt.nightrider-15": "Figure in a cap with big round eyes and a clown-like nose",
+        "alt.nightrider-13": "Pair of gloves with striped fingers, with motion marks",
+        "alt.nightrider-01": "Bearded man’s face with rosary beads and the word DOLORE in tall letters",
+        "alt.nightrider-16": "Curly-haired figure with closed eyes and a toothy mouth, seated in a striped top, with a cross earring",
+        "alt.batman-2": "Painting of Batman in a blue cowl with red lips and a bat emblem, on a green background",
+        "alt.clown-diable-3": "Painting of a grinning clown with red devil horns and green hair, in a green jacket holding a pistol, on an orange background"
+      },
+      fr: {
+        "doc.title": "Boutique — Virtos Charles",
+        "doc.title.piece": "{title} — Boutique — Virtos Charles",
+        "collections": "Collections",
+        "series.label": "Séries",
+        "sk.aria": "Esquisses",
+        "sk.choose": "Choisir une esquisse",
+        "prints.aria": "Tirages",
+        "product.aria": "Tirage",
+        "play.pause": "Pause",
+        "play.play": "Lecture",
+        "cross.text": "Ces esquisses ont toutes été vendues.",
+        "cross.go": "Voir ce qui est en vente →",
+        "notify.aria": "Prochaine série",
+        "notify.ask": "Recevez en avant-première l’annonce de la prochaine série.",
+        "notify.email": "Adresse e-mail",
+        "notify.btn": "Me prévenir",
+        "notify.consent": "J’accepte de recevoir un e-mail de Virtos Charles à l’ouverture de la prochaine série. Je peux me désinscrire à tout moment.",
+        "notify.frame": "Inscription",
+        "notify.thanks": "Merci. Un e-mail de confirmation vient de vous être envoyé.",
+        "notify.mailto": "Votre messagerie va s’ouvrir : il suffit d’envoyer le message pour rejoindre la liste.",
+        "foot.text": "Une question ou une commande sur mesure :",
+        "foot.ask": "Une question ? Écrivez-moi",
+        "view.aria": "Détails de l’œuvre",
+        "view.prev": "Œuvre précédente",
+        "view.next": "Œuvre suivante",
+        "view.close": "Fermer",
+        "view.all": "Toutes les œuvres",
+        "tab.nightrider-1.name": "Esquisses",
+        "tab.nightrider-1.tag": "Épuisé",
+        "tab.prints.name": "Tirages",
+        "tab.prints.tag": "En vente",
+        "prefix.sketch": "Esquisse",
+        "prefix.print": "Tirage",
+        "lede.nightrider-1.sold": "Nightrider #1 · quinze esquisses originales, toutes vendues. À regarder, pas à acheter.",
+        "lede.nightrider-1.left": "Nightrider #1 · quinze esquisses originales. Il en reste {n}.",
+        "lede.prints.one": "Tirage en édition limitée, numéroté et signé : {n} exemplaires.",
+        "lede.prints": "Tirages en édition limitée.",
+        "lede.prints.closed": " Toutes les éditions sont terminées.",
+        "trust": "Tirages numérotés et signés · Éditions limitées · {pp}",
+        "pp.one": "Un par personne",
+        "pp.many": "Jusqu’à {n} par personne",
+        "pp.one.lc": "un par personne",
+        "pp.many.lc": "jusqu’à {n} par personne",
+        "meta.closed": "Édition terminée",
+        "meta.from": "À partir de {p}",
+        "meta.left": "Plus que {n}",
+        "buy.print": "Acheter le tirage · {f}",
+        "buy.wait": "Liste d’attente",
+        "open.details": "Voir le détail de {title}",
+        "prod.one": "Tirage en édition limitée · {f} · {size}",
+        "prod.ship": "Livraison incluse",
+        "prod.allgone": "Les {n} tirages ont trouvé preneur.",
+        "prod.left": "<b>Il en reste {left} sur {n}</b> · l’édition sera ensuite définitivement close",
+        "prod.mini": "Retour possible sous 14 jours · Un par personne",
+        "ptext.signed": "Numéroté et signé à la main",
+        "ptext.paper": "Imprimé sur {paper}",
+        "ship.sleeve": "Expédié à plat sous protection rigide, avec suivi",
+        "mail.buy.subj": "Commande — {title} ({series})",
+        "mail.buy.body": "Bonjour Virtos,\n\nJe souhaite acheter {title} ({series}, {price}).\n\nNom :\nAdresse de livraison :\n",
+        "mail.alert.subj": "Prochaines esquisses",
+        "mail.alert.body": "Bonjour Virtos,\n\nMerci de me prévenir quand les prochaines esquisses seront disponibles.\n",
+        "mail.print.subj": "Commande de tirage — {title} — {f} ({series})",
+        "mail.print.body": "Bonjour Virtos,\n\nJe souhaite acheter un tirage de {title} ({series}).\nFormat : {f} ({size})\nPrix : {price}\nNuméro d’édition : prochain disponible ({k} / {n})\n\nNom :\nAdresse de livraison :\n",
+        "mail.nl.subj": "Prochaine série : me prévenir",
+        "mail.nl.body": "Bonjour Virtos,\n\nMerci de me prévenir à l’ouverture de la prochaine série.\n\nMon e-mail : {email}\n",
+        "buy.sketch": "Acheter cette esquisse",
+        "ask": "Poser une question",
+        "reserved": "Réservée",
+        "alert.btn": "Me prévenir si elle se libère",
+        "notify.drop": "Me prévenir de la prochaine série",
+        "ask.similar": "Demander une pièce similaire",
+        "sold": "Vendue",
+        "sk.each": "pièce",
+        "sf.unique": "Pièce unique, signée et datée",
+        "sf.year": "Janvier 2026",
+        "sf.technique": "Encres à alcool sur papier grainé 300 g/m²",
+        "closed": "Terminée",
+        "one.original": "{series} · Original, pièce unique",
+        "note.sold": "Cette esquisse a trouvé preneur.",
+        "note.soldfirst": "Cette esquisse a trouvé preneur, mais recevez en avant-première l’annonce de la prochaine série.",
+        "note.soldfor": "Vendue pour {p}. Cette esquisse a trouvé preneur.",
+        "note.ship": "Livraison et assurance incluses",
+        "as.orig": "Original sur papier 300 g/m², signé à la main, avec un certificat",
+        "as.ship": "Expédié sous 3 jours ouvrés, avec suivi et assurance",
+        "as.returns": "Retour possible sous 14 jours",
+        "spec.medium": "Technique",
+        "spec.paper": "Papier",
+        "spec.size": "Format",
+        "spec.print": "Tirage",
+        "val.medium": "Encre à alcool",
+        "val.paper": "300 g/m², grainé",
+        "val.size": "A4 · 21 × 29,7 cm",
+        "val.print.medium": "Impression giclée",
+        "val.print.paper": "Papier beaux-arts texturé 320 g/m²",
+        "val.print.glossy": "Papier couché brillant 300 g/m²",
+        "rp.one": "Tirages · Édition limitée à {n}",
+        "rp.note": "Livraison incluse · {pp}",
+        "rp.allgone": "Les {n} tirages ont trouvé preneur.",
+        "meter.aria": "{s} tirages vendus sur {n}",
+        "ed.left": "<b>Il en reste {left} sur {n}</b> · prochain numéro {k} / {n}",
+        "ed.closed": "<b>Édition terminée.</b> Les {n} tirages sont vendus.",
+        "as.print.signed": "Numéroté et signé à la main, avec un certificat",
+        "alt.nightrider-12": "Personnage en casquette, sourcils levés, avec des traits de mouvement autour de la tête",
+        "alt.nightrider-03": "Personnage coiffé d’un haut-de-forme, au grand sourire denté, en pull rayé",
+        "alt.nightrider-08": "Petit diable à cornes, aux grandes dents et au collier en croix",
+        "alt.nightrider-07": "Homme à casquette tachetée et lunettes de soleil, à la moustache dentée, en chemise à col",
+        "alt.nightrider-14": "Homme aux cheveux frisés en chemise et cravate, tenant un pistolet",
+        "alt.nightrider-05": "Homme aux cheveux frisés en costume-cravate, avec une boucle d’oreille en croix",
+        "alt.nightrider-11": "Homme en bonnet avec une cigarette et une boucle d’oreille en croix",
+        "alt.nightrider-02": "Homme aux cheveux frisés, bouche ouverte et boucle d’oreille en croix",
+        "alt.nightrider-06": "Personnage chauve et souriant, pendentif en croix et cravate, près de triangles sombres",
+        "alt.nightrider-10": "Personnage aux cheveux frisés, en pull rayé, tenant un fusil, avec un petit visage en bas à gauche",
+        "alt.nightrider-09": "Homme à casquette, yeux fermés, boucle d’oreille en croix et haut rayé",
+        "alt.nightrider-15": "Personnage à casquette, grands yeux ronds et nez de clown",
+        "alt.nightrider-13": "Paire de gants aux doigts rayés, avec des traits de mouvement",
+        "alt.nightrider-01": "Visage barbu avec un chapelet et le mot DOLORE en grandes lettres",
+        "alt.nightrider-16": "Personnage aux cheveux frisés, yeux fermés et bouche dentée, assis en pull rayé, avec une boucle d’oreille en croix",
+        "alt.batman-2": "Peinture de Batman en cagoule bleue, aux lèvres rouges et à l’emblème de chauve-souris, sur fond vert",
+        "alt.clown-diable-3": "Peinture d’un clown souriant aux cornes de diable rouges et aux cheveux verts, en veste verte tenant un pistolet, sur fond orange"
+      }
+    });
   </script>
+
   <script>
     (function () {
+      // ===== Réglages =====
+      var EMAIL = 'virtos.charles-pro@outlook.com';
+      var CUR = '€';
+      var SKETCH_PRICE = 15;        // prix de chaque esquisse, en euros (affiché sur la fiche)
+      var SPEED = 28;               // vitesse du ruban de la page d'accueil, en pixels par seconde (plus grand = plus rapide)
+      var SHOW_SOLD_PRICE = false;   // true : afficher le prix des pièces vendues
+      // Adresse du formulaire Brevo (champ « action » du formulaire d'inscription), de la forme
+      // 'https://xxxxxxxx.sibforms.com/serve/MUIE…'. Vide = la demande d'inscription part par e-mail vers toi.
+      var BREVO_URL = '';
+
+      var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+      var q = function (t) { return '“' + t + '”'; };   // les titres sont toujours entre guillemets
+      var fmt = function (n) { return I18N.price(n); };                                // €80 en anglais, 80 € en français
+      var T = function (k, v) { return I18N.t(k, v); };
+      var sname = function (x) { return T('tab.' + x.id + '.name'); };
+      var ttl = function (w) { return w.title || T(w.prefix) + ' ' + pad(w.n); };   // « Sketch 01 » / « Esquisse 01 » ; les œuvres titrées gardent leur titre
+      var altOf = function (it) { return T('alt.' + it.key); };
+      var nz = function (x) { return I18N.num(x); };                                    // 29.7 devient 29,7 en français
+
+      // ===== Séries =====
+      // Une série = un bloc. Pour ajouter une collection, copier un bloc et changer les valeurs.
+      //   id     : identifiant court, sans espace (il sert dans l'adresse de la page)
+      //   name   : le nom affiché dans le menu (« Nightrider #2 », « Collection hiver »…)
+      //   blurb  : une phrase sous le nom de la série
+      //   pieces : une entrée par œuvre, dans l'ordre de la vitrine :
+      //            img (fichier dans assets/img), alt (description), price (€), status ('available' | 'reserved' | 'sold'),
+      //            title (facultatif : sinon « Sketch 01 », « Sketch 02 »…), checkout (lien de paiement, facultatif)
+      // Le menu, la vitrine, les vignettes et les fiches se mettent à jour tout seuls. La série affichée en premier est la première de la liste.
+      var SERIES = [
+        {
+          id: 'nightrider-1', prefix: 'prefix.sketch', title: 'Nightrider #1',
+          pieces: [
+            { img: 'nightrider-12', price: 120, status: 'sold' },
+            { img: 'nightrider-03', price: 120, status: 'sold' },
+            { img: 'nightrider-08', price: 150, status: 'sold' },
+            { img: 'nightrider-07', price: 120, status: 'available' },
+            { img: 'nightrider-14', price: 150, status: 'available' },
+            { img: 'nightrider-05', price: 120, status: 'sold' },
+            { img: 'nightrider-11', price: 180, status: 'sold' },
+            { img: 'nightrider-02', price: 120, status: 'sold' },
+            { img: 'nightrider-06', price: 150, status: 'sold' },
+            { img: 'nightrider-10', price: 200, status: 'sold' },
+            { img: 'nightrider-09', price: 120, status: 'sold' },
+            { img: 'nightrider-15', price: 150, status: 'sold' },
+            { img: 'nightrider-13', price: 150, status: 'available' },
+            { img: 'nightrider-01', price: 220, status: 'sold' },
+            // Esquisse photographiée qui n'était pas encore dans le fichier : ajoutée à la suite.
+            { img: 'nightrider-16', status: 'available' }
+          ]
+        }
+      ];
+      // Commun à toutes les séries : technique, papier, format. Une série qui en change le précise dans son bloc.
+      var DEFAULTS = { medium: 'val.medium', paper: 'val.paper', size: 'val.size', year: 2026 };
+      // Transforme les blocs ci-dessus en données prêtes pour l'affichage.
+      SERIES = SERIES.map(function (s) {
+        var sid = s.id;
+        var auto = 0;   // numérotation automatique des pièces sans n explicite
+        s.items = s.pieces.map(function (p, i) {
+          var n = p.n || ++auto;
+          return {
+            id: sid + '-' + pad(n), n: n, prefix: s.prefix, key: p.img, slug: p.slug, title: p.title || '', price: p.price,
+            size: p.size || DEFAULTS.size, medium: p.medium || DEFAULTS.medium, paper: p.paper || DEFAULTS.paper, year: p.year || DEFAULTS.year,
+            status: p.status || 'sold', img: 'assets/img/' + p.img + '.webp', checkout: p.checkout || '',
+            print: s.prints ? { edition: p.edition || s.prints.edition, sold: Math.min(p.printSold || 0, p.edition || s.prints.edition), paper: p.paper || s.prints.paper } : null
+          };
+        });
+        return s;
+      });
+
+      var $ = function (s) { return document.querySelector(s); };
+      var START = SERIES.filter(function (x) { return x.prints; })[0] || SERIES[0];   // on arrive sur ce qu'on peut acheter
+      var S = START, ITEMS = S.items, cur = 0, fi = 0, lastFocus = null;
+      var pLeft = function (it) { return it.print.edition - it.print.sold; };
+      var fromPrice = function () { return Math.min.apply(null, S.prints.formats.map(function (f) { return f.price; })); };
+      var view = $('#view'), track = $('#track'), band = $('#band');
+
+      // ===== Ruban de la page d'accueil =====
+      // Trois copies de la série bout à bout : le ruban glisse d'une copie, puis reprend au début sans qu'on voie la couture.
+      // La copie du milieu est la seule accessible au clavier et aux lecteurs d'écran.
+      function tmeta(it) {
+        var P = S.prints, l = pLeft(it), f = P.formats[0];
+        var what = P.formats.length === 1 ? f.label + ' · ' + fmt(f.price) : T('meta.from', { p: fmt(fromPrice()) });
+        return '<span class="tmeta">' + (l <= 0 ? T('meta.closed') : what + (l <= 5 ? ' · ' + T('meta.left', { n: l }) : '')) + '</span>';
+      }
+      function cardBuy(it) {   // le bouton d'achat directement sur la carte : un seul geste
+        var f = S.prints.formats[0];
+        return pLeft(it) > 0
+          ? '<a class="btn primary" href="' + (f.checkout || 'contact.html') + '">' + T('buy.print', { f: f.label }) + '</a>'
+          : '<a class="btn primary" href="#notify" data-notify>' + T('buy.wait') + '</a>';
+      }
+      function tilesHTML(copy) {
+        return ITEMS.map(function (it, i) {
+          var side = copy === 1 ? '' : ' tabindex="-1" aria-hidden="true"';
+          return '<button class="tile" type="button" data-i="' + i + '"' + side + ' aria-label="' + T('open.details', { title: q(ttl(it)) }) + '">' +
+            '<div class="frame"><img src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" /></div>' +
+            '</button>';
+        }).join('');
+      }
+      // Ruban piloté par le script : vitesse constante et douce, on peut le faire glisser au doigt ou à la souris
+      // (il garde son élan, puis reprend sa vitesse en douceur), il ralentit sous la souris et s'arrête quand une fiche est ouverte.
+      var rb = { x: 0, v: 0, copy: 0, off: 0, hover: false, down: false, drag: false, px: 0, pt: 0, sx: 0, dragEnd: 0 };
+      var reduceMotion = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+      function paintTrack() { track.style.transform = 'translate3d(' + (rb.off - rb.copy - rb.x) + 'px,0,0)'; }
+      var tPrev = 0;
+      function tick(t) {
+        requestAnimationFrame(tick);
+        var dt = Math.min(0.05, Math.max(0, (t - tPrev) / 1000)); tPrev = t;
+        if (!rb.copy || $('.stage').hidden || document.hidden) return;
+        if (!rb.drag) {
+          var paused = reduceMotion || track.classList.contains('stopped') || track.classList.contains('held') || document.body.classList.contains('lock');
+          var target = paused ? 0 : (rb.hover ? SPEED * 0.3 : SPEED);
+          rb.v += (target - rb.v) * (1 - Math.exp(-dt / 0.9));   // l'élan s'éteint en douceur, la vitesse revient sans à-coup
+          rb.x += rb.v * dt;
+        }
+        rb.x = ((rb.x % rb.copy) + rb.copy) % rb.copy;
+        paintTrack();
+      }
+      requestAnimationFrame(tick);
+      // Fiche d'une esquisse, affichée sur la page elle-même (pas de changement de page).
+      function sketchSheet(it) {
+        var sold = !!it && it.status === 'sold';
+        var head = it ? '<p class="sf-title">' + q(ttl(it)) + '</p><img class="sf-img" src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" />' : '';
+        var state = it && !sold ? '<p class="sf-state">' + T('note.ship') + '</p>' : '';
+        var buy = it && !sold ? '<a class="btn primary sf-buy" href="contact.html">' + T('buy.sketch') + '</a>' : '';
+        return head +
+          '<p class="sf-lines">' + T('sf.year') + '<br>' + T('val.size') + '<br>' + T('sf.technique') + '<br>' + T('sf.unique') + '</p>' +
+          state +
+          (sold ? '' : '<p class="sf-price">' + fmt(SKETCH_PRICE) + ' <span>' + T('sk.each') + '</span></p>') +   // une pièce vendue n'affiche plus de prix
+          buy;
+      }
+      // Esquisse vendue : la phrase s'affiche sous le menu et prolonge l'invitation (« …, but be the first… »), qui la remplace.
+      function soldNote(it) {
+        var sold = !!it && it.status === 'sold';
+        $('#sfsold').textContent = sold ? T('note.soldfirst') : ''; $('#sfsold').hidden = !sold;
+        $('#nask').hidden = sold;
+      }
+      function pickSketch(i) {
+        var it = ITEMS[i]; if (!it) return;
+        $('#sfiche').innerHTML = sketchSheet(it);
+        $('#sfiche').hidden = false;
+        soldNote(it);
+        $('#sfiche').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' });
+      }
+      function layoutTrack() {
+        var t = track.children;
+        if (t.length < 2 || $('.stage').hidden) return;
+        var copy = (t[1].offsetLeft - t[0].offsetLeft) * ITEMS.length;
+        track.style.setProperty('--copy', copy + 'px');
+        track.style.setProperty('--off', (band.clientWidth / 2 - t[0].offsetWidth / 2) + 'px');   // la première esquisse démarre au centre
+        track.style.setProperty('--dur', (copy / SPEED) + 's');
+        rb.copy = copy; rb.off = band.clientWidth / 2 - t[0].offsetWidth / 2; paintTrack();
+      }
+      track.addEventListener('click', function (e) {
+        var t = e.target.closest('.tile');
+        if (t && !t.getAttribute('aria-hidden')) pickSketch(Number(t.dataset.i));
+      });
+      window.addEventListener('resize', layoutTrack);
+      // Glisser : le ruban suit le doigt ; un simple appui sur une esquisse ouvre toujours sa fiche.
+      band.addEventListener('pointerdown', function (e) {
+        if (e.button > 0) return;
+        rb.down = true; rb.drag = false; rb.sx = rb.px = e.clientX; rb.pt = performance.now();
+      });
+      band.addEventListener('pointermove', function (e) {
+        if (!rb.down) return;
+        var now = performance.now(), dx = e.clientX - rb.px, dt = Math.max(1, now - rb.pt) / 1000;
+        if (!rb.drag && Math.abs(e.clientX - rb.sx) > 6) { rb.drag = true; band.classList.add('dragging'); try { band.setPointerCapture(e.pointerId); } catch (err) {} }
+        if (rb.drag) { rb.x -= dx; rb.v = rb.v * 0.6 + (-dx / dt) * 0.4; }
+        rb.px = e.clientX; rb.pt = now;
+      });
+      function endDrag() {
+        if (!rb.down) return;
+        rb.down = false;
+        if (rb.drag) rb.dragEnd = performance.now();
+        rb.drag = false; band.classList.remove('dragging');
+        rb.v = Math.max(-1600, Math.min(1600, rb.v));
+      }
+      band.addEventListener('pointerup', endDrag);
+      band.addEventListener('pointercancel', endDrag);
+      band.addEventListener('lostpointercapture', endDrag);
+      band.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') rb.hover = true; });
+      band.addEventListener('pointerleave', function () { rb.hover = false; });
+      band.addEventListener('click', function (e) {   // juste après un glissé, on n'ouvre pas de fiche
+        if (performance.now() - rb.dragEnd < 350) { e.stopPropagation(); e.preventDefault(); }
+      }, true);
+
+      // Au clavier, le ruban s'arrête sur l'image sélectionnée ; à la souris ou au doigt, jamais.
+      var tabbing = false;
+      document.addEventListener('keydown', function (e) { tabbing = e.key === 'Tab'; });
+      document.addEventListener('pointerdown', function () { tabbing = false; });
+      track.addEventListener('focusin', function () { if (tabbing) track.classList.add('held'); });
+      track.addEventListener('focusout', function () { track.classList.remove('held'); });
+      $('#play').addEventListener('click', function () {
+        var stopped = track.classList.toggle('stopped');
+        this.textContent = T(stopped ? 'play.play' : 'play.pause');
+        this.setAttribute('aria-pressed', String(stopped));
+      });
+
+      // ===== Collections : les séries d'originaux, puis l'onglet Prints =====
+      function renderTabs() {
+        var originals = SERIES.filter(function (x) { return !x.prints; }), prints = SERIES.filter(function (x) { return x.prints; });
+        var tab = function (x) { return '<button type="button" class="ctab" data-id="' + x.id + '" aria-pressed="' + (x === S) + '">' + sname(x) + '</button>'; };   // pas d'étiquette « En vente » / « Épuisé » sur les onglets : le statut s'affiche une fois l'onglet ouvert
+        var first;
+        if (originals.length > 2) {   // beaucoup de séries : un menu sobre, sans cadre, à la place des mots
+          first = '<span class="pick"><label class="sr" for="series">' + T('series.label') + '</label><select id="series">' + originals.map(function (x) {
+            return '<option value="' + x.id + '"' + (x === S ? ' selected' : '') + '>' + sname(x) + '</option>'; }).join('') + '</select></span>';
+        } else { first = originals.map(tab).join(''); }
+        $('#tabs').innerHTML = prints.map(tab).join('') + first;
+        $('#tabs').hidden = (prints.length + originals.length) < 2;   // une seule collection : pas d'onglet à afficher
+      }
+      function renderProduct(it) {
+        var P = S.prints, f = P.formats[0], left = pLeft(it), open = left > 0;
+        $('#product').innerHTML =
+          '<div class="frame pfig natural"><img src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" /></div>' +
+          '<div class="pinfo"><h2>' + q(ttl(it)) + '</h2>' +
+          '<p class="one">' + T('prod.one', { f: f.label, size: nz(f.size) }) + '</p>' +
+          '<p class="price"><span>' + (open ? fmt(f.price) : T('meta.closed')) + '</span><small>' + (open ? T('prod.ship') : T('prod.allgone', { n: it.print.edition })) + '</small></p>' +
+          '<div class="edition"><div class="meter" role="img" aria-label="' + T('meter.aria', { s: it.print.sold, n: it.print.edition }) + '"><span style="width:' + Math.round(it.print.sold / it.print.edition * 100) + '%"></span></div><p>' +
+            (open ? T('prod.left', { left: left, n: it.print.edition }) : T('ed.closed', { n: it.print.edition })) + '</p></div>' +
+          '<ul class="ptext"><li>' + T('ptext.signed') + '</li><li>' + T('ptext.paper', { paper: T(P.paper) }) + '</li><li>' + T('ship.sleeve') + '</li></ul>' +
+          '<div class="buy-desktop">' + printBuyHTML(it, f, false) + '</div>' +
+          '<p class="pmini">' + T('prod.mini') + '</p></div>';
+        $('#pbar').innerHTML = printBuyHTML(it, f, true);
+      }
+      function loadSeries(id) {
+        S = SERIES.filter(function (x) { return x.id === id; })[0] || SERIES[0];
+        ITEMS = S.items; fi = 0;
+        renderTabs();
+        var pr = !!S.prints;
+        var single = pr && S.layout === 'product';
+        if (pr) $('#cross').hidden = true;
+        $('.stage').hidden = pr; $('#pgrid').hidden = !pr || single; $('#trust').hidden = !pr || single;
+        $('#product').hidden = !single; $('#pbar').hidden = !single;
+        document.body.classList.toggle('has-pbar', single);
+        if (single) {
+          renderProduct(ITEMS[0]);
+          $('#lede').textContent = T('lede.prints.one', { n: ITEMS[0].print.edition });
+        } else if (pr) {
+          var open = ITEMS.filter(function (i) { return pLeft(i) > 0; }).length;
+          $('#lede').textContent = T('lede.prints') + (open ? '' : T('lede.prints.closed'));
+          $('#trust').hidden = true; $('#lede').hidden = true; $('#stitle').hidden = true; $('#stext').hidden = true;   // page principale sobre : le détail est sur la page de chaque print
+          $('#pgrid').innerHTML = ITEMS.map(function (it, i) {
+            return '<a class="pcard" href="print-' + it.slug + '.html" aria-label="' + T('open.details', { title: q(ttl(it)) }) + '">' +
+              '<div class="frame natural"><img src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" /></div>' +
+              '<span class="tcap">' + q(ttl(it)) + '</span></a>';
+          }).join('');
+        } else {
+          var left = ITEMS.filter(function (i) { return i.status === 'available'; }).length;
+          $('#lede').textContent = ''; $('#lede').hidden = true;
+          $('#stitle').textContent = S.title || ''; $('#stitle').hidden = !S.title;
+          var stext = T('stext.' + S.id); $('#stext').textContent = stext === 'stext.' + S.id ? '' : stext; $('#stext').hidden = !$('#stext').textContent;
+          $('#cross').hidden = true;   // plus de phrase « ces esquisses sont vendues »
+          $('#skpick').innerHTML = '<option value="">' + T('sk.choose') + '</option>' + ITEMS.map(function (it, i) {
+            return '<option value="' + i + '">' + q(ttl(it)) + '</option>'; }).join('');
+          $('#sfiche').innerHTML = sketchSheet(null);
+          $('#sfiche').hidden = false;
+          soldNote(null);
+          track.innerHTML = tilesHTML(0) + tilesHTML(1) + tilesHTML(2);
+          layoutTrack();
+        }
+        $('#thumbs').classList.toggle('cover', pr);
+        $('#thumbs').innerHTML = ITEMS.map(function (it, i) {
+          return '<button class="thumb" data-i="' + i + '" aria-label="' + q(ttl(it)) + '"><div class="frame"><img src="' + it.img + '" alt="" loading="lazy" decoding="async" /></div></button>';
+        }).join('');
+      }
+      $('#skpick').addEventListener('change', function () {
+        if (this.value === '') return;
+        pickSketch(Number(this.value));   // la fiche s'affiche sur cette page, sans changer d'écran
+      });
+      $('#goprints').addEventListener('click', function () { loadSeries(START.id); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      $('#tabs').addEventListener('click', function (e) {
+        var b = e.target.closest('.ctab');
+        if (b && b.dataset.id !== S.id) { if (!view.hidden) closeView(); loadSeries(b.dataset.id); }
+      });
+      $('#tabs').addEventListener('change', function (e) {
+        if (e.target.id === 'series') { if (!view.hidden) closeView(); loadSeries(e.target.value); }
+      });
+      $('#pgrid').addEventListener('click', function (e) {
+        if (e.target.closest('[data-notify]')) {
+          e.preventDefault();
+          $('#notify').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(function () { $('#nemail').focus({ preventScroll: true }); }, 400);
+          return;
+        }
+        var c = e.target.closest('.popen');
+        if (c) openView(Number(c.dataset.i), c);
+      });
+
+      // ===== Fiche œuvre =====
+      function mailto(it, kind) {
+        if (kind === 'ask') return 'contact.html';   // « Ask a question » ouvre la page Contact
+        var v = { title: q(ttl(it)), series: sname(S), price: fmt(S.prints ? it.price : SKETCH_PRICE) };
+        var subj = kind === 'alert' ? T('mail.alert.subj') : T('mail.buy.subj', v);
+        var body = kind === 'alert' ? T('mail.alert.body') : T('mail.buy.body', v);
+        return 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+      }
+      function printMailto(it, f) {
+        var v = { title: q(ttl(it)), series: sname(S), f: f.label, size: nz(f.size), price: fmt(f.price), k: it.print.sold + 1, n: it.print.edition };
+        var subj = T('mail.print.subj', v);
+        var body = T('mail.print.body', v);
+        return 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+      }
+      function printBuyHTML(it, f, mobile) {
+        var open = pLeft(it) > 0, main, sub;
+        if (open) {
+          main = '<a class="btn primary" href="' + (f.checkout || 'contact.html') + '">' + T('buy.print', { f: f.label }) + '</a>';
+          sub = '<a class="btn ghost" href="' + mailto(it, 'ask') + '">' + T('ask') + '</a>';
+        } else {
+          main = '<a class="btn primary" href="#notify" data-notify>' + T('buy.wait') + '</a>';
+          sub = '<a class="btn ghost" href="' + mailto(it, 'ask') + '">' + T('ask.similar') + '</a>';
+        }
+        if (!mobile) return main + sub;
+        var pills = open && S.prints.formats.length > 1 ? S.prints.formats.map(function (x, k) {
+          return '<button type="button" class="fmt" data-f="' + k + '" aria-pressed="' + (x === f) + '">' + x.label + ' <small>' + fmt(x.price) + '</small></button>';
+        }).join('') : '';
+        return '<div class="mfmt" role="group" aria-label="Format">' + pills + '</div><div class="mrow"><span class="pp">' + (open ? fmt(f.price) : T('closed')) + '</span>' + main + '</div>';
+      }
+      function renderPrint(it) {
+        var P = S.prints, f = P.formats[fi] || P.formats[0], left = pLeft(it), open = left > 0;
+        var li = function (t) { return '<li>' + t + '</li>'; };
+        $('#d-one').textContent = T('rp.one', { n: it.print.edition });
+        $('#d-formats').innerHTML = P.formats.map(function (x, k) {
+          return '<button type="button" class="fmt" data-f="' + k + '" aria-pressed="' + (x === f) + '">' + x.label + ' <small>' + fmt(x.price) + '</small></button>';
+        }).join('');
+        $('#d-price').textContent = open ? fmt(f.price) : T('meta.closed');
+        $('#d-note').textContent = open ? T('rp.note', { pp: P.perPerson === 1 ? T('pp.one.lc') : T('pp.many.lc', { n: P.perPerson }) }) : T('rp.allgone', { n: it.print.edition });
+        $('#d-edition').innerHTML = '<div class="meter" role="img" aria-label="' + T('meter.aria', { s: it.print.sold, n: it.print.edition }) + '"><span style="width:' +
+          Math.round(it.print.sold / it.print.edition * 100) + '%"></span></div><p>' +
+          (open ? T('ed.left', { left: left, n: it.print.edition, k: it.print.sold + 1 }) : T('ed.closed', { n: it.print.edition })) + '</p>';
+        $('#d-assure').innerHTML = open ? [T('as.print.signed'), T('ship.sleeve'), T('as.returns')].map(li).join('') : '';
+        $('#d-specs').innerHTML = [[T('spec.print'), T(P.medium)], [T('spec.paper'), T(it.print.paper)], [T('spec.size'), nz(f.size) + ' (' + f.label + ')']]
+          .map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('');
+        $('#buy-d').innerHTML = printBuyHTML(it, f, false);
+        $('#buy-m').innerHTML = printBuyHTML(it, f, true);
+      }
+      function buyHTML(it, mobile) {
+        var main, sub;
+        if (it.status === 'available') {
+          main = '<a class="btn primary" href="' + (it.checkout || 'contact.html') + '">' + T('buy.sketch') + '</a>';
+          sub = '<a class="btn ghost" href="' + mailto(it, 'ask') + '">' + T('ask') + '</a>';
+        } else if (it.status === 'reserved') {
+          main = '<a class="btn primary" aria-disabled="true">' + T('reserved') + '</a>';
+          sub = '<a class="btn ghost" href="' + mailto(it, 'alert') + '">' + T('alert.btn') + '</a>';
+        } else {
+          main = '<a class="btn primary" href="#notify" data-notify>' + T('notify.drop') + '</a>';
+          sub = '<a class="btn ghost" href="' + mailto(it, 'ask') + '">' + T('ask.similar') + '</a>';
+        }
+        var left = it.status === 'sold' ? T('sold') : fmt(it.price);
+        return mobile ? '<div class="mrow"><span class="pp">' + left + '</span>' + main + '</div>' : main + sub;
+      }
+      function showView(i, push, keepScroll) {
+        cur = (i + ITEMS.length) % ITEMS.length;
+        var it = ITEMS[cur], sold = it.status === 'sold', prints = !!S.prints;
+        $('#pic').classList.toggle('natural', prints);
+        $('#pic').innerHTML = '<img src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" />';
+        $('#d-title').textContent = q(ttl(it));
+        $('#d-formats').innerHTML = ''; $('#d-edition').innerHTML = '';
+        if (prints) { renderPrint(it); } else {
+        $('#d-one').textContent = T('one.original', { series: sname(S) });
+        $('#d-price').textContent = sold ? T('sold') : fmt(SKETCH_PRICE) + ' ' + T('sk.each');
+        $('#d-note').textContent = sold ? (SHOW_SOLD_PRICE ? T('note.soldfor', { p: fmt(SKETCH_PRICE) }) : T('note.sold')) : T('note.ship');
+        $('#d-assure').innerHTML = sold ? '' : [T('as.orig'), T('as.ship'), T('as.returns')]
+          .map(function (t) { return '<li>' + t + '</li>'; }).join('');
+        $('#d-specs').innerHTML = [[T('spec.medium'), T(it.medium)], [T('spec.paper'), T(it.paper)], [T('spec.size'), T(it.size)]]
+          .map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('');
+        $('#buy-d').innerHTML = buyHTML(it, false);
+        $('#buy-m').innerHTML = buyHTML(it, true);
+        }
+        $('#pos').textContent = (cur + 1) + ' / ' + ITEMS.length;
+        document.title = T('doc.title.piece', { title: q(ttl(it)) });
+        document.querySelectorAll('.thumb').forEach(function (t, k) {
+          t.setAttribute('aria-current', String(k === cur));
+          if (k === cur && t.scrollIntoView) t.scrollIntoView({ block: 'nearest', inline: 'center' });
+        });
+        if (push !== false) history.replaceState(null, '', '#' + it.id);
+        if (!keepScroll) view.scrollTop = 0;
+      }
+      function openView(i, from) {
+        lastFocus = from || null;
+        view.hidden = false;
+        document.body.classList.add('lock');
+        showView(i);
+        $('#close').focus();
+      }
+      function closeView() {
+        view.hidden = true;
+        document.body.classList.remove('lock');
+        document.title = T('doc.title');
+        history.replaceState(null, '', location.pathname + location.search);
+        if (lastFocus) lastFocus.focus({ preventScroll: true });
+      }
+      // Adresse directe : #nightrider-1-03 ouvre la fiche d'un original, #prints-02 celle d'un tirage.
+      function fromHash() {
+        var id = location.hash.slice(1);
+        if (!id) return;
+        var found = null;
+        SERIES.forEach(function (sr) { sr.items.forEach(function (it, i) { if (it.id === id) found = { s: sr, i: i }; }); });
+        if (!found) return;
+        if (found.s !== S) loadSeries(found.s.id);
+        if (found.s.layout === 'product') { $('#product').scrollIntoView({ block: 'start' }); return; }
+        pickSketch(found.i);   // la fiche s'affiche sur cette page, comme au clic sur une vignette : plus d'écran séparé
+      }
+
+      view.addEventListener('click', function (e) {
+        var b = e.target.closest('.fmt');
+        if (b) { fi = Number(b.dataset.f); showView(cur, true, true); }
+      });
+      $('#thumbs').addEventListener('click', function (e) {
+        var t = e.target.closest('.thumb');
+        if (t) showView(Number(t.dataset.i));
+      });
+      $('#prev').addEventListener('click', function () { showView(cur - 1); });
+      $('#next').addEventListener('click', function () { showView(cur + 1); });
+      $('#close').addEventListener('click', closeView);
+      document.addEventListener('keydown', function (e) {
+        if (view.hidden) return;
+        if (e.key === 'Escape') closeView();
+        else if (e.key === 'ArrowLeft') showView(cur - 1);
+        else if (e.key === 'ArrowRight') showView(cur + 1);
+      });
+      // Balayage au doigt sur l'image pour passer à l'esquisse suivante ou précédente
+      var tx = 0, ty = 0;
+      $('.pic').addEventListener('touchstart', function (e) { tx = e.changedTouches[0].clientX; ty = e.changedTouches[0].clientY; }, { passive: true });
+      $('.pic').addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) showView(cur + (dx < 0 ? 1 : -1));
+      }, { passive: true });
+      // « Notify me » dans une fiche : on referme la fiche et on amène le visiteur au formulaire.
+      view.addEventListener('click', function (e) {
+        if (!e.target.closest('[data-notify]')) return;
+        e.preventDefault();
+        lastFocus = null;
+        closeView();
+        $('#notify').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(function () { $('#nemail').focus({ preventScroll: true }); }, 400);
+      });
+
+      // ===== Inscription à la prochaine série =====
+      // Avec BREVO_URL, le formulaire part chez Brevo dans un cadre caché (la page ne bouge pas) ; sans, un e-mail pré-rempli s'ouvre.
+      var nform = $('#nform'), nframe = $('#nframe'), waiting = false;
+      function thanks() {
+        nform.hidden = true;
+        $('#nmsg').textContent = T('notify.thanks');
+      }
+      nframe.addEventListener('load', function () { if (waiting) { waiting = false; thanks(); } });
+      nform.addEventListener('submit', function (e) {
+        if (BREVO_URL) {
+          if (nform.querySelector('input[name="email_address_check"]').value) { e.preventDefault(); return; }
+          nform.action = BREVO_URL;
+          waiting = true;
+          return;
+        }
+        e.preventDefault();
+        location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(T('mail.nl.subj')) +
+          '&body=' + encodeURIComponent(T('mail.nl.body', { email: $('#nemail').value.trim() }));
+        $('#nmsg').textContent = T('notify.mailto');
+      });
+
+      // ===== Démarrage =====
+      // Quand la langue est connue ou change, tout ce que la page construit se redessine dans la bonne langue.
+      function refresh(lang) {
+        loadSeries(S.id);
+        $('#play').textContent = T(track.classList.contains('stopped') ? 'play.play' : 'play.pause');
+        nform.querySelector('input[name="locale"]').value = lang;   // la langue des e-mails envoyés par Brevo
+        if (!view.hidden) showView(cur, false, true);
+      }
+      I18N.onChange(refresh);
+      I18N.init();
+      if (location.hash) fromHash();
+      window.addEventListener('hashchange', function () { if (view.hidden) fromHash(); });
+
       var back = document.querySelector('.back');
-      if (!back) return;
       back.addEventListener('click', function (e) {
         try {
           if (document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1) {
