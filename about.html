@@ -116,14 +116,19 @@
 </head>
 <body>
 
-  <a class="back" href="index.html">← Back</a>
+  <a class="back" href="index.html" data-i18n="nav.back">← Back</a>
 
   <main class="page">
-    <h1>About</h1>
-    <h2 class="about-title">.A love story</h2>
-    <p class="about-line">“die trying to express something to someone”</p>
+    <h1 data-i18n="nav.about">About</h1>
+    <h2 class="about-title" data-i18n="about.title">.A love story</h2>
+    <p class="about-line" data-i18n="about.line">“die trying to express something to someone”</p>
   </main>
 
+  <script src="assets/i18n.js"></script>
+  <script>
+    I18N.add({ en: {"doc.title": "About — Virtos Charles", "about.title": ".A love story", "about.line": "“die trying to express something to someone”"}, fr: {"doc.title": "À propos — Virtos Charles", "about.title": ".Une histoire d’amour", "about.line": "“mourir en essayant d’exprimer quelque chose à quelqu’un”"} });
+    I18N.init();
+  </script>
   <script>
     (function () {
       var back = document.querySelector('.back');

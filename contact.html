@@ -5,126 +5,322 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — Virtos Charles</title>
+  <meta name="description" content="Contact Virtos Charles: ask about an artwork, sizing and pricing, place a personal order or propose a collaboration." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Jost:wght@300;400;500;700&family=Unbounded:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Jost:wght@300;400;500;700&family=Unbounded:wght@500&display=swap" rel="stylesheet" />
   <style>
-    :root { --sig: #4a78b5; }
+    :root {
+      --sig: #4a78b5;          /* bleu de la signature */
+      --ink: #14161a;
+      --muted: #5d636c;
+      --line: #e4e7ec;
+      --paper: #f7f8fa;
+    }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { height: 100%; }
+    html { -webkit-text-size-adjust: 100%; }
 
     body {
-      background: #FFFFFF;
-      color: #000;
+      background: #fff;
+      color: var(--ink);
       font-family: 'Inter', sans-serif;
       font-weight: 300;
+      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100%;
-      padding: 1.5rem 1rem;
-      text-align: center;
+      padding: 5.2rem 1.25rem 2.4rem;
     }
 
     .back {
-      position: fixed;
-      z-index: 10;
-      top: 1rem; left: 1rem;
-      padding: 0.5rem 0.9rem;
-      border-radius: 999px;
+      position: fixed; z-index: 10; top: 1rem; left: 1rem;
+      padding: 0.5rem 0.9rem; border-radius: 999px;
       background: rgba(255, 255, 255, 0.88);
-      font-size: 0.95rem;
-      letter-spacing: 0.05em;
-      color: #000;
-      text-decoration: none;
-      opacity: 0.6;
-      transition: opacity 0.25s ease;
+      font-size: 0.95rem; letter-spacing: 0.05em; color: #000; text-decoration: none;
+      opacity: 0.6; transition: opacity 0.25s ease;
     }
     .back:hover, .back:focus-visible { opacity: 1; }
 
     .page {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%;
-      opacity: 0;
-      transform: translateY(14px);
+      width: 100%; max-width: 34rem; margin: auto 0;
+      opacity: 0; transform: translateY(14px);
       animation: fade-in 0.9s ease forwards 0.15s;
     }
 
+    /* ---- En-tête ---- */
+    .head { text-align: center; }
     h1 {
       font-family: 'Unbounded', 'Helvetica Neue', Arial, sans-serif;
       font-size: clamp(2.2rem, 7vw, 3.4rem);
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      color: var(--sig);
+      font-weight: 500; letter-spacing: 0.01em; color: var(--sig);
+    }
+    .lead {
+      margin: 1.1rem auto 0; max-width: 27rem;
+      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 400; font-size: clamp(1.05rem, 3.2vw, 1.2rem); line-height: 1.6;
+      color: #2a2e34; text-wrap: balance;
     }
 
-    .texts {
-      width: 100%;
-      max-width: 30rem;
-      margin: 2rem auto 0;
-      text-align: left;
-    }
-    .intro {
-      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 400;
-      font-size: clamp(1rem, 3vw, 1.12rem);
-      line-height: 1.75;
-      color: #1f2328;
-      text-wrap: pretty;
-    }
-    .intro + .intro { margin-top: 1.2rem; }
-    .intro a { color: #000; text-underline-offset: 4px; text-decoration-thickness: 1px; }
-
-    .thanks {
-      padding: 0 0 1rem;
-      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: 0.04em;
-      color: #1f2328;
+    /* ---- Bloc principal : écrire un e-mail ---- */
+    .cta-card {
+      margin-top: 2rem; padding: 1.5rem 1.25rem 1.2rem;
+      border: 1px solid var(--line); border-radius: 20px; background: #fff;
+      box-shadow: 0 1px 2px rgba(20, 22, 26, 0.04), 0 14px 34px -18px rgba(20, 22, 26, 0.22);
       text-align: center;
     }
+    .cta {
+      display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+      width: 100%; min-height: 3.5rem; padding: 0.85rem 1.2rem;
+      border-radius: 14px; background: var(--ink); color: #fff; text-decoration: none;
+      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight: 500;
+      font-size: 1.05rem; letter-spacing: 0.04em;
+      transition: background 0.25s ease, transform 0.25s ease;
+    }
+    .cta svg { width: 1.3rem; height: 1.3rem; flex: none; }
+    .cta .go { transition: transform 0.25s ease; }
+    .cta:hover, .cta:focus-visible { background: var(--sig); }
+    .cta:hover .go, .cta:focus-visible .go { transform: translateX(4px); }
+    .cta:focus-visible, .row:focus-visible, .ig:focus-visible, .copy:focus-visible, .mail:focus-visible { outline: 2px solid var(--sig); outline-offset: 3px; }
 
-    @keyframes fade-in {
-      to { opacity: 1; transform: none; }
+    .reply {
+      display: inline-flex; align-items: center; gap: 0.55rem; margin-top: 1rem;
+      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; font-size: 0.95rem; color: #2c6a3d;
+    }
+    .reply i { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: #3f9a57; box-shadow: 0 0 0 0 rgba(63, 154, 87, 0.5); animation: pulse 2.4s ease-out infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(63, 154, 87, 0.5); } 70%, 100% { box-shadow: 0 0 0 9px rgba(63, 154, 87, 0); } }
+
+    .addr { margin-top: 0.9rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.35rem 0.9rem; }
+    .addr a.mail {
+      font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.98rem; color: var(--ink);
+      text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;
+      overflow-wrap: anywhere;
+    }
+    .copy {
+      border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+      border-radius: 999px; padding: 0.38rem 0.85rem; min-height: 2.2rem;
+      font: 400 0.85rem 'Inter', sans-serif; letter-spacing: 0.03em; cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .copy:hover { border-color: var(--ink); }
+    .copy.done { background: #eaf3ec; border-color: #b9d6c0; color: #2c6a3d; }
+
+    /* ---- Titres de section ---- */
+    .section { margin-top: 2.4rem; }
+    .label {
+      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight: 500;
+      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+      text-align: center; margin-bottom: 0.5rem;
     }
 
+    /* ---- Comment puis-je aider ---- */
+    .rows { list-style: none; border-top: 1px solid var(--line); }
+    .rows li { border-bottom: 1px solid var(--line); }
+    .row {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      min-height: 4.1rem; padding: 0.8rem 0.4rem; text-decoration: none; color: inherit; text-align: left;
+      transition: background 0.2s ease, padding 0.25s ease;
+    }
+    .row:hover, .row:focus-visible { background: var(--paper); padding-left: 0.9rem; padding-right: 0.9rem; }
+    .row b { display: block; font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; font-size: 1.08rem; color: var(--ink); }
+    .row span { display: block; margin-top: 0.15rem; font-size: 0.9rem; color: var(--muted); }
+    .row i { font-style: normal; font-size: 1.2rem; color: var(--sig); transition: transform 0.25s ease; flex: none; }
+    .row:hover i, .row:focus-visible i { transform: translateX(4px); }
+
+    /* ---- Modalités ---- */
+    .steps { list-style: none; counter-reset: s; }
+    .steps li {
+      counter-increment: s; position: relative; padding: 0.95rem 0 0.95rem 3rem;
+      border-bottom: 1px solid var(--line); text-align: left;
+    }
+    .steps li:first-child { border-top: 1px solid var(--line); }
+    .steps li::before {
+      content: counter(s); position: absolute; left: 0.2rem; top: 1rem;
+      width: 1.8rem; height: 1.8rem; border-radius: 50%; border: 1px solid var(--sig); color: var(--sig);
+      display: grid; place-items: center;
+      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; font-size: 0.9rem;
+    }
+    .steps b { display: block; font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight: 500; font-size: 1.05rem; color: var(--ink); }
+    .steps span { display: block; margin-top: 0.2rem; font-size: 0.93rem; line-height: 1.55; color: #3c4149; }
+    .fine { margin-top: 1rem; text-align: center; font-size: 0.85rem; line-height: 1.55; color: var(--muted); text-wrap: balance; }
+
+    /* ---- Instagram ---- */
+    .social { margin-top: 2.2rem; display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
+    .social p { font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight: 400; font-size: 0.98rem; color: var(--muted); }
+    .ig {
+      display: inline-flex; align-items: center; gap: 0.7rem; min-height: 3rem; padding: 0.4rem 1.1rem 0.4rem 0.5rem;
+      border: 1px solid var(--line); border-radius: 999px; color: var(--ink); text-decoration: none;
+      transition: border-color 0.25s ease, transform 0.25s ease;
+    }
+    .ig:hover, .ig:focus-visible { border-color: var(--ink); transform: translateY(-2px); }
+    .ig .ico { width: 2.3rem; height: 2.3rem; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; }
+    .ig svg { width: 1.2rem; height: 1.2rem; display: block; }
+    .ig span { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.98rem; letter-spacing: 0.01em; }
+
+    .thanks {
+      margin-top: 2.2rem; text-align: center;
+      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif; font-weight: 700; font-size: 1.05rem; letter-spacing: 0.06em; color: #1f2328;
+    }
+
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    @keyframes fade-in { to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) {
       .page { animation: none; opacity: 1; transform: none; }
+      .cta, .cta .go, .row, .row i, .ig { transition: none; }
+      .reply i { animation: none; }
     }
+    @media (max-width: 380px) { .cta-card { padding: 1.2rem 0.9rem 1rem; } }
   </style>
 </head>
 <body>
 
-  <a class="back" href="index.html">← Back</a>
+  <a class="back" href="index.html" data-i18n="nav.back">← Back</a>
 
   <main class="page">
-    <h1>Contact</h1>
-    <div class="texts">
-      <p class="intro">If you are interested by a piece and would like more information about sizing, pricing, anything else, or if you simply want to place a personal order, hit me at: <a href="mailto:virtos.charles-pro@outlook.com">virtos.charles-pro@outlook.com</a>.</p>
-      <p class="intro">For do special collaborations, let's pull up in my MP</p>
+    <header class="head">
+      <h1 data-i18n="nav.contact">Contact</h1>
+      <p class="lead" data-i18n="c.lead">Interested in an artwork? Sizing, pricing, availability or a personal order: write to me directly.</p>
+    </header>
+
+    <section class="cta-card" aria-label="Email" data-i18n-attr="aria-label:c.email">
+      <a class="cta" data-mail="ask" href="mailto:virtos.charles-pro@outlook.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7.5 8 6 8-6"/></svg>
+        <span data-i18n="c.send">Send me an email</span><span class="go" aria-hidden="true">→</span>
+      </a>
+      <p class="reply"><i aria-hidden="true"></i><span data-i18n="c.reply">I reply within 48 hours.</span></p>
+      <div class="addr">
+        <a class="mail" href="mailto:virtos.charles-pro@outlook.com" id="addr">virtos.charles-pro@outlook.com</a>
+        <button class="copy" type="button" id="copy" data-i18n="c.copy">Copy address</button>
+      </div>
+      <p class="sr" id="copied" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="section" aria-labelledby="ways-t">
+      <h2 class="label" id="ways-t" data-i18n="c.ways">How can I help?</h2>
+      <ul class="rows">
+        <li>
+          <a class="row" data-mail="ask" href="mailto:virtos.charles-pro@outlook.com">
+            <div><b data-i18n="c.r1">Ask about an artwork</b><span data-i18n="c.r1s">Size, price and availability</span></div><i aria-hidden="true">→</i>
+          </a>
+        </li>
+        <li>
+          <a class="row" data-mail="order" href="mailto:virtos.charles-pro@outlook.com">
+            <div><b data-i18n="c.r2">Place a personal order</b><span data-i18n="c.r2s">Tell me what you have in mind</span></div><i aria-hidden="true">→</i>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="https://ig.me/m/thxwereallymadeit" target="_blank" rel="noopener noreferrer">
+            <div><b data-i18n="c.r3">Special collaborations</b><span data-i18n="c.r3s">Slide into my DMs on Instagram</span></div><i aria-hidden="true">→</i>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="how-t">
+      <h2 class="label" id="how-t" data-i18n="c.how">How it works</h2>
+      <ol class="steps">
+        <li><b data-i18n="c.s1">Enquiry</b><span data-i18n="c.s1d">Tell me which artwork interests you. I reply within 48 hours with its availability, dimensions and price.</span></li>
+        <li><b data-i18n="c.s2">Reservation</b><span data-i18n="c.s2d">Once we agree, the artwork is reserved in your name for 7 days.</span></li>
+        <li><b data-i18n="c.s3">Payment</b><span data-i18n="c.s3d">By secure payment link or bank transfer. Personal orders: a 50% deposit when the order is confirmed, the balance before shipping.</span></li>
+        <li><b data-i18n="c.s4">Shipping</b><span data-i18n="c.s4d">Carefully packed and sent tracked and insured within 3 working days of payment. The shipping cost is confirmed in your quote.</span></li>
+        <li><b data-i18n="c.s5">Authenticity and returns</b><span data-i18n="c.s5d">Every original is hand-signed and comes with a certificate of authenticity. Returns are accepted within 14 days of receipt; personal orders, made to measure, cannot be returned.</span></li>
+      </ol>
+      <p class="fine" data-i18n="c.fine">Prices are in euros. An invoice is issued for every purchase.</p>
+    </section>
+
+    <div class="social">
+      <p data-i18n="c.follow">Follow the latest work</p>
+      <a class="ig" href="https://www.instagram.com/thxwereallymadeit/" target="_blank" rel="noopener noreferrer" aria-label="Instagram, @thxwereallymadeit (opens in a new tab)" data-i18n-attr="aria-label:c.ig">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"></circle></svg></span>
+        <span>@thxwereallymadeit</span>
+      </a>
     </div>
+
+    <p class="thanks" data-i18n="c.thanks">Thx 2 U</p>
   </main>
 
-  <p class="thanks">Thx 2 U</p>
-
+  <script src="assets/i18n.js"></script>
   <script>
     (function () {
-      var back = document.querySelector('.back');
-      if (!back) return;
-      back.addEventListener('click', function (e) {
-        try {
-          if (document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1) {
-            e.preventDefault();
-            history.back();
-          }
-        } catch (err) {}
+      var ADDR = 'virtos.charles-pro@outlook.com';
+      I18N.add({
+        en: {
+          'doc.title': 'Contact — Virtos Charles',
+          'doc.desc': 'Contact Virtos Charles: ask about an artwork, sizing and pricing, place a personal order or propose a collaboration.',
+          'c.email': 'Email',
+          'c.lead': 'Interested in an artwork? Sizing, pricing, availability or a personal order: write to me directly.',
+          'c.send': 'Send me an email', 'c.reply': 'I reply within 48 hours.',
+          'c.copy': 'Copy address', 'c.copied': 'Copied ✓', 'c.copied.sr': 'Address copied',
+          'c.ways': 'How can I help?',
+          'c.r1': 'Ask about an artwork', 'c.r1s': 'Size, price and availability',
+          'c.r2': 'Place a personal order', 'c.r2s': 'Tell me what you have in mind',
+          'c.r3': 'Special collaborations', 'c.r3s': 'Slide into my DMs on Instagram',
+          'c.how': 'How it works',
+          'c.s1': 'Enquiry', 'c.s1d': 'Tell me which artwork interests you. I reply within 48 hours with its availability, dimensions and price.',
+          'c.s2': 'Reservation', 'c.s2d': 'Once we agree, the artwork is reserved in your name for 7 days.',
+          'c.s3': 'Payment', 'c.s3d': 'By secure payment link or bank transfer. Personal orders: a 50% deposit when the order is confirmed, the balance before shipping.',
+          'c.s4': 'Shipping', 'c.s4d': 'Carefully packed and sent tracked and insured within 3 working days of payment. The shipping cost is confirmed in your quote.',
+          'c.s5': 'Authenticity and returns', 'c.s5d': 'Every original is hand-signed and comes with a certificate of authenticity. Returns are accepted within 14 days of receipt; personal orders, made to measure, cannot be returned.',
+          'c.fine': 'Prices are in euros. An invoice is issued for every purchase.',
+          'c.follow': 'Follow the latest work', 'c.ig': 'Instagram, @thxwereallymadeit (opens in a new tab)',
+          'c.thanks': 'Thx 2 U',
+          'm.ask.subj': 'Enquiry: an artwork I’m interested in',
+          'm.ask.body': 'Hello Virtos,\n\nI’m interested in this artwork: \nI’d like to know: size / price / availability\n\nCity and country (for shipping): \n\nThank you,\n',
+          'm.order.subj': 'Personal order',
+          'm.order.body': 'Hello Virtos,\n\nI’d like to place a personal order.\nWhat I have in mind: \nPreferred size: \nCity and country: \n\nThank you,\n'
+        },
+        fr: {
+          'doc.title': 'Contact — Virtos Charles',
+          'doc.desc': 'Contacter Virtos Charles : se renseigner sur une œuvre, les dimensions et les prix, passer une commande personnalisée ou proposer une collaboration.',
+          'c.email': 'E-mail',
+          'c.lead': 'Une œuvre vous intéresse ? Dimensions, prix, disponibilité ou commande personnalisée : écrivez-moi directement.',
+          'c.send': 'M’envoyer un e-mail', 'c.reply': 'Je vous réponds sous 48 heures.',
+          'c.copy': 'Copier l’adresse', 'c.copied': 'Copiée ✓', 'c.copied.sr': 'Adresse copiée',
+          'c.ways': 'Comment puis-je vous aider ?',
+          'c.r1': 'Se renseigner sur une œuvre', 'c.r1s': 'Dimensions, prix et disponibilité',
+          'c.r2': 'Passer une commande personnalisée', 'c.r2s': 'Dites-moi ce que vous imaginez',
+          'c.r3': 'Collaborations spéciales', 'c.r3s': 'Écrivez-moi en message privé sur Instagram',
+          'c.how': 'Comment cela se passe',
+          'c.s1': 'Demande', 'c.s1d': 'Dites-moi quelle œuvre vous intéresse. Je vous réponds sous 48 heures avec sa disponibilité, ses dimensions et son prix.',
+          'c.s2': 'Réservation', 'c.s2d': 'Une fois d’accord, l’œuvre est réservée à votre nom pendant 7 jours.',
+          'c.s3': 'Paiement', 'c.s3d': 'Par lien de paiement sécurisé ou par virement bancaire. Commande personnalisée : un acompte de 50 % à la confirmation de la commande, le solde avant l’expédition.',
+          'c.s4': 'Expédition', 'c.s4d': 'Emballage soigné, envoi suivi et assuré sous 3 jours ouvrés après le paiement. Les frais d’expédition sont indiqués dans votre devis.',
+          'c.s5': 'Authenticité et retours', 'c.s5d': 'Chaque original est signé à la main et accompagné d’un certificat d’authenticité. Les retours sont acceptés sous 14 jours après réception ; les commandes personnalisées, réalisées sur mesure, ne peuvent pas être retournées.',
+          'c.fine': 'Les prix sont en euros. Une facture est remise pour chaque achat.',
+          'c.follow': 'Suivre les dernières œuvres', 'c.ig': 'Instagram, @thxwereallymadeit (s’ouvre dans un nouvel onglet)',
+          'c.thanks': 'Merci à vous',
+          'm.ask.subj': 'Demande : une œuvre qui m’intéresse',
+          'm.ask.body': 'Bonjour Virtos,\n\nJe suis intéressé(e) par cette œuvre : \nJe souhaite connaître : les dimensions / le prix / la disponibilité\n\nVille et pays (pour la livraison) : \n\nMerci,\n',
+          'm.order.subj': 'Commande personnalisée',
+          'm.order.body': 'Bonjour Virtos,\n\nJe souhaite passer une commande personnalisée.\nCe que j’imagine : \nFormat souhaité : \nVille et pays : \n\nMerci,\n'
+        }
+      });
+      // Les liens « e-mail » : objet et message préremplis, dans la langue choisie.
+      function mails() {
+        document.querySelectorAll('[data-mail]').forEach(function (a) {
+          var k = a.getAttribute('data-mail');
+          a.href = 'mailto:' + ADDR + '?subject=' + encodeURIComponent(I18N.t('m.' + k + '.subj')) + '&body=' + encodeURIComponent(I18N.t('m.' + k + '.body'));
+        });
+        var d = document.querySelector('meta[name="description"]'); if (d) d.setAttribute('content', I18N.t('doc.desc'));
+      }
+      I18N.onChange(mails);
+      I18N.init();
+
+      // Copier l'adresse : utile à ceux qui n'ont pas d'application e-mail sur l'appareil.
+      var btn = document.getElementById('copy'), say = document.getElementById('copied'), timer;
+      if (btn) btn.addEventListener('click', function () {
+        function ok() {
+          btn.textContent = I18N.t('c.copied'); btn.classList.add('done'); say.textContent = I18N.t('c.copied.sr');
+          clearTimeout(timer);
+          timer = setTimeout(function () { btn.textContent = I18N.t('c.copy'); btn.classList.remove('done'); say.textContent = ''; }, 2200);
+        }
+        function fallback() {
+          var t = document.createElement('textarea'); t.value = ADDR; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+          document.body.appendChild(t); t.select(); try { document.execCommand('copy'); ok(); } catch (e) {} t.remove();
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(ADDR).then(ok, fallback); } else { fallback(); }
       });
     })();
   </script>

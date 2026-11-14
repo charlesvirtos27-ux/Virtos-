@@ -141,18 +141,18 @@
       <span class="logo-fallback">Virtos</span>
       <canvas id="signature" tabindex="0" role="img" aria-label="Virtos Charles"></canvas>
     </h1>
-    <nav class="home-menu" aria-label="Main">
+    <nav class="home-menu" aria-label="Main" data-i18n-attr="aria-label:nav.menu">
       <ul>
-        <li><a href="workpiece.html">Workpiece</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="workshop.html">Workshop</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="workpiece.html" data-i18n="nav.workpiece">Workpiece</a></li>
+        <li><a href="about.html" data-i18n="nav.about">About</a></li>
+        <li><a href="workshop.html" data-i18n="nav.workshop">Workshop</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
       </ul>
     </nav>
   </div>
 
   <div class="home-social">
-    <a href="https://www.instagram.com/thxwereallymadeit/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)">
+    <a href="https://www.instagram.com/thxwereallymadeit/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)" data-i18n-attr="aria-label:nav.instagram">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="3" y="3" width="18" height="18" rx="5"></rect>
         <circle cx="12" cy="12" r="4"></circle>
@@ -161,6 +161,11 @@
     </a>
   </div>
 
+  <script src="assets/i18n.js"></script>
+  <script>
+    I18N.add({ en: {"doc.title": "Virtos Charles — Artist"}, fr: {"doc.title": "Virtos Charles — Artiste"} });
+    I18N.init();
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <script>

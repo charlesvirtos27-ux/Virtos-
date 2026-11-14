@@ -277,18 +277,19 @@ input[type=email]:focus,input[type=text]:focus,input[type=password]:focus{border
     sync();
   })();
   </script>
+<script src="assets/i18n.js"></script>
 <script>
   var DICT = {en: {"le": "Email address", "ep": "Your email", "ln": "Name", "b1": "Get my code", "f1": "Your address is only used to send your access code. You can unsubscribe at any time.", "have": "I already have a code", "ge": "Please check your email address to continue.", "l2": "Check your inbox and enter the code we just sent you.", "hl": "Access code", "b2": "Enter the site", "f2": "Wrong address? You can","sp1": "Check your spam folder.","sp2": "The email can take a minute to arrive, and may land in your spam or junk folder.", "other": "use another address", "he": "This code is not valid. Check your email and try again.", "ok1": "Access granted", "ok2": "Welcome.", "ok3": "Opening the site…"}, fr: {"le": "Adresse e-mail", "ep": "Votre e-mail", "ln": "Nom", "b1": "Recevoir mon code", "f1": "Votre adresse sert uniquement à vous envoyer le code d’accès. Vous pouvez vous désinscrire à tout moment.", "have": "J’ai déjà un code", "ge": "Vérifiez votre adresse e-mail pour continuer.", "l2": "Consultez votre boîte de réception et saisissez le code que nous venons de vous envoyer.", "hl": "Code d’accès", "b2": "Entrer sur le site", "f2": "Mauvaise adresse ? Vous pouvez","sp1": "Pensez à regarder dans vos spams.","sp2": "L’e-mail peut mettre une minute à arriver, et se retrouver dans vos courriers indésirables.", "other": "utiliser une autre adresse", "he": "Ce code n’est pas valide. Vérifiez votre e-mail et réessayez.", "ok1": "Accès accordé", "ok2": "Bienvenue.", "ok3": "Ouverture du site…"}};
-  var lang = (function(){
-    var q = new URLSearchParams(location.search).get('lang');
-    var l = (q === 'fr' || q === 'en') ? q : ((navigator.language || '').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en');
-    document.documentElement.lang = l;
+  var lang = 'en';
+  function applyLang(l){
+    lang = l;
     document.querySelectorAll('[data-t]').forEach(function(el){ var v = DICT[l][el.getAttribute('data-t')]; if (v) el.textContent = v; });
     document.querySelectorAll('input[name=locale]').forEach(function(i){ i.value = l; });
     var gn = document.getElementById('g-name'); if (gn) gn.placeholder = DICT[l].ln;
     var ge = document.getElementById('g-email'); if (ge) ge.placeholder = DICT[l].ep;
-    return l;
-  })();
+  }
+  I18N.onChange(applyLang);   // le sélecteur EN | FR en haut à droite (assets/i18n.js) change la langue ; le choix est gardé pour tout le site
+  I18N.init();
   (function(){
     var ACCESS_HASH = "fb9ff9e5856238991fe484da577cfb18fcd3982bfcf9f3571118e59af68a2a21";   // empreinte SHA-256 du code d'accès (ce n'est pas un coffre-fort : voir la note)
     function $(s){ return document.querySelector(s); }

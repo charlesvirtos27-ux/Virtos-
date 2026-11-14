@@ -71,14 +71,19 @@
 </head>
 <body>
 
-  <a class="back" href="index.html">← Back</a>
+  <a class="back" href="index.html" data-i18n="nav.back">← Back</a>
 
   <main>
     <div class="soon-block">
-      <p class="soon">First Sale Upcoming Soon</p>
+      <p class="soon" data-i18n="ws.soon">First Sale Upcoming Soon</p>
     </div>
   </main>
 
+  <script src="assets/i18n.js"></script>
+  <script>
+    I18N.add({ en: {"doc.title": "Workshop — Virtos Charles", "ws.soon": "First Sale Upcoming Soon"}, fr: {"doc.title": "Boutique — Virtos Charles", "ws.soon": "Première vente prochainement"} });
+    I18N.init();
+  </script>
   <script>
     (function () {
       var back = document.querySelector('.back');

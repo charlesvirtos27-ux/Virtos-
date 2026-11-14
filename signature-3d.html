@@ -52,13 +52,18 @@
 </style>
 </head>
 <body>
-<canvas id="c" tabindex="0" role="img" aria-label="Virtos Charles’s signature in sky-blue metal, which can be rotated"></canvas>
+<canvas id="c" tabindex="0" role="img" aria-label="Virtos Charles’s signature in sky-blue metal, which can be rotated" data-i18n-attr="aria-label:sig.alt"></canvas>
 
 <div class="overlay">
   <div class="coming-soon-subtitle">Signature 3D</div>
-  <div class="coming-soon">Upcoming Soon</div>
+  <div class="coming-soon" data-i18n="sig.soon">Upcoming Soon</div>
 </div>
 
+<script src="assets/i18n.js"></script>
+<script>
+    I18N.add({ en: {"doc.title": "Signature 3D — Virtos Charles", "sig.alt": "Virtos Charles’s signature in sky-blue metal, which can be rotated", "sig.soon": "Upcoming Soon"}, fr: {"doc.title": "Signature 3D — Virtos Charles", "sig.alt": "Signature de Virtos Charles en métal bleu ciel, que l’on peut faire pivoter", "sig.soon": "Prochainement"} });
+    I18N.init();
+  </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
