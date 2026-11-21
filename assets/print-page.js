@@ -127,8 +127,7 @@
     var buy = '<a class="btn" href="' + href + '"><span class="bt"><b>' + (open ? T('pp.c.buy', { f: f.label }) : T('pp.wait')) + '</b>' +
       (open ? '<small>' + T('pp.c.inbtn', { left: left, n: it.edition }) + '</small>' : '') + '</span><span class="go" aria-hidden="true">→</span></a>';
     document.getElementById('print').innerHTML =
-      '<figure class="wall"><div class="framed" role="button" tabindex="0" aria-label="' + T('pp.zoom') + '"><img src="assets/img/' + it.img + '.webp" alt="' + T('alt.' + it.img) + '" decoding="async" />' +
-        '<span class="zoom-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5M10.5 8v5M8 10.5h5"/></svg></span></div></figure>' +
+      '<figure class="wall"><div class="framed"><img src="assets/img/' + it.img + '.webp" alt="' + T('alt.' + it.img) + '" decoding="async" /></div></figure>' +
       '<div class="label">' +
         '<h1>' + q(it.title) + '</h1>' +
         '<p class="edl">' + T('pp.c.ed', { n: it.edition }) + '</p>' +
@@ -142,15 +141,7 @@
         '<p class="fine">* ' + T('pp.c.frame') + '</p>' +
         '<p class="fine orig">' + T('pp.c.orig') + '</p>' +
       '</div>' +
-      '</div>' +
-      '<div class="zoom" id="zoom" hidden><button class="zoom-x" type="button">' + T('pp.close') + '</button>' +
-        '<img src="assets/img/' + it.img + '.webp" alt="' + T('alt.' + it.img) + '" /></div>';
-    // Agrandir l'œuvre : un appui ouvre la toile en grand, un appui ou Échap la referme.
-    var fr = document.querySelector('.wall .framed'), zm = document.getElementById('zoom');
-    var openZ = function () { zm.hidden = false; document.body.style.overflow = 'hidden'; zm.querySelector('.zoom-x').focus(); };
-    fr.addEventListener('click', openZ);
-    fr.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openZ(); } });
-    zm.addEventListener('click', function () { closeZoom(); fr.focus(); });
+      '</div>';
     document.title = T('pp.doc', { title: q(it.title) });
   }
 

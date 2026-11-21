@@ -210,7 +210,7 @@ body.cartel { padding-bottom: 6rem; }
 
 /* ===== Finitions « galerie » : lumière douce sur le mur, entrée en fondu, œuvre à agrandir, mention d'édition ===== */
 body.cartel { background: radial-gradient(110% 55% at 50% 0%, rgba(255,255,255,0.42), rgba(255,255,255,0) 62%), var(--wall); }
-.cartel .wall .framed { position: relative; cursor: zoom-in; -webkit-tap-highlight-color: transparent; }
+.cartel .wall .framed { position: relative; -webkit-tap-highlight-color: transparent; }
 .cartel .wall .framed:focus-visible { outline: 2px solid #2c2c2a; outline-offset: 6px; }
 .zoom-ico { position: absolute; right: 10px; bottom: 10px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
   background: rgba(255,255,255,0.86); color: #2c2c2a; box-shadow: 0 2px 8px rgba(0,0,0,0.18); opacity: 0.85; transition: opacity 0.2s ease, transform 0.2s ease; }
