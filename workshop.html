@@ -348,6 +348,7 @@
   </div>
 
   <script src="assets/i18n.js"></script>
+  <script src="assets/prints.js"></script>
   <script>
     I18N.add({
       en: {
@@ -647,6 +648,12 @@
             { img: 'nightrider-01', price: 220, status: 'sold' },
             { img: 'nightrider-16', status: 'sold' }
           ]
+        }        ,
+        // Onglet « Tirages » : les données viennent de assets/prints.js (prix, édition). Chaque tirage a sa propre page.
+        {
+          id: 'prints', prefix: 'prefix.print',
+          prints: { edition: 15, perPerson: PRINTS.perPerson, medium: PRINTS.medium, paper: PRINTS.paper, formats: PRINTS.formats },
+          pieces: PRINTS.items.map(function (x) { return { img: x.img, title: x.title, edition: x.edition, printSold: x.sold, slug: x.slug, paper: x.paper, price: x.price }; })
         }
       ];
       // Commun à toutes les séries : technique, papier, format. Une série qui en change le précise dans son bloc.
@@ -679,8 +686,8 @@
       // La copie du milieu est la seule accessible au clavier et aux lecteurs d'écran.
       function tmeta(it) {
         var P = S.prints, l = pLeft(it), f = P.formats[0];
-        var what = P.formats.length === 1 ? f.label + ' · ' + fmt(f.price) : T('meta.from', { p: fmt(fromPrice()) });
-        return '<span class="tmeta">' + (l <= 0 ? T('meta.closed') : what + (l <= 5 ? ' · ' + T('meta.left', { n: l }) : '')) + '</span>';
+        var what = P.formats.length === 1 ? f.label + ' · ' + fmt(it.price || f.price) : T('meta.from', { p: fmt(fromPrice()) });
+        return '<span class="tmeta">' + (l <= 0 ? T('meta.closed') : what) + '</span>';
       }
       function cardBuy(it) {   // le bouton d'achat directement sur la carte : un seul geste
         var f = S.prints.formats[0];
