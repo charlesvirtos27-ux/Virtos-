@@ -202,6 +202,7 @@
     .info h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(2rem, 6vw, 2.8rem); }
     .info .one { margin-top: 0.3rem; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
     .price { margin-top: 1rem; font-size: 1.7rem; font-weight: 400; }
+    .eth { display: block; margin-top: 0.2rem; font-size: 0.85rem; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; cursor: help; }
     .price small { display: block; margin-top: 0.15rem; font-size: 0.8rem; color: var(--muted); }
     .specs { margin-top: 1.2rem; border-top: 1px solid var(--line); }
     .specs div { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
@@ -337,7 +338,7 @@
         <h2 id="d-title"></h2>
         <p class="one" id="d-one"></p>
         <div class="formats" id="d-formats" role="group" aria-label="Format"></div>
-        <p class="price"><span id="d-price"></span><small id="d-note"></small></p>
+        <p class="price"><span id="d-price"></span><span class="eth" id="d-eth" data-eur="0" hidden></span><small id="d-note"></small></p>
         <div class="edition" id="d-edition"></div>
         <dl class="specs" id="d-specs"></dl>
         <div class="buy-desktop" id="buy-d"></div>
@@ -348,6 +349,7 @@
   </div>
 
   <script src="assets/i18n.js"></script>
+  <script src="assets/eth.js" defer></script>
   <script src="assets/prints.js"></script>
   <script>
     I18N.add({
@@ -613,6 +615,7 @@
       var pad = function (n) { return (n < 10 ? '0' : '') + n; };
       var q = function (t) { return '“' + t + '”'; };   // les titres sont toujours entre guillemets
       var fmt = function (n) { return I18N.price(n); };                                // €80 en anglais, 80 € en français
+      var eth = function (n) { return '<span class="eth" data-eur="' + n + '" hidden></span>'; };   // équivalent ETH, rempli par assets/eth.js
       var T = function (k, v) { return I18N.t(k, v); };
       var sname = function (x) { return T('tab.' + x.id + '.name'); };
       var ttl = function (w) { return w.title || T(w.prefix) + ' ' + pad(w.n); };   // « Sketch 01 » / « Esquisse 01 » ; les œuvres titrées gardent leur titre
@@ -732,7 +735,7 @@
         return head +
           '<p class="sf-lines">' + T('sf.year') + '<br>' + T('val.size') + '<br>' + T('sf.technique') + '<br>' + T('sf.unique') + '</p>' +
           state +
-          (it && !sold ? '<p class="sf-price">' + fmt(SKETCH_PRICE) + ' <span>' + T('sk.each') + '</span></p>' : '') +   // une pièce vendue n'affiche plus de prix
+          (it && !sold ? '<p class="sf-price">' + fmt(SKETCH_PRICE) + ' <span>' + T('sk.each') + '</span>' + eth(SKETCH_PRICE) + '</p>' : '') +   // une pièce vendue n'affiche plus de prix
           buy;
       }
       // Esquisse vendue : la phrase s'affiche sous le menu et prolonge l'invitation (« …, but be the first… »), qui la remplace.
@@ -820,7 +823,7 @@
           '<div class="frame pfig natural"><img src="' + it.img + '" alt="' + altOf(it) + '" decoding="async" /></div>' +
           '<div class="pinfo"><h2>' + q(ttl(it)) + '</h2>' +
           '<p class="one">' + T('prod.one', { f: f.label, size: nz(f.size) }) + '</p>' +
-          '<p class="price"><span>' + (open ? fmt(f.price) : T('meta.closed')) + '</span><small>' + (open ? T('prod.ship') : T('prod.allgone', { n: it.print.edition })) + '</small></p>' +
+          '<p class="price"><span>' + (open ? fmt(f.price) : T('meta.closed')) + '</span>' + (open ? eth(f.price) : '') + '<small>' + (open ? T('prod.ship') : T('prod.allgone', { n: it.print.edition })) + '</small></p>' +
           '<div class="edition"><div class="meter" role="img" aria-label="' + T('meter.aria', { s: it.print.sold, n: it.print.edition }) + '"><span style="width:' + Math.round(it.print.sold / it.print.edition * 100) + '%"></span></div><p>' +
             (open ? T('prod.left', { left: left, n: it.print.edition }) : T('ed.closed', { n: it.print.edition })) + '</p></div>' +
           '<ul class="ptext"><li>' + T('ptext.signed') + '</li><li>' + T('ptext.paper', { paper: T(P.paper) }) + '</li><li>' + T('ship.sleeve') + '</li></ul>' +
@@ -929,6 +932,7 @@
           return '<button type="button" class="fmt" data-f="' + k + '" aria-pressed="' + (x === f) + '">' + x.label + ' <small>' + fmt(x.price) + '</small></button>';
         }).join('');
         $('#d-price').textContent = open ? fmt(f.price) : T('meta.closed');
+        $('#d-eth').setAttribute('data-eur', open ? f.price : 0);
         $('#d-note').textContent = open ? T('rp.note', { pp: P.perPerson === 1 ? T('pp.one.lc') : T('pp.many.lc', { n: P.perPerson }) }) : T('rp.allgone', { n: it.print.edition });
         $('#d-edition').innerHTML = '<div class="meter" role="img" aria-label="' + T('meter.aria', { s: it.print.sold, n: it.print.edition }) + '"><span style="width:' +
           Math.round(it.print.sold / it.print.edition * 100) + '%"></span></div><p>' +

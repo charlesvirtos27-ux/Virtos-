@@ -135,6 +135,7 @@
         '<div class="bx">' +
           '<p class="bx-k">' + T('pp.c.price') + '</p>' +
           '<p class="bx-price">' + (open ? price : T('pp.closed')) + '</p>' +
+          (open ? '<p class="bx-eth" data-eur="' + (it.price || f.price) + '" hidden></p>' : '') +
           '<p class="bx-ship">' + (open ? T('pp.ship') : T('pp.allgone', { n: it.edition })) + '</p>' +
           '<a class="cta" href="' + href + '"><span>' + (open ? T('pp.c.buy', { f: f.label }) : T('pp.wait')) + '</span><span class="go" aria-hidden="true">→</span></a>' +
         '</div>' +
@@ -173,7 +174,7 @@
         '<figcaption>' + T('pp.shown') + '</figcaption></figure>' +
       '<div class="info">' +
       '<p class="one">' + T('pp.kind', { f: f.label, size: I18N.num(f.size) }) + '</p>' +
-      '<p class="price">' + (open ? I18N.price(it.price || f.price) : T('pp.closed')) + '<small>' + (open ? T('pp.ship') : T('pp.allgone', { n: it.edition })) + '</small></p>' +
+      '<p class="price">' + (open ? I18N.price(it.price || f.price) : T('pp.closed')) + (open ? '<span class="eth" data-eur="' + (it.price || f.price) + '" hidden></span>' : '') + '<small>' + (open ? T('pp.ship') : T('pp.allgone', { n: it.edition })) + '</small></p>' +
       '<div class="edition"><div class="meter" role="img" aria-label="' + T('pp.meter', { s: it.sold, n: it.edition }) + '"><span style="width:' + Math.round(it.sold / it.edition * 100) + '%"></span></div><p>' +
         (open ? T('pp.left', { left: left, n: it.edition, k: it.sold + 1 }) : T('pp.edclosed', { n: it.edition })) + '</p></div>' +
       (open ? '<a class="btn" href="' + (f.checkout || 'contact.html') + '">' + T('pp.buy', { f: f.label }) + '</a>'
