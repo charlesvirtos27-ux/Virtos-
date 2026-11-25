@@ -2,6 +2,7 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.coingecko.com https://api.coinbase.com https://*.sibforms.com; form-action 'self' https://*.sibforms.com mailto:; object-src 'none'; base-uri 'self'; frame-src 'none'; upgrade-insecure-requests" /><meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Signature 3D — Virtos Charles</title>
 <style>
@@ -64,7 +65,7 @@
     I18N.add({ en: {"doc.title": "Signature 3D — Virtos Charles", "sig.alt": "Virtos Charles’s signature in sky-blue metal, which can be rotated", "sig.soon": "Upcoming Soon"}, fr: {"doc.title": "Signature 3D — Virtos Charles", "sig.alt": "Signature de Virtos Charles en métal bleu ciel, que l’on peut faire pivoter", "sig.soon": "Prochainement"} });
     I18N.init();
   </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 (function(){
   var NOIR  = /couleur=noir/i.test(location.search);
