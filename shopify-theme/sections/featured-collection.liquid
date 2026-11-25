@@ -1,0 +1,23 @@
+{%- assign collection = section.settings.collection -%}
+<section class="section wrap">
+  <header class="section-head">
+    <h2>{{ section.settings.title }}</h2>
+    {%- if collection != blank -%}<a class="link" href="{{ collection.url }}">{{ 'general.view_all' | t }} →</a>{%- endif -%}
+  </header>
+  <div class="art-grid">
+    {%- if collection != blank -%}
+      {%- for product in collection.products limit: section.settings.limit -%}{% render 'art-card', product: product %}{%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..3) -%}<article class="art-card"><div class="art-card__media">{{ 'product-1' | placeholder_svg_tag: 'placeholder' }}</div><h3 class="art-card__title">{{ 'general.example' | t }}</h3></article>{%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Œuvres à la une",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Dernières œuvres" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Nombre d'œuvres", "min": 2, "max": 12, "step": 1, "default": 6 }
+  ],
+  "presets": [{ "name": "Œuvres à la une" }] }
+{% endschema %}

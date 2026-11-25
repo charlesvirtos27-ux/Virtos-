@@ -1,0 +1,11 @@
+<section class="wrap section">
+  <header class="page-head"><h1>{{ 'collection.all' | t }}</h1></header>
+  <div class="art-grid">
+    {%- for collection in collections -%}
+      <article class="art-card"><a class="art-card__link" href="{{ collection.url }}">
+        <div class="art-card__media">{%- if collection.featured_image -%}{{ collection.featured_image | image_url: width: 900 | image_tag: loading: 'lazy' }}{%- else -%}{{ 'collection-1' | placeholder_svg_tag: 'placeholder' }}{%- endif -%}</div>
+        <h3 class="art-card__title">{{ collection.title }}</h3></a></article>
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}{ "name": "Liste des collections" }{% endschema %}

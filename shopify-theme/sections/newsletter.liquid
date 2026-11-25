@@ -1,0 +1,19 @@
+<section class="section wrap newsletter">
+  <h2>{{ section.settings.title }}</h2>
+  <p class="muted">{{ section.settings.text }}</p>
+  {%- form 'customer', class: 'inline-form' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <label class="sr" for="nl-email">{{ 'general.email' | t }}</label>
+    <input id="nl-email" type="email" name="contact[email]" required autocomplete="email" placeholder="{{ 'general.email' | t }}">
+    <button class="btn" type="submit">{{ 'general.subscribe' | t }}</button>
+  {%- endform -%}
+  {%- if form.posted_successfully? -%}<p class="ok">{{ 'general.subscribed' | t }}</p>{%- endif -%}
+</section>
+{% schema %}
+{ "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Soyez prévenu des nouvelles œuvres" },
+    { "type": "text", "id": "text", "label": "Texte", "default": "Chaque toile est unique : recevez un mail dès qu'une nouvelle pièce est disponible." }
+  ],
+  "presets": [{ "name": "Newsletter" }] }
+{% endschema %}

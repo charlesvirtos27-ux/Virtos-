@@ -1,0 +1,7 @@
+{
+  "general": { "skip": "Skip to content", "menu": "Menu", "view_all": "View all", "example": "Artwork title", "email": "Email address", "subscribe": "Subscribe", "subscribed": "Thank you, you're subscribed!", "close": "Close", "rights": "All rights reserved", "not_found": "This page doesn't exist.", "home": "Back to home" },
+  "products": { "from": "From", "sold": "Sold", "add": "Add to cart", "zoom": "Zoom image", "technique": "Medium", "dimensions": "Dimensions", "year": "Year", "edition": "Edition", "enquire": "Question about this piece?" },
+  "collection": { "empty": "No artworks yet.", "all": "Collections" },
+  "cart": { "title": "Cart", "empty": "Your cart is empty.", "continue": "Browse artworks", "quantity": "Quantity", "remove": "Remove", "subtotal": "Subtotal", "taxes": "Taxes included. Shipping calculated at checkout.", "update": "Update", "checkout": "Check out", "added": "Added to cart ✓", "error": "Could not add this artwork." },
+  "contact": { "name": "Name", "subject": "Subject", "message": "Message", "send": "Send", "sent": "Thank you, your message has been sent.", "about": "About:" }
+}

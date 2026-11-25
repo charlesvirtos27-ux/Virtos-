@@ -1,0 +1,23 @@
+<section class="hero {% if section.settings.image == blank %}hero--text{% endif %}">
+  {%- if section.settings.image != blank -%}
+    <div class="hero__media">{{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '800,1200,1600,2000', sizes: '100vw', alt: section.settings.image.alt | default: shop.name }}</div>
+  {%- endif -%}
+  <div class="hero__text">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h1>{{ section.settings.title }}</h1>
+    {%- if section.settings.subtitle != blank -%}<p class="hero__sub">{{ section.settings.subtitle }}</p>{%- endif -%}
+    {%- if section.settings.button_label != blank -%}<a class="btn" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }}</a>{%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Bannière",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image (une peinture, format portrait ou paysage)" },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Peintures originales" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Virtos Charles" },
+    { "type": "text", "id": "subtitle", "label": "Sous-titre", "default": "Des visages, des couleurs, des histoires. Chaque toile est une pièce unique." },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Découvrir les œuvres" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton" }
+  ],
+  "presets": [{ "name": "Bannière" }] }
+{% endschema %}

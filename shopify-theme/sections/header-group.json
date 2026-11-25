@@ -1,0 +1,3 @@
+{ "name": "En-tête", "type": "header",
+  "sections": { "announcement": { "type": "announcement-bar" }, "header": { "type": "header" } },
+  "order": ["announcement", "header"] }

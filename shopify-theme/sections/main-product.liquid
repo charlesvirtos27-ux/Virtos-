@@ -1,0 +1,55 @@
+{%- assign current = product.selected_or_first_available_variant -%}
+<section class="wrap product" data-product>
+  <div class="product__gallery">
+    {%- for media in product.media -%}
+      {%- if forloop.first -%}{%- assign load = 'eager' -%}{%- else -%}{%- assign load = 'lazy' -%}{%- endif -%}
+      <button type="button" class="product__img" data-zoom="{{ media | image_url: width: 2400 }}" aria-label="{{ 'products.zoom' | t }}">
+        {{ media | image_url: width: 1400 | image_tag: loading: load, widths: '600,900,1200,1400', sizes: '(min-width: 900px) 55vw, 100vw', alt: media.alt | default: product.title }}
+      </button>
+    {%- else -%}{{ 'product-1' | placeholder_svg_tag: 'placeholder' }}{%- endfor -%}
+  </div>
+  <div class="product__info">
+    <p class="eyebrow">{{ product.type | default: shop.name }}</p>
+    <h1>{{ product.title }}</h1>
+    <p class="product__price" data-price>
+      {%- if product.available -%}{% render 'price', product: product %}{%- else -%}<span class="tag tag--sold">{{ 'products.sold' | t }}</span>{%- endif -%}
+    </p>
+    <dl class="specs">
+      {%- assign mf = product.metafields.custom -%}
+      {%- if mf.technique != blank -%}<div><dt>{{ 'products.technique' | t }}</dt><dd>{{ mf.technique }}</dd></div>{%- endif -%}
+      {%- if mf.dimensions != blank -%}<div><dt>{{ 'products.dimensions' | t }}</dt><dd>{{ mf.dimensions }}</dd></div>{%- endif -%}
+      {%- if mf.year != blank -%}<div><dt>{{ 'products.year' | t }}</dt><dd>{{ mf.year }}</dd></div>{%- endif -%}
+      {%- if mf.edition != blank -%}<div><dt>{{ 'products.edition' | t }}</dt><dd>{{ mf.edition }}</dd></div>{%- endif -%}
+    </dl>
+    {%- form 'product', product, class: 'product-form', data-product-form: '' -%}
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          <fieldset class="opt"><legend>{{ option.name }}</legend>
+            {%- for value in option.values -%}
+              <input type="radio" id="o{{ option.position }}-{{ forloop.index }}" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option>
+              <label for="o{{ option.position }}-{{ forloop.index }}">{{ value }}</label>
+            {%- endfor -%}
+          </fieldset>
+        {%- endfor -%}
+      {%- endunless -%}
+      <select name="id" hidden data-variant-select>
+        {%- for v in product.variants -%}<option value="{{ v.id }}" data-price="{{ v.price | money }}" data-available="{{ v.available }}" {% if v == current %}selected{% endif %}>{{ v.title }}</option>{%- endfor -%}
+      </select>
+      <button class="btn btn--full" type="submit" data-add {% unless current.available %}disabled{% endunless %}>
+        {%- if current.available -%}{{ 'products.add' | t }}{%- else -%}{{ 'products.sold' | t }}{%- endif -%}
+      </button>
+      {{ form | payment_button }}
+    {%- endform -%}
+    <p class="muted small">{{ section.settings.shipping_note }}</p>
+    <div class="rte">{{ product.description }}</div>
+    <a class="link" href="{{ section.settings.contact_link }}?subject={{ product.title | url_encode }}">{{ 'products.enquire' | t }} →</a>
+  </div>
+</section>
+<div class="lightbox" data-lightbox hidden><button class="lightbox__x" aria-label="{{ 'general.close' | t }}" data-lightbox-close>×</button><img alt="" data-lightbox-img></div>
+{% schema %}
+{ "name": "Fiche œuvre",
+  "settings": [
+    { "type": "text", "id": "shipping_note", "label": "Note livraison", "default": "Livraison assurée et suivie. Certificat d'authenticité inclus." },
+    { "type": "url", "id": "contact_link", "label": "Page contact", "default": "/pages/contact" }
+  ] }
+{% endschema %}

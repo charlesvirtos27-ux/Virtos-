@@ -1,0 +1,8 @@
+{%- comment -%} Usage: render 'price', product: product {%- endcomment -%}
+<span class="price">
+  {%- if product.compare_at_price > product.price -%}
+    <s>{{ product.compare_at_price | money }}</s>
+  {%- endif -%}
+  {%- if product.price_varies -%}{{ 'products.from' | t }} {% endif -%}
+  {{ product.price | money }}
+</span>

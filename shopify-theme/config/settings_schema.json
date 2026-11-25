@@ -1,0 +1,20 @@
+[
+  { "name": "theme_info", "theme_name": "Virtos Gallery", "theme_version": "1.0.0", "theme_author": "Virtos Charles", "theme_documentation_url": "https://help.shopify.com/", "theme_support_url": "https://help.shopify.com/" },
+  { "name": "Couleurs", "settings": [
+    { "type": "color", "id": "color_bg", "label": "Fond", "default": "#FFFFFF" },
+    { "type": "color", "id": "color_ink", "label": "Texte", "default": "#16191D" },
+    { "type": "color", "id": "color_muted", "label": "Texte secondaire", "default": "#6B7280" },
+    { "type": "color", "id": "color_accent", "label": "Accent clair", "default": "#A6DDFF" },
+    { "type": "color", "id": "color_accent_deep", "label": "Accent foncé", "default": "#5FB3E8" } ] },
+  { "name": "Typographie", "settings": [
+    { "type": "font_picker", "id": "type_heading_font", "label": "Titres", "default": "cormorant_garamond_i5" },
+    { "type": "font_picker", "id": "type_body_font", "label": "Texte", "default": "inter_n3" },
+    { "type": "range", "id": "page_width", "label": "Largeur de page", "min": 1000, "max": 1600, "step": 50, "default": 1300, "unit": "px" } ] },
+  { "name": "Marque", "settings": [
+    { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+    { "type": "image_picker", "id": "share_image", "label": "Image de partage (réseaux sociaux)" } ] },
+  { "name": "Réseaux sociaux", "settings": [
+    { "type": "url", "id": "social_instagram", "label": "Instagram" },
+    { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+    { "type": "url", "id": "social_facebook", "label": "Facebook" } ] }
+]

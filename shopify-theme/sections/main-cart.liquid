@@ -1,0 +1,31 @@
+<section class="wrap section cart">
+  <header class="page-head"><h1>{{ 'cart.title' | t }}</h1></header>
+  {%- if cart.item_count == 0 -%}
+    <p class="center">{{ 'cart.empty' | t }}</p><p class="center"><a class="btn" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a></p>
+  {%- else -%}
+  <form action="{{ routes.cart_url }}" method="post">
+    <ul class="cart__items">
+      {%- for item in cart.items -%}
+      <li class="cart__item">
+        <a href="{{ item.url }}" class="cart__img">{%- if item.image -%}{{ item.image | image_url: width: 300 | image_tag: loading: 'lazy' }}{%- endif -%}</a>
+        <div><a href="{{ item.url }}"><strong>{{ item.product.title }}</strong></a>
+          {%- unless item.product.has_only_default_variant -%}<p class="muted small">{{ item.variant.title }}</p>{%- endunless -%}
+          <p>{{ item.final_price | money }}</p>
+          <label class="sr" for="q{{ item.index }}">{{ 'cart.quantity' | t }}</label>
+          <input id="q{{ item.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="qty">
+          <a class="link small" href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}</a>
+        </div>
+        <p class="cart__line">{{ item.final_line_price | money }}</p>
+      </li>
+      {%- endfor -%}
+    </ul>
+    <div class="cart__foot">
+      <p class="cart__total"><span>{{ 'cart.subtotal' | t }}</span> <strong>{{ cart.total_price | money }}</strong></p>
+      <p class="muted small">{{ 'cart.taxes' | t }}</p>
+      <button type="submit" name="update" class="btn btn--ghost">{{ 'cart.update' | t }}</button>
+      <button type="submit" name="checkout" class="btn">{{ 'cart.checkout' | t }}</button>
+    </div>
+  </form>
+  {%- endif -%}
+</section>
+{% schema %}{ "name": "Panier" }{% endschema %}

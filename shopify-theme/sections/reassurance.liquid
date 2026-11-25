@@ -1,0 +1,19 @@
+<section class="section wrap">
+  <ul class="reassure">
+    {%- for block in section.blocks -%}
+      <li {{ block.shopify_attributes }}><strong>{{ block.settings.title }}</strong><span>{{ block.settings.text }}</span></li>
+    {%- endfor -%}
+  </ul>
+</section>
+{% schema %}
+{ "name": "Réassurance",
+  "blocks": [{ "type": "item", "name": "Point", "settings": [
+    { "type": "text", "id": "title", "label": "Titre", "default": "Pièce unique" },
+    { "type": "text", "id": "text", "label": "Texte", "default": "Signée, avec certificat d'authenticité" } ] }],
+  "max_blocks": 4,
+  "presets": [{ "name": "Réassurance", "blocks": [
+    { "type": "item", "settings": { "title": "Pièce unique", "text": "Signée, avec certificat d'authenticité" } },
+    { "type": "item", "settings": { "title": "Emballage soigné", "text": "Expédiée protégée, assurée et suivie" } },
+    { "type": "item", "settings": { "title": "Paiement sécurisé", "text": "Carte, PayPal, Apple Pay, virement" } },
+    { "type": "item", "settings": { "title": "Retour 14 jours", "text": "Si l'œuvre ne vous convient pas" } } ] }] }
+{% endschema %}

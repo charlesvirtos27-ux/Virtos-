@@ -1,0 +1,18 @@
+{%- comment -%} Usage: render 'art-card', product: product {%- endcomment -%}
+<article class="art-card">
+  <a href="{{ product.url }}" class="art-card__link">
+    <div class="art-card__media">
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300,450,600,900', sizes: '(min-width: 900px) 30vw, 90vw', alt: product.featured_media.alt | default: product.title }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+      {%- endif -%}
+      {%- unless product.available -%}<span class="tag tag--sold">{{ 'products.sold' | t }}</span>{%- endunless -%}
+    </div>
+    <h3 class="art-card__title">{{ product.title }}</h3>
+    <p class="art-card__meta">
+      {%- if product.metafields.custom.technique != blank -%}{{ product.metafields.custom.technique }} · {% endif -%}
+      {%- if product.available -%}{% render 'price', product: product %}{%- else -%}{{ 'products.sold' | t }}{%- endif -%}
+    </p>
+  </a>
+</article>

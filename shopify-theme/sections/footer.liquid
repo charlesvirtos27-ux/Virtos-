@@ -1,0 +1,24 @@
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="footer-brand">{{ shop.name }}</p>
+      {%- if section.settings.text != blank -%}<p class="muted">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <nav aria-label="Pied de page">
+      <ul>{%- for link in linklists[section.settings.menu].links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+    </nav>
+    <ul class="social">
+      {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" rel="me noopener" target="_blank">Instagram</a></li>{%- endif -%}
+      {%- if settings.social_tiktok != blank -%}<li><a href="{{ settings.social_tiktok }}" rel="me noopener" target="_blank">TikTok</a></li>{%- endif -%}
+      {%- if settings.social_facebook != blank -%}<li><a href="{{ settings.social_facebook }}" rel="me noopener" target="_blank">Facebook</a></li>{%- endif -%}
+    </ul>
+  </div>
+  <p class="copyright">© {{ 'now' | date: '%Y' }} {{ shop.name }} · {{ 'general.rights' | t }}</p>
+</footer>
+{% schema %}
+{ "name": "Pied de page",
+  "settings": [
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Peintures originales de Virtos Charles. Chaque œuvre est unique, signée et expédiée avec certificat d'authenticité." },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+  ] }
+{% endschema %}

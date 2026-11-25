@@ -1,0 +1,19 @@
+<section class="section wrap statement">
+  {%- if section.settings.image != blank -%}<div class="statement__img">{{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.image.alt | default: shop.name }}</div>{%- endif -%}
+  <div class="statement__text">
+    <h2>{{ section.settings.title }}</h2>
+    <div class="rte">{{ section.settings.text }}</div>
+    {%- if section.settings.button_label != blank -%}<a class="btn btn--ghost" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>{%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "L'artiste",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo (atelier, portrait…)" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "A love story" },
+    { "type": "richtext", "id": "text", "label": "Texte", "default": "<p>Je peins des visages et des silhouettes en aplats vifs, entre street art et peinture classique. Chaque œuvre est réalisée à la main dans mon atelier, signée et numérotée.</p>" },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "À propos" },
+    { "type": "url", "id": "button_link", "label": "Lien" }
+  ],
+  "presets": [{ "name": "L'artiste" }] }
+{% endschema %}

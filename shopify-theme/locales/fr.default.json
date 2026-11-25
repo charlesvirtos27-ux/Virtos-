@@ -1,0 +1,7 @@
+{
+  "general": { "skip": "Aller au contenu", "menu": "Menu", "view_all": "Tout voir", "example": "Titre de l'œuvre", "email": "Adresse e-mail", "subscribe": "Je m'inscris", "subscribed": "Merci, vous êtes inscrit·e !", "close": "Fermer", "rights": "Tous droits réservés", "not_found": "Cette page n'existe pas.", "home": "Retour à l'accueil" },
+  "products": { "from": "À partir de", "sold": "Vendue", "add": "Ajouter au panier", "zoom": "Agrandir l'image", "technique": "Technique", "dimensions": "Dimensions", "year": "Année", "edition": "Édition", "enquire": "Une question sur cette œuvre ?" },
+  "collection": { "empty": "Aucune œuvre pour le moment.", "all": "Collections" },
+  "cart": { "title": "Panier", "empty": "Votre panier est vide.", "continue": "Voir les œuvres", "quantity": "Quantité", "remove": "Retirer", "subtotal": "Sous-total", "taxes": "Taxes incluses. Frais de livraison calculés à l'étape suivante.", "update": "Mettre à jour", "checkout": "Payer", "added": "Ajoutée au panier ✓", "error": "Impossible d'ajouter cette œuvre." },
+  "contact": { "name": "Nom", "subject": "Sujet", "message": "Message", "send": "Envoyer", "sent": "Merci, votre message a bien été envoyé.", "about": "À propos de :" }
+}

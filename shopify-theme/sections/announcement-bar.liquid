@@ -1,0 +1,13 @@
+{%- if section.settings.text != blank -%}
+<div class="announce">
+  {%- if section.settings.link != blank -%}<a href="{{ section.settings.link }}">{{ section.settings.text }}</a>{%- else -%}{{ section.settings.text }}{%- endif -%}
+</div>
+{%- endif -%}
+{% schema %}
+{ "name": "Bandeau d'annonce",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Texte", "default": "Livraison offerte et emballage soigné · Œuvres originales signées" },
+    { "type": "url", "id": "link", "label": "Lien" }
+  ],
+  "presets": [{ "name": "Bandeau d'annonce" }] }
+{% endschema %}

@@ -1,0 +1,30 @@
+<header class="site-header" data-header>
+  <div class="site-header__inner">
+    <button class="icon-btn menu-toggle" aria-expanded="false" aria-controls="nav" data-menu-toggle aria-label="{{ 'general.menu' | t }}">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+    <a class="logo" href="{{ routes.root_url }}">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 400 | image_tag: alt: shop.name, height: section.settings.logo_height, loading: 'eager' }}
+      {%- else -%}{{ shop.name }}{%- endif -%}
+    </a>
+    <nav id="nav" class="nav" data-nav aria-label="Principal">
+      <ul>
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li><a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+    <a class="cart-link" href="{{ routes.cart_url }}" aria-label="{{ 'cart.title' | t }}">
+      {{ 'cart.title' | t }} <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+    </a>
+  </div>
+</header>
+{% schema %}
+{ "name": "En-tête",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (optionnel, sinon le nom de la boutique)" },
+    { "type": "range", "id": "logo_height", "label": "Hauteur du logo", "min": 20, "max": 120, "step": 4, "default": 48, "unit": "px" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ] }
+{% endschema %}

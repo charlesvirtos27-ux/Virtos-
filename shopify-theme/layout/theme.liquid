@@ -1,0 +1,39 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_bg }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank -%}<link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64 }}">{%- endif -%}
+  <title>{{ page_title }}{% unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  {% render 'meta-tags' %}
+  <style>
+    {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+    {{ settings.type_body_font | font_face: font_display: 'swap' }}
+    :root{
+      --accent:{{ settings.color_accent }};
+      --accent-deep:{{ settings.color_accent_deep }};
+      --ink:{{ settings.color_ink }};
+      --muted:{{ settings.color_muted }};
+      --bg:{{ settings.color_bg }};
+      --font-heading:{{ settings.type_heading_font.family }},{{ settings.type_heading_font.fallback_families }};
+      --font-body:{{ settings.type_body_font.family }},{{ settings.type_body_font.fallback_families }};
+      --page-width:{{ settings.page_width }}px;
+    }
+  </style>
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  <script>document.documentElement.className = document.documentElement.className.replace('no-js','js');</script>
+  {{ content_for_header }}
+</head>
+<body class="template-{{ request.page_type | handle }}">
+  <a class="skip" href="#main">{{ 'general.skip' | t }}</a>
+  {% sections 'header-group' %}
+  <main id="main" tabindex="-1">{{ content_for_layout }}</main>
+  {% sections 'footer-group' %}
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>window.theme = { cartUrl: {{ routes.cart_url | json }}, addUrl: {{ routes.cart_add_url | append: '.js' | json }}, strings: { added: {{ 'cart.added' | t | json }}, error: {{ 'cart.error' | t | json }} } };</script>
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</body>
+</html>

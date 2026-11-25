@@ -1,0 +1,12 @@
+{ "sections": {
+  "hero": { "type": "hero" },
+  "featured": { "type": "featured-collection" },
+  "statement": { "type": "artist-statement" },
+  "reassure": { "type": "reassurance", "blocks": {
+    "a": { "type": "item", "settings": { "title": "Pièce unique", "text": "Signée, avec certificat d'authenticité" } },
+    "b": { "type": "item", "settings": { "title": "Emballage soigné", "text": "Expédiée protégée, assurée et suivie" } },
+    "c": { "type": "item", "settings": { "title": "Paiement sécurisé", "text": "Carte, PayPal, Apple Pay" } },
+    "d": { "type": "item", "settings": { "title": "Retour 14 jours", "text": "Si l'œuvre ne vous convient pas" } } },
+    "block_order": ["a","b","c","d"] },
+  "newsletter": { "type": "newsletter" } },
+  "order": ["hero","featured","statement","reassure","newsletter"] }
