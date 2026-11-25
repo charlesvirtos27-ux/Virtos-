@@ -9,6 +9,8 @@ window.PRINTS = {
   formats: [{ id: 'a3', label: 'A3', size: '29.7 × 42 cm', price: 80, checkout: '' }],   // checkout : lien de paiement, plus tard
   items: [
     { slug: 'ninja-batbat', img: 'batman-2', title: 'Ninja Batbat', edition: 10, sold: 6, price: 60, bats: true,
-      mood: { bg: '#050b07', glow: '#5fc531', accent: '#7cd43f', accentInk: '#06110a', second: '#4a5cd8', mark: 'BAT' } }
+      mood: { bg: '#050b07', glow: '#5fc531', accent: '#7cd43f', accentInk: '#06110a', second: '#4a5cd8', mark: 'BAT' } },
+    { slug: 'archer', img: 'clown-diable-3', title: 'Archer?', edition: 10, sold: 0, price: 40, paper: 'val.print.glossy',
+      mood: { bg: '#110706', glow: '#e8581f', accent: '#f26a2c', accentInk: '#160805', second: '#c9303b', mark: '?' } }
   ]
 };
