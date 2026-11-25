@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Virtos Shop — Les produits tendance livrés chez toi</title>
+<meta name="description" content="Découvre nos produits tendance à prix mini. Livraison offerte dès 49 €, satisfait ou remboursé 30 jours.">
+<link rel="stylesheet" href="style.css"></head><body>
+<div class="bar">🚚 Livraison offerte dès 49 € · Satisfait ou remboursé 30 jours</div>
+<header><div class="nav"><a class="logo" href="#">Virtos<span>.</span>shop</a>
+<nav><a class="l" href="#produits">Produits</a><a class="l" href="#faq">FAQ</a><a class="l" href="#contact">Contact</a></nav>
+<button class="cartbtn" id="cartbtn">🛒 Panier<b id="count">0</b></button></div></header>
+<div class="hero"><h1>Les produits <em>tendance</em>, livrés directement chez toi</h1>
+<p>Une sélection testée et approuvée, à prix mini. Paiement sécurisé, suivi de colis, retours faciles.</p>
+<a class="cta" href="#produits">Voir la sélection</a></div>
+<div class="trust"><div><b>🚚 Livraison rapide</b>Suivi inclus</div><div><b>🔒 Paiement sécurisé</b>CB, PayPal, Apple Pay</div><div><b>↩️ Retours 30 jours</b>Sans prise de tête</div><div><b>💬 Support 7j/7</b>Réponse sous 24 h</div></div>
+<section id="produits"><h2>Nos best-sellers</h2><div class="filters" id="filters"></div><div class="grid" id="grid"></div></section>
+<section class="faq" id="faq"><h2>Questions fréquentes</h2>
+<details><summary>Quels sont les délais de livraison ?</summary><p>Entre 7 et 15 jours ouvrés selon le produit. Un numéro de suivi t'est envoyé par e-mail.</p></details>
+<details><summary>Puis-je retourner un produit ?</summary><p>Oui, sous 30 jours si le produit ne te convient pas. Contacte-nous et nous t'expliquons la démarche.</p></details>
+<details><summary>Le paiement est-il sécurisé ?</summary><p>Oui, le paiement est chiffré et géré par un prestataire certifié PCI-DSS.</p></details></section>
+<section id="contact"><div class="news"><h2>-10% sur ta première commande</h2><p>Inscris-toi à la newsletter et reçois ton code.</p>
+<form id="nl"><input type="email" required placeholder="ton@email.com"><button class="cta" type="submit">Je m'inscris</button></form></div></section>
+<footer><p>© 2026 Virtos Shop · <a href="#">CGV</a><a href="#">Mentions légales</a><a href="#">Confidentialité</a><a href="#">Retours</a></p></footer>
+<div class="overlay" id="ov"></div>
+<aside class="drawer" id="drawer"><div class="dh"><h3>Mon panier</h3><button id="close">×</button></div>
+<div class="items" id="items"></div>
+<div class="df"><small id="ship"></small><div class="prog"><i id="bar"></i></div>
+<div class="tot"><span>Total</span><span id="total">0,00 €</span></div><button class="pay" id="pay">Payer en toute sécurité</button></div></aside>
+<div class="modal" id="modal"></div><div class="toast" id="toast"></div>
+<script src="products.js"></script><script src="app.js"></script></body></html>
