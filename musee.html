@@ -149,16 +149,16 @@
     // Titres, années et tailles : seulement ce que le site a déjà publié. size:'real' = dimensions inscrites sur la page Galerie ; sinon taille indicative.
     var SERIES = {
       workpiece: { label: 'mv.s.wp', back: 'workpiece.html', works: [
-        { key: 'clown-diable-3', title: 'Archer?', cm: [60, 80], real: 1 },
-        { key: 'workshop-2', cm: [50, 70], real: 1 },
-        { key: 'joueur-angleterre-2', cm: [60, 80], real: 1 },
-        { key: 'trois-visages-2', cm: [80, 60], real: 1 },
-        { key: 'deux-capuches', cm: [60, 80], real: 1 },
-        { key: 'priere-rouge', cm: [60, 80], real: 1 },
-        { key: 'joueur-france-2', cm: [60, 80], real: 1 },
-        { key: 'deux-hommes', title: 'En Zz', cm: [60, 80], real: 1 },
-        { key: 'spray-noir-tranche', title: 'welcome nephew', cm: [40, 30], real: 1 },
-        { key: 'be-free-2', cm: [60, 80], real: 1 }
+        { key: 'clown-diable-3', frame: 'black', title: 'Archer?', cm: [60, 80], real: 1 },
+        { key: 'workshop-2', frame: 'oak', cm: [50, 70], real: 1 },
+        { key: 'joueur-angleterre-2', frame: 'walnut', cm: [60, 80], real: 1 },
+        { key: 'trois-visages-2', frame: 'black', cm: [80, 60], real: 1 },
+        { key: 'deux-capuches', frame: 'oak', cm: [60, 80], real: 1 },
+        { key: 'priere-rouge', frame: 'black', cm: [60, 80], real: 1 },
+        { key: 'joueur-france-2', frame: 'walnut', cm: [60, 80], real: 1 },
+        { key: 'deux-hommes', frame: 'oak', title: 'En Zz', cm: [60, 80], real: 1 },
+        { key: 'spray-noir-tranche', frame: 'black', title: 'welcome nephew', cm: [40, 30], real: 1 },
+        { key: 'be-free-2', frame: 'black', cm: [60, 80], real: 1 }
       ] }
     };
     var sid = 'workpiece', WORKS = SERIES[sid].works;
@@ -208,7 +208,7 @@
       $('back').setAttribute('href', SERIES[sid].back);
       $('count').textContent = (cur < 9 ? '0' : '') + (cur + 1) + ' / ' + (WORKS.length < 10 ? '0' : '') + WORKS.length;
       $('title').textContent = name(w);
-      $('meta').textContent = T(w.real ? 'mv.meta' : 'mv.meta.ind', { w: w.cm[0], h: w.cm[1] }) + (w.year ? ' · ' + w.year : '');
+      $('meta').textContent = T('mv.meta', { w: w.cm[0], h: w.cm[1] }) + (w.year ? ' · ' + w.year : '');
       var t = name(w).replace(/[“”]/g, '');
       $('cta').href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(T('mv.mail.subj', { t: t, s: seriesLabel() })) + '&body=' + encodeURIComponent(T('mv.mail.body', { t: t, s: seriesLabel(), w: T('mail.w.' + world) }));
       $('worlds').innerHTML = WORLDS.map(function (k) { return '<button type="button" data-w="' + k + '" aria-pressed="' + (k === world) + '">' + T('w.' + k) + '</button>'; }).join('');
@@ -362,7 +362,7 @@
               std(0xffffff, 0.45, { map: canvasTex(1024, 1024, plain('#a29d95', 0.35), true, [3, 2]), envMapIntensity: 0.8 }), 0xe7e4de);
       g.add(new THREE.HemisphereLight(0xfffaf2, 0x8f8a82, 0.6));
       sunLight(g, 0xfff6ea, 0.55, [2, 8, 6], 5);
-      spot(g, 6, 1.55); hangY.gallery = 1.55; paintTint.gallery = 0xf6f4f0;
+      spot(g, 6, 1.68); hangY.gallery = 1.68; paintTint.gallery = 0xf6f4f0;
       // banc en chêne face à la toile
       var oak = std(0xffffff, 0.55, { map: canvasTex(512, 128, planks([178, 136, 92]), true) });
       var top = at(rbox(1.8, 0.06, 0.42, 0.012, oak), 0, 0.44, 2.2); g.add(top);
@@ -378,7 +378,7 @@
               std(0xffffff, 0.5, { map: canvasTex(1024, 1024, planks([170, 128, 86]), true, [3, 4]), envMapIntensity: 0.6 }), 0xe9e1d6);
       g.add(new THREE.HemisphereLight(0xfff5e8, 0x8a7563, 0.55));
       sunLight(g, 0xffefd8, 1.15, [-6, 6.5, 5], 5);   // lumière d'une fenêtre à gauche
-      spot(g, 2.2, 1.45, 0xffe7c8); hangY.salon = 1.45; paintTint.salon = 0xf2efe9;
+      spot(g, 2.2, 1.58, 0xffe7c8); hangY.salon = 1.58; paintTint.salon = 0xf2efe9;
       // tapis
       var rug = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 2.3), std(0xffffff, 1, { map: canvasTex(512, 512, function (c, w, h) { c.fillStyle = '#e8e0d2'; c.fillRect(0, 0, w, h); clouds(c, w, h, 0.25); noise(c, w, h, 22); c.strokeStyle = 'rgba(120,100,80,0.35)'; c.lineWidth = 6; c.strokeRect(18, 18, w - 36, h - 36); }, true) }));
       rug.rotation.x = -Math.PI / 2; rug.position.set(0, 0.006, 1.15); rug.receiveShadow = true; g.add(rug);
@@ -408,7 +408,7 @@
               std(0xffffff, 0.42, { map: canvasTex(1024, 1024, plain('#6f6a64', 0.45), true, [3, 2]), envMapIntensity: 0.9 }), 0x2b2927);
       g.add(new THREE.HemisphereLight(0xffeedd, 0x3a3631, 0.45));
       sunLight(g, 0xffe2c0, 0.7, [5, 6, 5], 5);
-      spot(g, 7, 1.5, 0xffdfb5); hangY.loft = 1.5; paintTint.loft = 0xe6e2dc;
+      spot(g, 7, 1.66, 0xffdfb5); hangY.loft = 1.66; paintTint.loft = 0xe6e2dc;
       // fauteuil en cuir cognac, de trois quarts
       var leather = std(0x8a4f2b, 0.45, { envMapIntensity: 0.6 }), chair = new THREE.Group();
       chair.add(at(rbox(0.82, 0.2, 0.8, 0.06, leather), 0, 0.38, 0));
@@ -434,7 +434,7 @@
               std(0xffffff, 0.55, { map: canvasTex(1024, 1024, planks([150, 110, 76]), true, [3, 4]), envMapIntensity: 0.5 }), 0x26302a);
       g.add(new THREE.HemisphereLight(0xffe9d2, 0x2a2622, 0.4));
       sunLight(g, 0xffe6c8, 0.55, [-5, 6, 6], 5);
-      spot(g, 5, 1.62, 0xffdcb0); hangY.chambre = 1.62; paintTint.chambre = 0xe4e0da;
+      spot(g, 5, 1.76, 0xffdcb0); hangY.chambre = 1.76; paintTint.chambre = 0xe4e0da;
       // lit bas : tête de lit capitonnée, matelas, couette, oreillers, plaid
       var linen = std(0xeee8de, 0.98), z = 1.05;
       g.add(at(rbox(1.9, 1.05, 0.12, 0.05, std(0x8a7b69, 0.95)), 0, 0.6, 0.08));            // tête de lit
@@ -467,19 +467,44 @@
     }
     var faceMat = new THREE.MeshBasicMaterial({ color: 0xf4f2ee, toneMapped: false, transparent: true });
     var sideMat = new THREE.MeshStandardMaterial({ color: 0xe6e2da, roughness: 0.9, transparent: true });
-    var canvasMesh = null, shadowMesh = null;
+    function safeTexture(img) {
+      var pot = function (n) { var p = 256; while (p * 2 <= n && p < 2048) p *= 2; return p; };
+      var cw = pot(img.naturalWidth), ch = pot(img.naturalHeight), cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+      var c = cv.getContext('2d'); c.imageSmoothingQuality = 'high'; c.drawImage(img, 0, 0, cw, ch);   // l'étirement est annulé par les coordonnées de texture
+      return new THREE.CanvasTexture(cv);
+    }
+    var canvasMesh = null, shadowMesh = null, frameGroup = null;
+    // Les cadres : des caisses américaines, la toile flotte au milieu, séparée du cadre par un jour d'ombre de 1 cm.
+    // Noir mat pour les fonds vifs, chêne clair pour les tons chauds, verts et sombres, noyer foncé pour les fonds roses et violets.
+    var FRAMES = {
+      black: new THREE.MeshStandardMaterial({ color: new THREE.Color(0x181716).convertSRGBToLinear(), roughness: 0.55, metalness: 0.1 }),
+      oak: new THREE.MeshStandardMaterial({ color: new THREE.Color(0xc29a6b).convertSRGBToLinear(), roughness: 0.6 }),
+      walnut: new THREE.MeshStandardMaterial({ color: new THREE.Color(0x3b281b).convertSRGBToLinear(), roughness: 0.5 })
+    };
+    var gapMat = new THREE.MeshBasicMaterial({ color: 0x121110 });
     function setPainting(i) {
       var w = WORKS[i], img = images[w.key], tex = textures[w.key];
-      if (!tex && img) { tex = textures[w.key] = new THREE.Texture(img); tex.needsUpdate = true; tex.encoding = THREE.sRGBEncoding; tex.anisotropy = ANISO; tex.minFilter = THREE.LinearMipmapLinearFilter; }
+      if (!tex && img) { tex = textures[w.key] = safeTexture(img); tex.encoding = THREE.sRGBEncoding; tex.anisotropy = ANISO; tex.minFilter = THREE.LinearMipmapLinearFilter; }
       var ht = w.cm[1] / 100, wd = img ? ht * img.naturalWidth / img.naturalHeight : w.cm[0] / 100, depth = 0.035;
       if (canvasMesh) { painting.remove(canvasMesh); canvasMesh.geometry.dispose(); }
       if (shadowMesh) { painting.remove(shadowMesh); shadowMesh.geometry.dispose(); }
       faceMat.map = tex || null; faceMat.needsUpdate = true; sideMat.color.copy(img ? edgeColor(img) : new THREE.Color(0xe6e2da));
       canvasMesh = new THREE.Mesh(new THREE.BoxGeometry(wd, ht, depth), [sideMat, sideMat, sideMat, sideMat, faceMat, sideMat]);
       canvasMesh.position.z = depth / 2 + 0.006; canvasMesh.castShadow = true; painting.add(canvasMesh);
-      shadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(wd * 1.5, ht * 1.45), new THREE.MeshBasicMaterial({ map: softShadow, transparent: true, depthWrite: false, opacity: 0.32, color: 0x000000 }));
+      if (frameGroup) { painting.remove(frameGroup); frameGroup.traverse(function (o) { if (o.geometry) o.geometry.dispose(); }); frameGroup = null; }
+      var fm = FRAMES[w.frame], ow = wd, oh = ht;
+      if (fm) {
+        var g = 0.012, fw = wd > 1.2 ? 0.032 : 0.024, fd = 0.068; ow = wd + 2 * (g + fw); oh = ht + 2 * (g + fw);
+        frameGroup = new THREE.Group();
+        var bar = function (bw, bh, x, y) { var m = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, fd), fm); m.position.set(x, y, fd / 2); m.castShadow = true; m.receiveShadow = true; frameGroup.add(m); };
+        bar(ow, fw, 0, oh / 2 - fw / 2); bar(ow, fw, 0, -oh / 2 + fw / 2);
+        bar(fw, oh - 2 * fw, -ow / 2 + fw / 2, 0); bar(fw, oh - 2 * fw, ow / 2 - fw / 2, 0);
+        var back = new THREE.Mesh(new THREE.PlaneGeometry(wd + 2 * g + 0.002, ht + 2 * g + 0.002), gapMat); back.position.z = 0.004; frameGroup.add(back);
+        painting.add(frameGroup);
+      }
+      shadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(ow * 1.45, oh * 1.4), new THREE.MeshBasicMaterial({ map: softShadow, transparent: true, depthWrite: false, opacity: 0.32, color: 0x000000 }));
       shadowMesh.position.set(0.03, -0.05, 0.002); painting.add(shadowMesh);
-      painting.userData.h = ht;
+      painting.userData.h = oh;
     }
 
     // ===== Caméra : légère parallaxe, on peut regarder un peu autour =====
